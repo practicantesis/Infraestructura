@@ -17,6 +17,9 @@ session_start();
 unset($_SESSION['user']);
 session_destroy();
 return false;
+
+
+
 */
 
 
@@ -30,6 +33,8 @@ ConectaSQL('firewall');
 //error_reporting(0);
 //global $conn;
 //$objCONF = new Configuraciones;
+
+
 
 session_start();
 if(!isset($_SESSION['user'])) {
@@ -750,7 +755,7 @@ var html = '<b>' + $('<div>').text(value.city).html() + '</b>, ' + $('<div>').te
                 <a href="http://192.168.120.119/seguros/" target="_blank" >Seguros</a>
                 </div>
                 <div class="header-left mambo">
-                <a href="http://192.168.120.179/INFRAESTRUCTURA-DESARROLLO/gsalazar/tabla/" target="_blank" >Moviles</a>
+                <a href="http://ti.tpitic.com.mx/INFRAESTRUCTURA-PRODUCCION/Infraestructura/informe/index.php?666U2lzdGVtYXM=897" target="_blank" >Moviles</a>
                 </div>
                 <!--Menu de enlaces-->
                 <div class="header-right">
@@ -952,6 +957,12 @@ var html = '<b>' + $('<div>').text(value.city).html() + '</b>, ' + $('<div>').te
                 <i class="icon-people menu-icon"></i><span class="nav-text">Device Users</span>
                 </a></li>
 
+                <li><a href="#" onclick="ShowLDAP('NukeDev')">
+                <i class="icon-people menu-icon"></i><span class="nav-text">Eliminar</span>
+                </a></li>
+
+
+
             <li class="nav-label">SAMBA</li>
                 <li><a href="#" onclick="ShowLDAPG('SMBLDAPGroup')">
                  <i class="icon-grid menu-icon"></i><span class="nav-text">Grupos LDAP Samba</span>
@@ -1025,6 +1036,7 @@ var html = '<b>' + $('<div>').text(value.city).html() + '</b>, ' + $('<div>').te
                     </li>
 
 
+
                     <?php
                         $regios= GetRegionalesFromOficinas();
                         foreach ($regios as &$valor) {
@@ -1045,6 +1057,17 @@ var html = '<b>' + $('<div>').text(value.city).html() + '</b>, ' + $('<div>').te
                     </a>
 
 
+                    <li class="nav-label">Herramientas</li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void()">
+                             <i class="icon-location-pin menu-icon"></i><span class="nav-text">INVENTARIOS</span>
+
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="#" onclick="ShowLastTag()">Ultimo Tag</a></li>
+                            <!-- <li><a href="./index-2.html">Home 2</a></li> -->
+                        </ul>
+                    </li>
 
 
 
@@ -1114,12 +1137,12 @@ var html = '<b>' + $('<div>').text(value.city).html() + '</b>, ' + $('<div>').te
                             </div>
                         </div>
                         <br>
-                        <div id="LDAPDevUserTable"><!--xxxxxxxxxx--></div>
+                        <div id="LDAPDevUserTable"><!--xx   xxxxxxxx--></div>
                     </div>
-                    <div id="SmbLDAPGroups" style="display:none;">
+                    <div id="SMBLDAPGroups" style="display:none;">
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <!--<button type="button" class="btn btn-secondary" onclick="SmbLoadGroupQuery('Poruser')">Buscar Grupo SMB Por Usuario</button>-->
                             <button type="button" class="btn btn-secondary" onclick="SmbLoadGroupQuery('Pornombre')">Buscar Grupo SMB Por Nombre</button>
+                            
                         </div>
                     </div>
                     <div id="LDAPGroups" style="display:none;">

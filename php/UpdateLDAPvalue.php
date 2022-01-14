@@ -209,7 +209,7 @@ if ($_POST['value'] == "SAMBA") {
 		$success="Es el mismo valor que tiene el usuario";
 	} else {
 		$con=ConectaLDAP();
-		if ($_POST['nvalue'] == "SIx") {
+		if ($_POST['nvalue'] == "SI") {
 			$sambaArray = array();
 			$sambaArray['objectClass'][0] = "sambaSamAccount";
 			$sambaArray['sambaSID'] = "S-1-5-21-2286529612-1239631486-3098793819-1002";
@@ -221,7 +221,7 @@ if ($_POST['value'] == "SAMBA") {
 			$smbReq = @ldap_mod_add($con,$_POST['dn'],$sambaArray);
 			$success="Samba activado";
 		}
-		if ($_POST['nvalue'] == "NxxO") {
+		if ($_POST['nvalue'] == "NO") {
 			$userdataModifydelSamba = array();
 			$userdataModifydelSamba['objectClass'] = array();
 			$userdataModifydelSamba['objectClass'][6] = 'sambaSamAccount';
@@ -233,13 +233,12 @@ if ($_POST['value'] == "SAMBA") {
 			$userdataModifydelSamba['sambaAcctFlags'] = array();
 			$userdataModifydelSamba['shadowLastChange'] = array();
 			$sucess = ldap_mod_del($con, $_POST['dn'], $userdataModifydelSamba);
-
-
+/*
         echo "<pre>";
         echo $_POST['dn'];
         print_r($sambaArray);
         echo "</pre>";
-
+*/
 			$smbReq = ldap_mod_del($con,$_POST['dn'], $sambaArray);
 			$success="Samba eliminado";
 		}
