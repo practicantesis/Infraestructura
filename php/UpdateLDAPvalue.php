@@ -166,7 +166,8 @@ if ($_POST['value'] == "lanmac") {
 
 	if ( ($exma == "EXISTE") and ($_POST['nvalue'] != "NO") ) {
 		$valid='NO';
-		$success=$_POST['nvalue']." MAC address existente en LDAP";
+		$exmaow=VerifyMACOwner($_POST['nvalue']);
+		$success=$_POST['nvalue']." MAC address existente en LDAP para ".$exmaow." Si ese usuario ya no tiene esa MAC, pongale la correcta o cambie el valor a NO";
 	}
 
 

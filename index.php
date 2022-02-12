@@ -989,6 +989,18 @@ var html = '<b>' + $('<div>').text(value.city).html() + '</b>, ' + $('<div>').te
                         </ul>
                     </li>
 
+                    <li class="nav-label">Herramientas</li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void()">
+                             <i class="icon-location-pin menu-icon"></i><span class="nav-text">INVENTARIOS</span>
+
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="#" onclick="ShowLastTag()">Ultimo Tag</a></li>
+                            <!-- <li><a href="./index-2.html">Home 2</a></li> -->
+                        </ul>
+                    </li>
+
                     <li class="nav-label">HARDWARE</li>
                     <!-- IMPRESORAS -->
                     <li><a href="#" onclick="Show('print')">

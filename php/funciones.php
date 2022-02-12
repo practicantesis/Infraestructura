@@ -279,6 +279,30 @@ function VerifyMAC($mac) {
     return $out;
 }
 
+function VerifyMACOwner($mac) {
+    include 'configuraciones.class.php';
+    $err='';
+    $data='';
+    $out='';
+    $ldapconn=ConectaLDAP();
+    //error_reporting(E_ALL);
+    ini_set('display_errors', 'On');
+    set_time_limit(30);
+    $array1= array();
+    $result = ldap_search($ldapconn,$LDAPUserBase, "(|(lanmac=$mac)(wifimac=$mac))");
+    $err=ldap_error($ldapconn);
+    $ldata = ldap_get_entries($ldapconn, $result);
+    for ($i=0; $i<$ldata["count"]; $i++) {
+        $who=$ldata[$i]['uid'][0];
+    }
+    if ( $ldata["count"] > 0) {
+        $out = $who;
+    } else {
+        $out = "NOEXISTE";
+    }
+    return $out;
+}
+
 
 function ConectaSQL($base) {
     include 'configuraciones.class.php';
@@ -1909,7 +1933,7 @@ function NewCellForm() {
                                     <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">Device IMEI: </label><div id="edit-'.$cu.'"><a href="#" onclick="UValn('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
                                     <div class="col-lg-6">
                                         <div class="form-row" id="elinput-'.$cu.'">
-                                            <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="'.$cu.'" value="PORASIGNAR" onchange="validarinput('."'validadeviceuser','$cu'".','."'NO'".')" '.$rouser.'>
+                                            <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="'.$cu.'" value="PORASIGNAR" onchange="validarinput('."'validadeviceuser','$cu'".','."'NO'".')" '.$rouser.' DISABLED>
                                         </div>
                                     </div>
                                 </div>
