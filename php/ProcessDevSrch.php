@@ -10,7 +10,7 @@ $FOUND="DUNNO";
 $conn=ConectaSQL('ocsweb');
 
 $mes .='<br>ANALISIS DEL DISPOSITIVO<br>';
-
+$huerfano="DUNNO";
 $mes.='<div>.</div>';
 if (preg_match("/^[a-zA-Z]+$/i",$_POST["param"],$matches)) {
       //$mes.='<div>-</div>';
@@ -43,6 +43,14 @@ if (preg_match("/^[a-zA-Z]+$/i",$_POST["param"],$matches)) {
                   $mes .='<div class="alert alert-danger" role="alert">';
                   $mes.=" EL DEV USER NO TIENE DISPOSITIVO ASIGNADO EN LDAP";
                   $mes.='</div>';
+                  if ($_POST["action"] == "CHANGE") {
+                        //$DeleteDUPOCSTag="YES";
+                        DeleteLDAPUser("duusernname=".$_POST["param"].",ou=DeviceUsers,dc=transportespitic,dc=com");
+                  } else {
+                        $propuesta .= "Borrar el Devuser ".$_POST["param"]." --> ("."duusernname=".$_POST["param"].",ou=DeviceUsers,dc=transportespitic,dc=com".")<br>";
+                  }                                 
+
+                  
             }
       }            
 }      
@@ -109,18 +117,23 @@ if (1 == 1) {
                         if ($_POST["action"] == "CHANGE") {
                               $ChangeDeviceOffice="YES";
                         } else {
-                              $propuesta .= "Cambiar el DeviceOffice en LDAP del dispositivo con TAG ".$_POST["param"]." a BAJA_CEL_".$regsig."<br>";
+                              $propuesta .= "Cambiar el DeviceOffice en LDAP del dispositivo con TAG ".$_POST["param"]." de ".$di[0]['deviceoffice'][0]." a BAJA_CEL_".$regsig."<br>";
                         }
-                  }  { $propuesta .= "sk0<br>"; }                        
+                  }  { $propuesta .= "-=-<br>"; }                        
 
                   // CHECK ASSIGNED USER
                   $ato=GetDeviceUserInfoFromLDAP($di[0]['deviceassignedto'][0]);
                   //print_r($ato);
                   if ($ato['count'] == 0) {
                         if ($di[0]['deviceassignedto'][0] != "BAJA") {
-                              $mes.='<div class="alert alert-danger" role="alert">';
+                              $mes.='<div class="alert alert-warning" role="alert">';
                               $mes.=" DEVICE USER DECLARADO PARA CELULAR ".$di[0]['deviceassignedto'][0]." NO ENCONTRADO EN LDAP";
                               $mes.='</div>';
+                              if ($_POST["action"] == "CHANGE") {
+                                    $UnasignUserFromDev="YES";
+                              } else {
+                                    $propuesta .= "Cambiar el usuario del dispositivo con TAG ".$_POST["param"]." de ".$di[0]['deviceassignedto'][0]." a BAJA<br>";
+                              }                                 
                         }
                   }
                   if ($ato['count'] > 1) {
@@ -137,14 +150,15 @@ if (1 == 1) {
                         if ($_POST["action"] == "CHANGE") {
                               $UnasignUserFromDev="YES";
                         } else {
-                              $propuesta .= "Cambiar el usuario del dispositivo con TAG ".$_POST["param"]." a BAJA<br>";
+                              $propuesta .= "Cambiar el usuario del dispositivo con TAG ".$_POST["param"]." de ".$di[0]['deviceassignedto'][0]." a BAJA<br>";
                         }                                 
-                  }            
+                  }
+
                   // CHECK serial for TAG ON AIRWATCH
                   $airwatchPorSerie=QueryToAirwatchAPI('DEVICE',$di[0]['deviceserial'][0]);
                   $eljson = json_decode ($airwatchPorSerie, true);
                   if ($eljson == "404") {
-                        $mes .='<div class="alert alert-danger" role="alert">';
+                        $mes .='<div class="alert alert-warning" role="alert">';
                         $mes.=" NUMERO DE SERIE ".$di[0]['deviceserial'][0]." NO ENCONTRADO EN AIRWATCH ";
                         $mes.='</div>';
                         $FOUND="AW404";
@@ -182,7 +196,7 @@ if (1 == 1) {
                   $airwatchPorImei=QueryToAirwatchAPI('DEVICEperIMEI',$di[0]['deviceimei'][0]);
                   $eljsoni = json_decode ($airwatchPorImei, true);
                   if ($eljsoni == "404") {
-                        $mes .='<div class="alert alert-danger" role="alert">';
+                        $mes .='<div class="alert alert-warning" role="alert">';
                         $mes.=" IMEI ".$di[0]['deviceimei'][0]." NO ENCONTRADO EN AIRWATCH ";
                         $mes.='</div>';
                         $FOUND="AWI404";
@@ -242,7 +256,7 @@ if (! preg_match("/^BAJA_CEL_(\w\w\w)$/i",$ocsof,$matchesc)) {
                         } else {
                               $propuesta .= "Cambiar la oficina del HWID ".$ocshw." de OCS a BAJA_CEL_".$regsig."<br>";
                         }
-} else { $propuesta .= "sk1<br>"; }                        
+} else { $propuesta .= "- -<br>"; }                        
 
                   }
                   // OCS OMEI
@@ -270,7 +284,7 @@ if (! preg_match("/^BAJA_CEL_(\w\w\w)$/i",$ocsof,$matchesc)) {
                                     }                                 
                                     
                               }
-} else { $propuesta .= "sk2<br>"; }                                                      
+} else { $propuesta .= "-.-<br>"; }                                                      
 
 
                         } else {
@@ -312,7 +326,7 @@ $updateuserldap=UpdateLDAPVAl('DeviceTAG='.$_POST["param"].',ou=Celulares,ou=Dev
 } else {
       if ($FOUND != "YES") {
             $mes.='<div class="alert alert-danger" role="alert">';
-            $mes.=" NO VEO TAG NI DEVUSER CON ESO QUE PUSISTE, DE CUAL FUMASTE?";
+            $mes.=" NO EXISTE TAG NI DEVUSER CON ESA BUSQUEDA";
             $mes.='</div>';
       }
 }
