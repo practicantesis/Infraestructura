@@ -1,7 +1,7 @@
 <?php
 require('funciones.php');
 //print_r($_POST);
-
+$mcok="DUNNO";
 $nets=CheckMultipleNets($_POST['ofi']);
 $asignado="NO";
 if ($nets != "NO") {
@@ -26,6 +26,10 @@ if(preg_match("/^\d+$/",$_POST['multi'])) {
 			}			
 
 		}
+		if ($_POST['tipo'] == "wifimac") {
+			UpdateLDAPVAl($_POST['dn'],$_POST['multi'],'wifimac');
+			$mcok="OK";
+		}
 	}		
 	if ($nets != "NO") {
 		$multi='YES';
@@ -45,6 +49,7 @@ $jsonSearchResults[] =  array(
   'multi' => $multi,
 	'nets' => $nets,
 	'asignado' => $asignado,
+	'mcok' => $mcok,
   'sele' => $sele
 );
 echo json_encode ($jsonSearchResults);

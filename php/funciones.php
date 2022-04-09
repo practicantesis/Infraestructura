@@ -1,5 +1,14 @@
 <?php
 
+function EnviaTelegram($response) {
+    //feria
+    $chatId="1835595419";
+    $token = '2018772774:AAEIoNJsUaQdSVCrVJP97E8DoLUFBAy85zk';
+    $website = 'https://api.telegram.org/bot'.$token;
+    $url = $website.'/sendMessage?chat_id='.$chatId.'&parse_mode=HTML&text='.urlencode($response);
+    file_get_contents($url);
+}
+
 
 function GetBrandFromModel($model) {
     switch ($model) {
@@ -168,7 +177,7 @@ function getRegSiglaFromRegional($reg) {
 
 
 function QueryToAirwatchAPI($tipo,$val) {
-    $basic_auth = base64_encode("jferia:TP1nghm0R1hM0za");
+    $basic_auth = base64_encode("jferia:TP1nghm0R1hM0zaUq");
     //$basic_auth='amZlcmlhOkxldHR5b3J0ZWdh';
     $ch = curl_init();
     $api_key='Zbh2S+e0ejNOibdtwlFDFssflXSeCniu2oh1/7lVg5A=';
@@ -1046,17 +1055,27 @@ function UserForm($ldata) {
         } else {
             $haveSAMBA="NO";
         }
-        $haveINFRAESTRUCTURA="SI";
+        
         //$haveSAMBA=$ldata[0]['sambapasswordhistory'][0];
         /*
         echo "<pre>";
         print_r($ldata);
         echo "</pre>";
         */
+       
         $servs = $ldata[0]["servicios"][0];
-        if ($servs == "Drupal") {
-            $srvDrypalchk='checked';
+        $srvINFRAchk='';
+        foreach ($ldata[0]["servicios"] as &$value) {
+            //echo "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx".$value;
+            if ($value == "INFRAESTRUCTURA") {
+                $srvINFRAchk='checked';
+                $haveINFRAESTRUCTURA="SI";
+            }
+            if ($value == "Drupal") {
+                $srvDrypalchk='checked';
+            }
         }
+
         $livemeeting  = $ldata[0]["livemeeting"][0];
         if ($livemeeting  == "OpenVPN") {
             $srvOPENVPNchk='checked';
@@ -1064,6 +1083,7 @@ function UserForm($ldata) {
         } else {
             $vpnstat='OFF';
         }
+
 
         $userpassword = $ldata[0]["userpassword"][0];
         $dn=$ldata[0]["dn"];
@@ -1418,7 +1438,7 @@ function UserForm($ldata) {
                                             <input type="checkbox" class="form-check-input" id="val-'.$cu.'" name="val-'.$cu.'" onclick="EnableService('."'$dn'".','."'$cu'".','."'$servs'".')"  '.$srvDrypalchk.' > . .  Drupal 
                                         </div>
                                         <div class="form-row form-check-label" id="elservicio-INFRAESTRUCTURA">
-                                            <input type="checkbox" class="form-check-input" id="val-INFRAESTRUCTURA" '.$ifchk.' name="val-INFRAESTRUCTURA" onclick="EnableService('."'$dn'".','."'$cui'".','."'$servs'".')"  '.$srvDrypalchk.' > . .  INFRAESTRUCTURA 
+                                            <input type="checkbox" class="form-check-input" id="val-INFRAESTRUCTURA" '.$ifchk.' name="val-INFRAESTRUCTURA" onclick="EnableService('."'$dn'".','."'$cui'".','."'$servs'".')"  '.$srvINFRAchk.' > . .  INFRAESTRUCTURA 
                                         </div>
                                         <div class="form-row form-check-label" id="elservicio-OPENVPN">
                                             <input type="checkbox" class="form-check-input" id="val-OPENVPN" '.$srvOPENVPNchk.' name="val-OPENVPN" onclick="EnableService('."'$dn'".','."'$vpn'".','."'$vpnstat'".')"  '.$srvOPENVPNchk.' > . .  OPENVPN 
@@ -2382,17 +2402,16 @@ function CheckExistentValueLDAP($base,$what,$val) {
     if ($what == "deviceassignedto") {
         $LDAPUserBase="ou=Celulares,ou=Devices,dc=transportespitic,dc=com";
     }
-
-
-
     $ldapconn=ConectaLDAP();
     ini_set('display_errors', 'On');
     set_time_limit(30);
-    $result = ldap_search($ldapconn,$LDAPUserBase, "$what=$val");
+    $result = ldap_search($ldapconn,$LDAPUserBase, "$what=$val");    
     $err=ldap_error($ldapconn);
     $ldata = ldap_get_entries($ldapconn, $result);
-    //echo "$what=$val  > ".$ldata['count'];
+    //echo "XXXXXXXXXXXXXX $what=$val  > ".$ldata['count']." <- - - - ";
     //print_r($ldata);
+
+    //echo "xxxxx".$ldata['count'];
     if ($ldata['count'] > 0) {
         return "NO";
     } else {
@@ -2776,7 +2795,11 @@ function GetCellsFromLDAP($como) {
     if ($como == "active" ) {
         $result = ldap_search($ldapconn,"ou=Celulares,ou=Devices,dc=transportespitic,dc=com", "(!(deviceoffice=BAJA_*))") or die ("Error in search query: ".ldap_error($ldapconn));
     } else {
-        $result = ldap_search($ldapconn,"ou=Celulares,ou=Devices,dc=transportespitic,dc=com","(DeviceTAG=*)");
+        if ($como == "poractivar" ) {
+            $result = ldap_search($ldapconn,"ou=Celulares,ou=Devices,dc=transportespitic,dc=com", "deviceimei=PORASIGNAR") or die ("Error in search query: ".ldap_error($ldapconn));
+        } else {
+            $result = ldap_search($ldapconn,"ou=Celulares,ou=Devices,dc=transportespitic,dc=com","(DeviceTAG=*)");
+        }
     }
     $err=ldap_error($ldapconn);
     $ldata = ldap_get_entries($ldapconn, $result);
@@ -2799,21 +2822,34 @@ function GetCellsFromLDAP($como) {
             $imei=$ldata[$i]['deviceimei'][0];
             //$tag=$ldata[$i]['devicetag'][0];
             //echo "perroi ".$ldata[$i]['devicetag'][0]."--".$imei."--"."<br>";
-            $outb[$imei]['devicelastseen']=$ldata[$i]['devicelastseen'][0];
+
+            $llave=$imei;
+            if ($como == "poractivar" ) {
+                $tag=$ldata[$i]['devicetag'][0];
+                $llave=$tag;
+            }
+
+
+            $outb[$llave]['devicelastseen']=$ldata[$i]['devicelastseen'][0];
             if (isset($ldata[$i]['deviceserial'][0])) {
-                $outb[$imei]['deviceserial']=$ldata[$i]['deviceserial'][0];
+                $outb[$llave]['deviceserial']=$ldata[$i]['deviceserial'][0];
             } else {
-                $outb[$imei]['deviceserial'] = "PORASIGNAR";
+                $outb[$llave]['deviceserial'] = "PORASIGNAR";
             }
             if (isset($ldata[$i]['deviceimei'][0])) {
-                $outb[$imei]['deviceimei']=$ldata[$i]['deviceimei'][0];
+                $outb[$llave]['deviceimei']=$ldata[$i]['deviceimei'][0];
             } else {
-                $outb[$imei]['deviceimei'] = "PORASIGNAR";
+                $outb[$llave]['deviceimei'] = "SINASIGNAR";
             }
-            $outb[$imei]['devicetag']=$ldata[$i]['devicetag'][0];
-            $outb[$imei]['deviceimei']=$ldata[$i]['deviceimei'][0];
-            $outb[$imei]['deviceassignedto']=$ldata[$i]['deviceassignedto'][0];
-            $outb[$imei]['deviceoffice']=$ldata[$i]['deviceoffice'][0];
+            if (isset($ldata[$i]['deviceassignedto'][0])) {
+                $outb[$llave]['deviceassignedto']=$ldata[$i]['deviceassignedto'][0];
+            } else {
+                $outb[$llave]['deviceassignedto'] = "SINASIGNAR";
+            }
+            $outb[$llave]['devicetag']=$ldata[$i]['devicetag'][0];
+            $outb[$llave]['deviceimei']=$ldata[$i]['deviceimei'][0];
+            $outb[$llave]['deviceassignedto']=$ldata[$i]['deviceassignedto'][0];
+            $outb[$llave]['deviceoffice']=$ldata[$i]['deviceoffice'][0];
         }
         //return false;
     }

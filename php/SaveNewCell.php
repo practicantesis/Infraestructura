@@ -15,7 +15,7 @@ $entry['deviceassignedto']=$forma['val-deviceassignedto'];
 $entry['devicenumber']=$forma['val-devicenumber'];
 $entry['deviceoffice']=$forma['val-oficina'];
 $entry['devicedept']=$forma['val-devicedept'];
-$entry['deviceimei']=$forma['val-devicimei'];
+$entry['deviceimei']='PORASIGNAR';
 $entry['objectClass'][0] = "top";
 $entry['objectClass'][1] = "DeviceInfo";
 
