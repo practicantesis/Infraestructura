@@ -1,8 +1,12 @@
 <?php
 
-function EnviaTelegram($response) {
+function EnviaTelegram($response,$who) {
+    $ui=GetUserInfoFromLDAP($who,"array");
+    //print_r($ui);
     //feria
-    $chatId="1835595419";
+
+    $chatId=$ui[0][telegram][0];
+    //"1835595419";
     $token = '2018772774:AAEIoNJsUaQdSVCrVJP97E8DoLUFBAy85zk';
     $website = 'https://api.telegram.org/bot'.$token;
     $url = $website.'/sendMessage?chat_id='.$chatId.'&parse_mode=HTML&text='.urlencode($response);
@@ -177,7 +181,7 @@ function getRegSiglaFromRegional($reg) {
 
 
 function QueryToAirwatchAPI($tipo,$val) {
-    $basic_auth = base64_encode("jferia:TP1nghm0R1hM0zaUq");
+    $basic_auth = base64_encode("jferia:TP1nghm0R1hM0zaUqr");
     //$basic_auth='amZlcmlhOkxldHR5b3J0ZWdh';
     $ch = curl_init();
     $api_key='Zbh2S+e0ejNOibdtwlFDFssflXSeCniu2oh1/7lVg5A=';
@@ -502,7 +506,7 @@ function GetUserInfoFromLDAP($user,$how) {
         if ($how == "htmltable") {
             $out .= "<tr><td>".$ldata[$i]['uid'][0]."</td></tr>";    
         }
-        if ($how == "array") {
+        if ($how == "GetUserInfoFromLDAP") {
             $out['uid']=$ldata[$i]['uid'][0];
             $out['cn']=$ldata[$i]['cn'][0];
             $out['oficina']=$ldata[$i]['oficina'][0];
@@ -513,6 +517,9 @@ function GetUserInfoFromLDAP($user,$how) {
     //print_r($out);
     if ($how == "exists") {
         $out = $ldata["count"];    
+    }
+    if ($how == "array") {
+        $out = $ldata;    
     }
 
 
@@ -812,8 +819,8 @@ function GetDeviceUserInfoFromLDAP($user) {
     return $ldata;
 }
 
-
-function GetDeviceTagInfoFromAssignedUserLDAP($user) {
+// Tipos count y tags
+function GetDeviceTagInfoFromAssignedUserLDAP($user,$tipo) {
     $err='';
     $data='';
     set_time_limit(30);
@@ -828,12 +835,33 @@ function GetDeviceTagInfoFromAssignedUserLDAP($user) {
         if ($ldapbind) {
             $result = ldap_search($ldapconn,$ldaptree, "(deviceassignedto=$user)") or die ("Error in search query: ".ldap_error($ldapconn));
             $ldata = ldap_get_entries($ldapconn, $result);
+            $tags="";
+            for ($i=0; $i<$ldata["count"]; $i++) {
+                //array_push($array1,$ldata[$i][$what][0]);
+                //echo "<pre>";
+                //print_r($ldata);
+                $tags .= $ldata[$i]['devicetag'][0]." "; 
+                //echo "</pre>";
+                //return false;
+            }
+
         }
     }
-    return $ldata;
+    if ($tipo == "count") {
+        return $ldata;    
+    }
+    if ($tipo == "tags") {
+        return $tags;    
+    }
+    
 }
 
-
+function TelegramATelefonia($debs) {
+    EnviaTelegram($debs,"eresendiz");
+    EnviaTelegram($debs,"jferia");  
+    EnviaTelegram($debs,"acota");  
+    EnviaTelegram($debs,"gsalazar");  
+}
 
 function ValidatePassword($password, $hash) {
         $algoritmo = substr($hash, 1, 3);
@@ -1872,6 +1900,8 @@ function NewCellForm() {
                         <form class="form-valide" name="newcell" id="newcell" action="#" method="post">
                             <!-- CARD -->
                             <div class="card"><div class="card-body"><h4 class="card-title">Informacion del Dispositivo</h4>
+                            <!-- Reglon Zero -->
+                                <input class="form-check-input" type="checkbox" id="noaw" name="noaw" value="noaw" onclick="SetNoaw()"> _ . SIN AIRWATCH
                             <!-- Primer Reglon -->
                             <div class="form-group row">';
                                 $cu='newtag';
@@ -1947,17 +1977,44 @@ function NewCellForm() {
                                 </div>
                                 ';
                                 $rouser="";  //
-                                $cu='devicimei';
+                                $cu='deviceimei';
                                 $forma .='
                                 <div class="col">
                                     <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">Device IMEI: </label><div id="edit-'.$cu.'"><a href="#" onclick="UValn('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
                                     <div class="col-lg-6">
                                         <div class="form-row" id="elinput-'.$cu.'">
-                                            <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="'.$cu.'" value="PORASIGNAR" onchange="validarinput('."'validadeviceuser','$cu'".','."'NO'".')" '.$rouser.' DISABLED>
+                                            <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="'.$cu.'" value="PORASIGNAR" onchange="validarinput('."'numero','$cu'".','."'NO'".')" '.$rouser.' DISABLED>
                                         </div>
                                     </div>
                                 </div>
                             </div>                                
+
+                            <!-- Cuarto Reglon  -->
+                            <div class="form-group row">';
+                                $cu='deviceserial';
+                                $forma .='
+                                <div class="col">
+                                    <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">Serie: </label><div id="edit-'.$cu.'"><a href="#" onclick="UValn('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
+                                    <div class="col-lg-6">
+                                        <div class="form-row" id="elinput-'.$cu.'">
+                                            <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="'.$cu.'"  '.$ldata[0][$cu][0].' value="PORASIGNAR" onchange="validarinput('."'serie','$cu'".','."'SI'".')" '.$rouser.' DISABLED>
+                                        </div>
+                                    </div>
+                                </div>
+                                ';
+                                $rouser="";  //
+                                $cu='devicebrand';
+                                $forma .='
+                                <div class="col">
+                                    <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">Device Brand: </label><div id="edit-'.$cu.'"><a href="#" onclick="UValn('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
+                                    <div class="col-lg-6">
+                                        <div class="form-row" id="elinput-'.$cu.'">
+                                            <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="'.$cu.'" value="PORASIGNAR" onchange="validarinput('."'palabrasp','$cu'".','."'NO'".')" '.$rouser.' DISABLED>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                                
+
                         </form>
                             <div class="col-lg-12">
                                 <div class="card">
@@ -2385,7 +2442,7 @@ function NewUserForm() {
     return $forma;
 }
 
-
+//$exdu=CheckExistentValueLDAP("ou=DeviceUsers,dc=transportespitic,dc=com","duusernname",$_POST['value']);
 function CheckExistentValueLDAP($base,$what,$val) {
     include 'configuraciones.class.php';
     if ($what == "dunumeroempleado") {
@@ -2411,7 +2468,7 @@ function CheckExistentValueLDAP($base,$what,$val) {
     //echo "XXXXXXXXXXXXXX $what=$val  > ".$ldata['count']." <- - - - ";
     //print_r($ldata);
 
-    //echo "xxxxx".$ldata['count'];
+    
     if ($ldata['count'] > 0) {
         return "NO";
     } else {

@@ -17,10 +17,11 @@ $tags=array_keys($celdap);
 echo "---------------------------------------------------  \n";
 echo "OBTENIENDO DISPOSITIVOS EN LDAP CON IMEI POR ASIGNAR \n";
 echo "---------------------------------------------------  \n";
-
+$debs="DISPOSITIVOS EN LDAP CON IMEI POR ASIGNAR\n";
 foreach ($tags as &$value) {
 	if (strlen($celdap[$value]['devicetag']) == 9 ) {
 		echo $celdap[$value]['devicetag']." -> ".$celdap[$value]['deviceassignedto']."\n";
+        $debs.=$celdap[$value]['devicetag']." -> ".$celdap[$value]['deviceassignedto']."\n";
 		array_push($a,$celdap[$value]['devicetag']);
 		$b[$celdap[$value]['devicetag']]=$celdap[$value]['deviceassignedto'];
 		//print_r($celdap[$value]);
@@ -28,12 +29,14 @@ foreach ($tags as &$value) {
 		echo "Invalid Tag ".$celdap[$value]['devicetag']."\n";	
 	}
 	
-}	
+}
+//echo "xx".$debs;
+
 echo "-------------------------------------------------------------------------  \n";
 echo "OBTENIENDO DISPOSITIVOS DESDE AIRWATCH Y ANALIZANDO LOS QUE ESTAN CREADOS \n";
 echo "-------------------------------------------------------------------------  \n";
 
-
+$processed="DUNNO";
 foreach ($awdevsa['Devices'] as &$valuex) {
 	$tag="DUNNO";
 	//echo $valuex['DeviceFriendlyName']."\n";
@@ -56,7 +59,7 @@ foreach ($awdevsa['Devices'] as &$valuex) {
 			
 		}
 		echo "VALIDANDO QUE HAYA UN SOLO TELEFONO ASIGNADO AL USUARIO\n";
-        $tagz=GetDeviceTagInfoFromAssignedUserLDAP($b[$valuex['DeviceFriendlyName']]);
+        $tagz=GetDeviceTagInfoFromAssignedUserLDAP($b[$valuex['DeviceFriendlyName']],"count");
         if ($tagz['count'] == 1) {
             echo  "OK! \n";
         } 
@@ -65,7 +68,10 @@ foreach ($awdevsa['Devices'] as &$valuex) {
             exit;
         } 
         if ($tagz['count'] > 1) {
-            echo  "Hay mas de un device asignado al usuario \n";
+            $tagzname=GetDeviceTagInfoFromAssignedUserLDAP($b[$valuex['DeviceFriendlyName']],"tags");
+            echo  "Hay mas de un device asignado al usuario ".$b[$valuex['DeviceFriendlyName']].": ".$tagzname."\n";
+            $debs.="ERROR!!! Hay mas de un device asignado al usuario ".$b[$valuex['DeviceFriendlyName']].": ".$tagzname." IMPORTACION ABORTADA!\n";
+            TelegramATelefonia($debs);
             exit;
         } 
         echo "VALIDACIONES TERMINADAS OBTENIENDO INFO DESDE AIRWATCH PARA ".$b[$valuex['DeviceFriendlyName']]."\n";
@@ -87,12 +93,27 @@ foreach ($awdevsa['Devices'] as &$valuex) {
 	   	$ldm=ldap_modify($con, $dn, $entry);
     	echo $ldm;
     	echo $RES=ldap_error($con);
+        if ($processed != "DUNNO") {
+            $processed .= "IMPORTED ".$b[$valuex['DeviceFriendlyName']]." FROM AW TO LDAP\n";
+        } else {
+            $processed = "IMPORTED ".$b[$valuex['DeviceFriendlyName']]." FROM AW TO LDAP\n";
+        }
 	} else {
 
 	}
 }	
 
+if ($processed != "DUNNO") {
+    $debs .= "\nOBTENIENDO DISPOSITIVOS DESDE AIRWATCH Y ANALIZANDO LOS QUE ESTAN CREADOS \n";
+    $debs .=  $processed;
+}
 
+
+
+EnviaTelegram($debs,"jferia");  
+EnviaTelegram($debs,"acota");  
+EnviaTelegram($debs,"eresendiz");  
+EnviaTelegram($debs,"gsalazar");  
 
 /*
 print_r($awdevsa);

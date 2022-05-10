@@ -1,3 +1,29 @@
+
+function SetNoaw() {
+    if (document.getElementById("noaw").checked == true) {
+        document.getElementById("val-deviceimei").disabled = false;
+        document.getElementById("val-devicebrand").disabled = false;
+        document.getElementById("val-deviceserial").disabled = false;
+        document.getElementById("val-deviceimei").value = '';
+        document.getElementById("val-devicebrand").value = '';
+        document.getElementById("val-deviceserial").value = '';
+        document.getElementById("val-newtag").value = '';
+        $("#val-oficina").prop("selectedIndex", 0);
+    }
+    if (document.getElementById("noaw").checked == false) {
+        document.getElementById("val-deviceimei").value = 'POR ASIGNAR';
+        document.getElementById("val-deviceimei").disabled = true;
+        document.getElementById("val-devicebrand").disabled = true;
+        document.getElementById("val-deviceserial").disabled = true;
+        document.getElementById("val-devicebrand").value = 'POR ASIGNAR';
+        document.getElementById("val-deviceserial").value = 'POR ASIGNAR';
+        document.getElementById("val-newtag").value = '';
+        $("#val-oficina").prop("selectedIndex", 0);
+    }
+    //var xx = document.getElementById("noaw").checked;
+    //alert(document.getElementById("noaw").checked);
+}
+
 function ShowLDAP(what) {
     Limpia();
     $("#LDAPGroups").hide();
@@ -681,6 +707,13 @@ function UValn(dn,value) {
 }
 
 function SelCelOfi(dn,value) {
+    if (document.getElementById('noaw').checked) {
+        alert("SIN AIRWATCH");
+        aw='no';
+    } else {
+        alert("CON AIRWATCH");
+        aw='yes';
+    }
     //alert('boo!'+dn+value);
     var e = document.getElementById("val-oficina");
     if (e) {
@@ -692,7 +725,7 @@ function SelCelOfi(dn,value) {
     $.ajax({    
         type: "POST",
         url: 'php/GetCellAvailableTag.php',
-        data: { ofi: multi },
+        data: { ofi: multi , aw: aw },
         dataType: "json",
         success: function(data) {
             if (data[0].success == "NO") {
@@ -973,6 +1006,10 @@ function validarinput(tipo,valor,chkexist) {
     if (tipo == 'palabra') {
         var re = new RegExp("^([a-zA-Z]+)$");
         var err = "Solo letras";
+    }
+    if (tipo == 'serie') {
+        var re = new RegExp("^([a-zA-Z0-9-\/]+)$");
+        var err = "Solo letras, numeros, guiones o diagonales ";
     }
     if (tipo == 'palabrasp') {
         var re = new RegExp("^[a-zA-Z]([\\s]|[a-zA-Z])+[a-zA-Z]$");

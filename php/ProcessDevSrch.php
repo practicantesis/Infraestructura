@@ -31,7 +31,7 @@ if (preg_match("/^[a-zA-Z]+$/i",$_POST["param"],$matches)) {
             $mes.=" DEVICE USER ENCONTRADO EN LDAP";
             $mes.='</div>';
             $FOUND="YES";
-            $luser=GetDeviceTagInfoFromAssignedUserLDAP($_POST["param"]);
+            $luser=GetDeviceTagInfoFromAssignedUserLDAP($_POST["param"],"count");
             //print_r($luser);
             if ($luser['count'] == 1) {
                   $mes .='<div class="alert alert-success" role="alert">';
@@ -155,77 +155,82 @@ if (1 == 1) {
                   }
 
                   // CHECK serial for TAG ON AIRWATCH
-                  $airwatchPorSerie=QueryToAirwatchAPI('DEVICE',$di[0]['deviceserial'][0]);
-                  $eljson = json_decode ($airwatchPorSerie, true);
-                  if ($eljson == "404") {
-                        $mes .='<div class="alert alert-warning" role="alert">';
-                        $mes.=" NUMERO DE SERIE ".$di[0]['deviceserial'][0]." NO ENCONTRADO EN AIRWATCH ";
-                        $mes.='</div>';
-                        $FOUND="AW404";
-
-                  } else {
-                        if ($_POST["param"] == $eljson['DeviceFriendlyName']) {
-                              $mes .='<div class="alert alert-success" role="alert">';
-                              $mes.=" NUMERO DE SERIE ".$di[0]['deviceserial'][0]." ENCONTRADO EN AIRWATCH Y COINCIDE EL DeviceFriendlyName CON EL TAG ";
+                  $snl=strlen($di[0]['deviceserial'][0]);
+                  if ($snl != 0) {
+                        $airwatchPorSerie=QueryToAirwatchAPI('DEVICE',$di[0]['deviceserial'][0]);
+                        $eljson = json_decode ($airwatchPorSerie, true);
+                        if ($eljson == "404") {
+                              $mes .='<div class="alert alert-warning" role="alert">';
+                              $mes.=" NUMERO DE SERIE ".$di[0]['deviceserial'][0]." NO ENCONTRADO EN AIRWATCH $snl ";
                               $mes.='</div>';
-                              $FOUND="AWYES";
-                              if ($_POST["action"] == "CHANGE") {
-                                    $DeleteAirwatchDevice="YES";
-                              } else {
-                                    //print_r($eljson);
-                                    if (! str_contains($propuesta, "Eliminar IMEI ".$eljson['Imei']." y serie ".$eljson['SerialNumber']." de Airwatch<br>")) { 
-                                          $propuesta .= "Eliminar IMEI ".$eljson['Imei']." y serie ".$eljson['SerialNumber']." de Airwatch<br>";
-                                    }                                 
-                              }
-
+                              $FOUND="AW404";
                         } else {
-                              $mes .='<div class="alert alert-danger" role="alert">';
-                              $mes.=" NUMERO DE SERIE ".$di[0]['deviceserial'][0]." ENCONTRADO EN AIRWATCH PERO NO COINCIDE EL DeviceFriendlyName (".$eljson['DeviceFriendlyName'].") CON EL TAG ";
-                              $mes.='</div>';
-                              $FOUND="AWPEND";
-                              if ($_POST["action"] == "CHANGE") {
-                                    $DeleteAirwatchDevice="YES";
+                              if ($_POST["param"] == $eljson['DeviceFriendlyName']) {
+                                    $mes .='<div class="alert alert-success" role="alert">';
+                                    $mes.=" NUMERO DE SERIE ".$di[0]['deviceserial'][0]." ENCONTRADO EN AIRWATCH Y COINCIDE EL DeviceFriendlyName CON EL TAG ";
+                                    $mes.='</div>';
+                                    $FOUND="AWYES";
+                                    if ($_POST["action"] == "CHANGE") {
+                                          $DeleteAirwatchDevice="YES";
+                                    } else {
+                                          //print_r($eljson);
+                                          if (! str_contains($propuesta, "Eliminar IMEI ".$eljson['Imei']." y serie ".$eljson['SerialNumber']." de Airwatch<br>")) { 
+                                                $propuesta .= "Eliminar IMEI ".$eljson['Imei']." y serie ".$eljson['SerialNumber']." de Airwatch<br>";
+                                          }                                 
+                                    }
+
                               } else {
-                                    $propuesta .= "SE SUGIERE VERIFICAR SERIE/IMEI/FRIENDLY EL DISPOSITIVO EN AIRWATCH ANTES DE APLICAR Eliminar IMEI ".$di[0]['deviceimei'][0]." de Airwatch Y SI ESTA SEGURO, APLICAR<br>";
+                                    $mes .='<div class="alert alert-danger" role="alert">';
+                                    $mes.=" NUMERO DE SERIE ".$di[0]['deviceserial'][0]." ENCONTRADO EN AIRWATCH PERO NO COINCIDE EL DeviceFriendlyName (".$eljson['DeviceFriendlyName'].") CON EL TAG ";
+                                    $mes.='</div>';
+                                    $FOUND="AWPEND";
+                                    if ($_POST["action"] == "CHANGE") {
+                                          $DeleteAirwatchDevice="YES";
+                                    } else {
+                                          $propuesta .= "SE SUGIERE VERIFICAR SERIE/IMEI/FRIENDLY EL DISPOSITIVO EN AIRWATCH ANTES DE APLICAR Eliminar IMEI ".$di[0]['deviceimei'][0]." de Airwatch Y SI ESTA SEGURO, APLICAR<br>";
+                                    }
+
+
                               }
-
-
                         }
-                  }
-                  // CHECK imei for TAG ON AIRWATCH
-                  $airwatchPorImei=QueryToAirwatchAPI('DEVICEperIMEI',$di[0]['deviceimei'][0]);
-                  $eljsoni = json_decode ($airwatchPorImei, true);
-                  if ($eljsoni == "404") {
-                        $mes .='<div class="alert alert-warning" role="alert">';
-                        $mes.=" IMEI ".$di[0]['deviceimei'][0]." NO ENCONTRADO EN AIRWATCH ";
-                        $mes.='</div>';
-                        $FOUND="AWI404";
-                  } else {
-                        if ($_POST["param"] == $eljsoni['DeviceFriendlyName']) {
-                              $mes .='<div class="alert alert-success" role="alert">';
-                              $mes.=" IMEI ".$di[0]['deviceimei'][0]." ENCONTRADO EN AIRWATCH Y COINCIDE EL DeviceFriendlyName CON EL TAG ";
+                        // CHECK imei for TAG ON AIRWATCH
+                        $airwatchPorImei=QueryToAirwatchAPI('DEVICEperIMEI',$di[0]['deviceimei'][0]);
+                        $eljsoni = json_decode ($airwatchPorImei, true);
+                        if ($eljsoni == "404") {
+                              $mes .='<div class="alert alert-warning" role="alert">';
+                              $mes.=" IMEI ".$di[0]['deviceimei'][0]." NO ENCONTRADO EN AIRWATCH ";
                               $mes.='</div>';
-                              $FOUND="AWYES";
-                              if ($_POST["action"] == "CHANGE") {
-                                    $DeleteAirwatchDevice="YES";
-                              } else {
-                                    if (! str_contains($propuesta, "Eliminar IMEI ".$eljsoni['Imei']." y serie ".$eljsoni['SerialNumber']." de Airwatch<br>")) { 
-                                          $propuesta .= "Eliminar IMEI ".$eljsoni['Imei']." y serie ".$eljsoni['SerialNumber']." de Airwatch<br>";
-                                    }                                 
-                              }
+                              $FOUND="AWI404";
                         } else {
-                              $mes .='<div class="alert alert-danger" role="alert">';
-                              $mes.=" IMEI ENCONTRADO EN AIRWATCH PERO NO COINCIDE EL DeviceFriendlyName CON EL TAG (".$eljsoni['DeviceFriendlyName'].")";
-                              $mes.='</div>';
-                              $FOUND="AWPEND";
-                              if ($_POST["action"] == "CHANGE") {
-                                    $DeleteAirwatchDevice="YES";
+                              if ($_POST["param"] == $eljsoni['DeviceFriendlyName']) {
+                                    $mes .='<div class="alert alert-success" role="alert">';
+                                    $mes.=" IMEI ".$di[0]['deviceimei'][0]." ENCONTRADO EN AIRWATCH Y COINCIDE EL DeviceFriendlyName CON EL TAG ";
+                                    $mes.='</div>';
+                                    $FOUND="AWYES";
+                                    if ($_POST["action"] == "CHANGE") {
+                                          $DeleteAirwatchDevice="YES";
+                                    } else {
+                                          if (! str_contains($propuesta, "Eliminar IMEI ".$eljsoni['Imei']." y serie ".$eljsoni['SerialNumber']." de Airwatch<br>")) { 
+                                                $propuesta .= "Eliminar IMEI ".$eljsoni['Imei']." y serie ".$eljsoni['SerialNumber']." de Airwatch<br>";
+                                          }                                 
+                                    }
                               } else {
-                                    $propuesta .= "SE SUGIERE VERIFICAR EL DISPOSITIVO EN AIRWATCH ANTES DE APLICAR Eliminar IMEI ".$di[0]['deviceimei'][0]." de Airwatch<br>";
+                                    $mes .='<div class="alert alert-danger" role="alert">';
+                                    $mes.=" IMEI ENCONTRADO EN AIRWATCH PERO NO COINCIDE EL DeviceFriendlyName CON EL TAG (".$eljsoni['DeviceFriendlyName'].")";
+                                    $mes.='</div>';
+                                    $FOUND="AWPEND";
+                                    if ($_POST["action"] == "CHANGE") {
+                                          $DeleteAirwatchDevice="YES";
+                                    } else {
+                                          $propuesta .= "SE SUGIERE VERIFICAR EL DISPOSITIVO EN AIRWATCH ANTES DE APLICAR Eliminar IMEI ".$di[0]['deviceimei'][0]." de Airwatch<br>";
+                                    }
                               }
-
                         }
-                  }
+                  } else {
+                        $mes .='<div class="alert alert-danger" role="alert">';
+                        $mes.=" SERIE PARA EL TAG (".$_POST["param"].") NO DECLARADA EN LDAP";
+                        $mes.='</div>';
+                  }                        
                   // GetOCSTAG($serial,$conn)
                   // GetOCSHwIDFromIMEI($imei,$conn) {
                   // GetOCSImeiFromTag($tag,$conn) {

@@ -4,7 +4,7 @@ include('configuraciones.class.php');
 //print_r($_POST);
 $exdu=CheckExistentValueLDAP("ou=DeviceUsers,dc=transportespitic,dc=com","duusernname",$_POST['value']);
 
-if ($exdu == "YES") {
+if ($exdu == "NO") {
 	$success="NO";
 	$err="El device user ".$_POST['value']." Existe en Device users";
 
