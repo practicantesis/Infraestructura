@@ -9,15 +9,17 @@ $success='DUNNO';
 $devs=GetFilteredDeviceListFromLDAP("ou=Celulares,ou=Devices,dc=transportespitic,dc=com","deviceoffice",$_POST['ofi'],"devicetag");
 $numbas=Array();
 
+if ($_POST['aw'] == "yes") {
+    $tipo="CEL";
+}
+if ($_POST['aw'] == "no") {
+    $tipo="CPH";
+}
+
+
 foreach ($devs as $value) {
     //if (preg_match("/([A-Z]+)(\d+)/i",$value,$mat)) {
     if (preg_match("/([A-Z][A-Z][A-Z])([A-Z][A-Z][A-Z1])(\d\d\d)$/i",$value,$mat)) {
-        if ($_POST['aw'] == "yes") {
-            $tipo="CEL";
-        }
-        if ($_POST['aw'] == "no") {
-            $tipo="CPH";
-        }
         if ($mat['1'] == $tipo) {
             array_push($numbas, $mat['3']);
             //echo "tipo enviado es $tipo detectado es ".$mat['1']."  ofi es ".$mat['2']." value  ".$mat['3']."\n";    
@@ -27,6 +29,9 @@ foreach ($devs as $value) {
     }
 }
 $elmax=(max($numbas)+1);
+
+//echo "el tipo es ".$tipo;
+
 $tagbody=$tipo.$_POST['ofi'];
 
 
@@ -37,8 +42,12 @@ $tagbody=$tipo.$_POST['ofi'];
 
 //$ofi=GetCellAvailableTag($_POST['ofi']);
 
+//echo $xxxx  = strlen($elmax);
+//print_r($devs) ;
+
 if (strlen($elmax) > 0) {
-	$success="YES";	
+	$success="YES";
+
 } else {
 	$success="NO";	
 }

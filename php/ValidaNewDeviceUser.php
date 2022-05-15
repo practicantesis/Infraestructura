@@ -4,21 +4,25 @@ include('configuraciones.class.php');
 //print_r($_POST);
 $exdu=CheckExistentValueLDAP("ou=DeviceUsers,dc=transportespitic,dc=com","duusernname",$_POST['value']);
 
-if ($exdu == "NO") {
+if (($exdu == "YES") and ($_POST['value'] != "PORDEFINIR") ) {
 	$success="NO";
-	$err="El device user ".$_POST['value']." Existe en Device users";
-
+	$err="El device user ".$_POST['value']." NO Existe en Device users, registrelo antes de continuar";
 }
 
 $extel=CheckExistentValueLDAP("ou=Celulares,ou=Devices,dc=transportespitic,dc=com","deviceassignedto",$_POST['value']);
 
 
-if ($extel == "NO") {
+
+if ( ($extel == "NO") and ($_POST['value'] != "PORDEFINIR") ) {
 	$success="NO";
 	$err="El device user ".$_POST['value']." ya tiene telefono, para que quiere otro?";
 
 }
 
+if ( !preg_match ("/^[a-zA-Z\s]+$/",$_POST['value'])) {
+   $err = "Solo Letras mi rey (".$_POST['value'].")...";
+   $success="NO";
+} 
 //echo "el valor es  $exdu";
 
 

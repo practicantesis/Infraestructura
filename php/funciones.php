@@ -1888,6 +1888,7 @@ function NewCellForm() {
     $cu="NU";
     $cn="NU";
     $CmbOfi="";
+    $rouser="";
     $abs=GetOfficeAbrevs('x');
     foreach ($abs as $value) {
         $CmbOfi .= '<OPTION VALUE="'.$value.'">'.$value.'</OPTION>';
@@ -1904,26 +1905,27 @@ function NewCellForm() {
                                 <input class="form-check-input" type="checkbox" id="noaw" name="noaw" value="noaw" onclick="SetNoaw()"> _ . SIN AIRWATCH
                             <!-- Primer Reglon -->
                             <div class="form-group row">';
-                                $cu='newtag';
-                                $rouser="";
+
+                                $cu='oficina';
                                 $forma .='
                                 <div class="col">
-                                    <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">Tag: </label><div id="edit-'.$cu.'"><a href="#" onclick="UValn('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
+                                    <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'"><p class="text-danger">Oficina: </p></label><div id="edit-'.$cu.'"><a href="#" onclick="SelCelOfi('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
                                     <div class="col-lg-6">
                                         <div class="form-row" id="elinput-'.$cu.'">
-                                            <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="'.$cu.'" onchange="validarinput('."'palabrasp','$cu'".','."'NO'".')" '.$rouser.'>
+                                              <select style="width:5" class="form-control" name="val-'.$cu.'" id="val-'.$cu.'" onchange="SelCelOfi('."'$dn'".','."'$cu'".')">
+                                                <option value="SELECCIONE">SELECCIONE</option>'.$CmbOfi.'
+                                            </select>
                                         </div>
                                     </div>
-                                </div>
-                                ';
-                                $rouser="";
-                                $cu='deviceassignedto';
+                                </div>';
+
+                                $cu='newtag';
                                 $forma .='
                                 <div class="col">
-                                    <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">Device User: </label><div id="edit-'.$cu.'"><a href="#" onclick="UValn('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
+                                    <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">Tag Generado: </label><div id="edit-'.$cu.'"><a href="#" onclick="UValn('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
                                     <div class="col-lg-6">
                                         <div class="form-row" id="elinput-'.$cu.'">
-                                            <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="'.$cu.'" onchange="validarinput('."'validadeviceuser','$cu'".','."'NO'".')" '.$rouser.'>
+                                            <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="'.$cu.'" onchange="validarinput('."'palabrasp','$cu'".','."'NO'".')" '.$rouser.' readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -1941,27 +1943,18 @@ function NewCellForm() {
                                     </div>
                                 </div>
                                 ';
-                                $cu='oficina';
+                                $cu='deviceassignedto';
                                 $forma .='
                                 <div class="col">
-                                    <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'"><p class="text-danger">Oficina: </p></label><div id="edit-'.$cu.'"><a href="#" onclick="SelCelOfi('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
+                                    <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">Device User: </label><div id="edit-'.$cu.'"><a href="#" onclick="UValn('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
                                     <div class="col-lg-6">
                                         <div class="form-row" id="elinput-'.$cu.'">
-                                            
-
-
-                                            <select style="width:5" class="form-control" name="val-'.$cu.'" id="val-'.$cu.'" onchange="SelCelOfi('."'$dn'".','."'$cu'".')">
-                                                <option value="SELECCIONE">SELECCIONE</option>'.$CmbOfi.'
-
-                                            </select>
-
-
-
-
+                                            <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="'.$cu.'" onchange="validarinput('."'validadeviceuser','$cu'".','."'NO'".')" '.$rouser.'>
                                         </div>
                                     </div>
                                 </div>
-                            </div>                                
+                            </div>
+
 
                             <!-- Tercer Reglon  -->
                             <div class="form-group row">';

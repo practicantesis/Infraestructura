@@ -1,4 +1,58 @@
 
+function UnassignCellDevice(tag,user) {
+    alert(tag+user);
+    if (user == "BAJA") {
+        alert("No se puede desasignar algo que no existe");
+        return false;
+    }
+    $.ajax({
+        type: "POST",
+        url: 'php/CellAssignActions.php',
+        data: { user: user, tag: tag, action: "unassign" },
+        dataType: "json",
+        success: function(data) {
+            alert(data[0].success);
+            if (data[0].success == "YES") {
+                alert('Password Actualizado');
+            } 
+        }
+    });
+
+}
+
+function AssignCellDevice(tag,user) {
+    var input=tag+'-TXTUsr';
+    var elvalor = document.getElementById(input).value;
+    //alert(tag+user+elvalor);
+    if (user == "BAJA") {
+        alert("No se puede desasignar algo que no existe");
+        return false;
+    }
+    $.ajax({
+        type: "POST",
+        url: 'php/CellAssignActions.php',
+        data: { user: user, tag: tag, action: "assign", elvalor: elvalor  },
+        dataType: "json",
+        success: function(data) {
+            if (data[0].success == "NOEXISTE") {
+                alert('Aunque es creativo el usuario '+elvalor+' NO existe en device users, registrelo primero e intente de nuevo');
+                return false;
+            } 
+            if (data[0].success == "ALREADYASSIGNED") {
+                alert('El usuario '+elvalor+' ya tiene un telefono asignado ( '+data[0].val+' ) quite la asignacion e intente de nuevo ');
+                return false;
+            } 
+
+            alert(data[0].success);
+            if (data[0].success == "YES") {
+                alert('Cambio realizado');
+            } 
+        }
+    });
+
+}
+
+
 function SetNoaw() {
     if (document.getElementById("noaw").checked == true) {
         document.getElementById("val-deviceimei").disabled = false;
@@ -703,7 +757,14 @@ function EnableService(dn,nuevo,initial) {
 }
 
 function UValn(dn,value) {
-    alert('boo!'+dn+value);
+    msg = 'boo!'+dn+value;    
+    if (value == "devicenumber") {
+        msg = "El numero telefonico del SIM del Celular a 10 digitos sin espacios";
+    }
+    if (value == "newtag") {
+        msg = "Aqui aparecere el Tag generado por el sistema";
+    } 
+    alert(msg);
 }
 
 function SelCelOfi(dn,value) {
@@ -721,6 +782,10 @@ function SelCelOfi(dn,value) {
         if (multi == "SELECCIONE") {
             alert('Selecciona una oficina Mcenzie!!!');
         }
+    }
+    if (multi == "TRA") {
+        alert('Al ser de Transporte se acepta el valor de PORASIGNAR en la asignacion, pero si ya cuenta con el usuario capturelo');
+        $('#val-deviceassignedto').val("PORDEFINIR");
     }
     $.ajax({    
         type: "POST",
