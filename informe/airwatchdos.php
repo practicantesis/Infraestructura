@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <a href="http://192.168.120.179/INFRAESTRUCTURA-DESARROLLO/gsalazar/tabla/">Regresar</a>
+    <a href="http://ti.tpitic.com.mx/Infraestructura/informe/index.php?666U2lzdGVtYXM=897">Regresar</a>
     <center>
         <form action="airwatchdos.php" method="post">
            <label for="">Numero de serie: </label> <input type="text" id="lname" name="serie">
