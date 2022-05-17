@@ -250,6 +250,7 @@ MTY";
 			echo "</div>";
 			echo "<div class='actualizar-grid'>";
 			echo "<a class='link' href=''>Actualizar Tabla</a>";
+			echo "<a class='link' href='airwatchdos.php'>Array Airwatch</a>";
 			echo "</div>";
 		}
 		?>
