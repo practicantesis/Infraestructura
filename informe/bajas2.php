@@ -202,8 +202,8 @@
 	</div>
 	<center>
 		<?php
-		require_once('conexion.php');
-		require_once('../php/funciones.php');
+		include('conexion.php');
+		include('../php/funciones.php');
 		$objConLDAP = new Conexion();
 		$con = $objConLDAP->conectarLDAP();
 		if ($con) {
