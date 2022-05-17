@@ -146,6 +146,7 @@
 				<option value="CHI">Chihuahua</option>
 				<option value="STA">Santa ana</option>
 				<option value="TOL">Toluca</option>
+				<option value="TOR">Torreon</option>
 				<option value="JUA">Juarez</option>
 				<option value="TPZ">Tepozotlan</option>
 				<option value="GDL">Guadalajara</option>
