@@ -164,7 +164,7 @@
 	</div>
 	<div class="menu-grid">
 		<div class="enlaces-grid">
-			<a class="link" href="http://ti.tpitic.com.mx/INFRAESTRUCTURA-PRODUCCION/Infraestructura/informe/index.php?666U2lzdGVtYXM=897">Regresar</a>
+			<a class="link" href="http://ti.tpitic.com.mx/Infraestructura/informe/index.php?666U2lzdGVtYXM=897">Regresar</a>
 			<a class='link' href='bajas2.php'>Bajas</a>
 			<a class='link' href='usuarios.php'>Usuarios</a>
 		</div>
