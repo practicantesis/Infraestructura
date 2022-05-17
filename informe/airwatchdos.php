@@ -39,7 +39,7 @@ echo '</table>';
 echo '</center>';
 echo '<br>';
 echo '<br>';
-print_r($out);
+print_r($array);
 ?>
 </body>
 
