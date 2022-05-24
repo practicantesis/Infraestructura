@@ -228,6 +228,12 @@ MTY";
 					<option value="TIJ">Tijuana</option>
 					<option value="COB">Ciudad obregon</option>
 					<option value="MTY">Monterrey</option>
+					<option value="CH">Capital Humano</option>
+					<option value="SIS">Sistemas</option>
+					<option value="FA">Finanzas</option>
+					<option value="DC">Direccion comercial</option>}
+					<option value="DG">Direccion General</option>
+					<option value="DO">Direccion de operaciones</option>
 				</select>
 
 			<?php

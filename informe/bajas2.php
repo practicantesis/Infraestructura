@@ -138,7 +138,7 @@
 				<label>Oficina:</label>
 
 				<select id="officinas" name="oficinas" onchange="busquedaPorOfficina()">
-					<option value="">Todas</option>
+				<option value="">Todas</option>
 					<option value="TRA">Transportes</option>
 					<option value="MT1">Monterrey 1</option>
 					<option value="MER">Merida</option>
@@ -167,6 +167,12 @@
 					<option value="TIJ">Tijuana</option>
 					<option value="COB">Ciudad obregon</option>
 					<option value="MTY">Monterrey</option>
+					<option value="CH">Capital Humano</option>
+					<option value="SIS">Sistemas</option>
+					<option value="FA">Finanzas</option>
+					<option value="DC">Direccion comercial</option>}
+					<option value="DG">Direccion General</option>
+					<option value="DO">Direccion de operaciones</option>
 					<option value="BAJA_CEL_SUR">Baja cel SUR</option>
 					<option value="BAJA_CEL_NOR">Baja cel NOR</option>
 					<option value="BAJA_CEL_OCT">Baja Cel OCT</option>
