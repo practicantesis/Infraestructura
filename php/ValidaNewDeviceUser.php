@@ -12,6 +12,8 @@ if (($exdu == "YES") and ($_POST['value'] != "PORDEFINIR") ) {
 $extel=CheckExistentValueLDAP("ou=Celulares,ou=Devices,dc=transportespitic,dc=com","deviceassignedto",$_POST['value']);
 
 
+echo "UUU $extel FFF".$_POST['value'];
+
 
 if ( ($extel == "NO") and ($_POST['value'] != "PORDEFINIR") ) {
 	$success="NO";

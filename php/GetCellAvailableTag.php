@@ -27,6 +27,25 @@ foreach ($devs as $value) {
         //echo "tipo enviado es $tipo detectado es ".$mat['1']."  ofi es ".$mat['2']." value  ".$mat['3']."\n";            
         //$tagbody=$mat['1'];
     }
+    // DG DC DO
+    if (preg_match("/([A-Z][A-Z][A-Z])(D[C|G|O])(\d\d\d)$/i",$value,$mat)) {
+        if ($mat['1'] == $tipo) {
+            array_push($numbas, $mat['3']);
+        }
+    }
+    //RH
+    if (preg_match("/([A-Z][A-Z][A-Z])(RH)(\d\d\d)$/i",$value,$mat)) {
+        if ($mat['1'] == $tipo) {
+            array_push($numbas, $mat['3']);
+        }
+    }
+    //TD
+    if (preg_match("/([A-Z][A-Z][A-Z])(TD)(\d\d\d)$/i",$value,$mat)) {
+        if ($mat['1'] == $tipo) {
+            array_push($numbas, $mat['3']);
+        }
+    }
+
 }
 $elmax=(max($numbas)+1);
 

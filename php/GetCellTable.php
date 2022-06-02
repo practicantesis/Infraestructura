@@ -31,7 +31,12 @@ for ($i=0; $i<$ldata["count"]; $i++) {
 	}
     $html .= "<td><center>$fnt2".$ldata[$i]['deviceassignedto'][0]." $btnda </center></td>";
     $html .= "<td>$fnt2".$ldata[$i]['devicebrand'][0]."</td>";
-	$html .= "<td>$fnt2".$ldata[$i]['devicedept'][0]."</td>";
+	
+	//$html .= "<td>$fnt2".$ldata[$i]['devicedept'][0]."</td>";
+	$html .= "<td><div id='CHGDEPT".$ldata[$i]['devicetag'][0]."'><a href='#' onclick=".'"'."ChgDeptCellDevice('".$ldata[$i]['devicetag'][0]."');".'"'.">$fnt2".$ldata[$i]['devicedept'][0]."</a></div></td>";
+	//$html .= "<td>$fnt2".$ldata[$i]['devicedept'][0]."<br><button id='".$ldata[$i]['devicetag'][0]."-BtnChgDept' type='button' class='btn mb-1 btn-primary btn-xs' onclick=".'"'."ChgDeptCellDevice('".$ldata[$i]['devicetag'][0]."');".'"'.">Cambiar</button></td>";
+
+
     $html .= "<td>$fnt1".$ldata[$i]['deviceimei'][0]."</td>";
     //$html .= "<td>$fnt1".$ldata[$i]['deviceip'][0]."</td>";    	
 	$html .= "<td>$fnt1".$ldata[$i]['devicelastenrolledon'][0]."</td>";    	
