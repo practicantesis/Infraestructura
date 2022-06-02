@@ -170,7 +170,7 @@
 
             </div>
             <div>
-          <abbr title="Ya puedes buscar por usuario, nombre, oficina e incluso por puesto "> <input id="searchTerm" onkeyup="doSearch()" type="text" name="buscador" ></abbr>
+                <abbr title="Ya puedes buscar por usuario, nombre, oficina e incluso por puesto "> <input id="searchTerm" onkeyup="doSearch()" type="text" name="buscador"></abbr>
             </div>
         </div>
 
@@ -185,7 +185,7 @@
     <article class="tabla">
         <?php
         require_once('conexion.php');
-       // require_once('../php/funciones_generales.php');
+        // require_once('../php/funciones_generales.php');
         require('funciones.php');
         $objConLDAP = new Conexion();
         $con = $objConLDAP->conectarLDAP();
@@ -193,12 +193,12 @@
 
 
         if ($con) {
-            echo '<table id="datos" class="table table-hover text-center">';
+            echo '<table id="datos" class="table table-hover">';
             echo '<thead class="encabezado2"><th>Usuario</th><th>Nombre</th><th>Puesto</th><th>Oficina</th><th>Asignado</th><th>IP</th><th>MAC</th></tr></thead>';
             $filter = "(uid=*)";
             //$filter = "(duusernname=*)";duoficina
 
-            $srch = ldap_search($con,"ou=People,dc=transportespitic,dc=com", $filter);
+            $srch = ldap_search($con, "ou=People,dc=transportespitic,dc=com", $filter);
             $count = ldap_count_entries($con, $srch);
             $info = ldap_get_entries($con, $srch);
             //$arr = GetDevUsersFromLDAPCells("array", $info[$i]['usuariotelefono'][0], $con);
@@ -210,22 +210,16 @@
                 echo '<td>' . $info[$i]['cn'][0] . '</td>';
                 echo '<td>' . $info[$i]['puesto'][0] . '</td>';
                 echo '<td>' . $info[$i]['oficina'][0] . '</td>';
-              //  if(preg_match('/\d\d\d.*/',$info[$i]['lanip'][0])&&
-              //  $info[$i]['lanmac'][0] ){
-                if( empty( $info[$i]['lanip'][0]) ||
-                    empty( $info[$i]['lanmac'][0])||
-                    $info[$i]['lanip'][0] == 'NO'
-                ){
+                //  if(preg_match('/\d\d\d.*/',$info[$i]['lanip'][0])&&
+                //  $info[$i]['lanmac'][0] ){
+                if (empty($info[$i]['lanip'][0]) || empty($info[$i]['lanmac'][0]) || $info[$i]['lanip'][0] == 'NO') {
                     echo '<td class="text-center">' . '<img src="./css/redcircle.png" >' . '</td>';
-                }else{
+                } else {
                     echo '<td class="text-center" >' . '<img src="./css/bluecircle.png" >' . '</td>';
-
                 }
                 echo '<td>' . $info[$i]['lanip'][0] . '</td>';
-                echo '<td>' .$info[$i]['lanmac'][0] . '</td>';
+                echo '<td>' . $info[$i]['lanmac'][0] . '</td>';
                 echo '</tr>';
-
-
             }
 
             echo '</tbody></table>';
