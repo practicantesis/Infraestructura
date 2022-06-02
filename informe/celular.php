@@ -209,6 +209,7 @@
 					|| $info[$i]['deviceoffice'][0] == 'BAJA_CEL_SUR' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_SUR' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_SUR ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_SUR '
 					|| $info[$i]['deviceoffice'][0] == 'BAJA_CEL_OCT' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_OCT' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_OCT ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_OCT '
 					|| $info[$i]['deviceoffice'][0] == 'BAJA_CEL_CNT' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_CNT' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_CNT ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_CNT '
+					|| $info[$i]['deviceoffice'][0] == 'BAJA_CEL_TRA' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_TRA' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_TRA ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_TRA '
 				) {
 				} else {
 					echo '<tbody class="tabladato"><tr>';
