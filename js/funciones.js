@@ -1,3 +1,24 @@
+function SaveNewCellOffice(tag) {
+    var selid="CMBCAMBIOFI"+tag;
+    var e = document.getElementById(selid);
+    if (e) {
+        var multi = e.options[e.selectedIndex].value;
+        if (multi == "SELECCIONE") {
+            alert('Selecciona una oficina Mcenzie!!!');
+            return false;
+        }
+        alert(multi);
+    }
+    alert(tag);
+}    
+
+
+function ChgDeptCellDevice(tag) {
+    var combo='<SELECT NAME="CMBCAMBIOFI'+tag+'" ID="CMBCAMBIOFI'+tag+'" onchange="SaveNewCellOffice('+"'"+tag+"'"+')"><OPTION VALUE="SELECCIONE">SELECCIONE</OPTION><OPTION VALUE="Reparto">Reparto</OPTION></SELECT>';
+    var idval="#CHGDEPT"+tag;
+    $(idval).html(combo);    
+}
+//onchange="SaveOfficeCell('+"'"+tag+"'"+')"'               '."'palabrasp','$cu'".','."'SI'".')"
 
 function UnassignCellDevice(tag,user) {
     alert(tag+user);
@@ -1179,9 +1200,21 @@ function validarinput(tipo,valor,chkexist) {
                 dataType: "json",
                 success: function(data) {
                     if (data[0].success == "YES") {
-                        $("#val-duusernname").val(data[0].uid);
                         $("#val-dunombre").val(data[0].cn);
                         $("#val-duoficina").val(data[0].oficina);
+                        //alert (va);
+                        //alert(data[0].existeduNE);
+                        if (data[0].existedu == "NO") {
+                            $("#val-duusernname").val(data[0].uid);
+                        }
+                        if (va == data[0].existeduNE) {
+                            $("#val-duusernname").val(data[0].uid);
+                        } else {
+                            if (data[0].existedu == "SI") {
+                                alert('El usuario para ese numero de empleado en la base principal de usuarios ('+data[0].uid+') Ya esta asignado a otro device user, elija otro username para su nuevo device user');   
+                                $('#val-duusernname').prop('readonly', false);
+                            }
+                        }
                     }
                 }
             });
@@ -1305,6 +1338,14 @@ function SaveNewCell() {
         success: function(data) {
             if (data[0].success == "YES") {
                 alert('Usuario Guardado');
+                $("#val-oficina").val("SELECCIONE");
+                $("#val-newtag").val("");
+                $("#val-devicenumber").val("");
+                $("#val-deviceassignedto").val("");
+                $("#val-devicedept").val("");
+                $("#val-deviceimei").val("PORASIGNAR");
+                $("#val-deviceserial").val("PORASIGNAR");
+                $("#val-devicebrand").val("PORASIGNAR");
             } else {
                 alert(data[0].success);
             }

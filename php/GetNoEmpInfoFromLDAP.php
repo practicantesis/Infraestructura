@@ -7,10 +7,30 @@ $success='DUNNO';
 //echo "zz";
 $empinfo=GetNoEmpInfoFromLDAP($_POST['valor'],'array');
 
+
+
+$exu=CheckExistentValueLDAP("ou=DeviceUsers,dc=transportespitic,dc=com","duusernname",$empinfo[uid]);
+
+
+if ($exu == "NO") {
+	$usi=GetDeviceUserInfoFromLDAP($empinfo[uid]);
+	$existedu = "SI";
+	$existeduNE = $usi[0]['dunumeroempleado'][0];
+	//print_r($usi);
+} else {
+	$existedu = "NO";
+}
+
+//5641
+//11475
+//12071
+
 $success="YES";
 
 
 $jsonSearchResults[] =  array(
+    'existedu' => $existedu,
+    'existeduNE' => $existeduNE,
     'success' => $success,
     'valor' => $empinfo,
     'uid' => $empinfo[uid],
