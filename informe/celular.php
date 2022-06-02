@@ -171,12 +171,12 @@
 	</div>
 	<div class="menu-grid">
 		<div class="enlaces-grid">
-			<a class="link" href="http://ti.tpitic.com.mx/Infraestructura/informe/index.php?666U2lzdGVtYXM=897">Regresar</a>
+			<a class="link" href="index.php?666U2lzdGVtYXM=897">Inicio</a>
 			<a class='link' href='bajas2.php'>Bajas</a>
 			<a class='link' href='usuarios.php'>Usuarios</a>
 		</div>
 		<div class="actualizar-grid">
-			<a class='link' href=''>actualizar</a>
+			<a class='celular.php' href=''>actualizar</a>
 		</div>
 
 	</div>
