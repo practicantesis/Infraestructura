@@ -203,7 +203,12 @@
 			echo '<thead class="encabezado2"><tr><th>Oficina</th><th>Usuario</th><th>Telefono</th><th>Marca</th><th>TAG</th><th>Asignado</th><th>Informacion</th></tr></thead>';
 
 			for ($i = 0; $i < $count; $i++) {
-				//
+				if($info[$i]['deviceoffice'][0]=='BAJA_CEL_NOR' || $info[$i]['deviceoffice'][0]==' BAJA_CEL_NOR' || $info[$i]['deviceoffice'][0]=='BAJA_CEL_NOR ' || $info[$i]['deviceoffice'][0]==' BAJA_CEL_NOR ' 
+				|| $info[$i]['deviceoffice'][0]=='BAJA_CEL_NST' || $info[$i]['deviceoffice'][0]==' BAJA_CEL_NST' || $info[$i]['deviceoffice'][0]=='BAJA_CEL_NST ' || $info[$i]['deviceoffice'][0]==' BAJA_CEL_NST '
+				|| $info[$i]['deviceoffice'][0]=='BAJA_CEL_SUR' || $info[$i]['deviceoffice'][0]==' BAJA_CEL_SUR' || $info[$i]['deviceoffice'][0]=='BAJA_CEL_SUR ' || $info[$i]['deviceoffice'][0]==' BAJA_CEL_SUR '
+				|| $info[$i]['deviceoffice'][0]=='BAJA_CEL_OCT' || $info[$i]['deviceoffice'][0]==' BAJA_CEL_OCT' || $info[$i]['deviceoffice'][0]=='BAJA_CEL_OCT ' || $info[$i]['deviceoffice'][0]==' BAJA_CEL_OCT '
+				|| $info[$i]['deviceoffice'][0]=='BAJA_CEL_CNT' || $info[$i]['deviceoffice'][0]==' BAJA_CEL_CNT' || $info[$i]['deviceoffice'][0]=='BAJA_CEL_CNT ' || $info[$i]['deviceoffice'][0]==' BAJA_CEL_CNT '){
+
 				echo '<tbody class="tabladato"><tr>';
 				echo '<td>' . $info[$i]['deviceoffice'][0] . '</td>';
 				echo '<td>' . $info[$i]['deviceassignedto'][0] . '</td>';
@@ -235,6 +240,9 @@
 				});
 				</script>
 				</td></tr></tbody>';
+				}
+
+				
 			}
 			echo '</table>';
 			ldap_close($con);
