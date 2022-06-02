@@ -176,7 +176,7 @@
 			<a class='link' href='usuarios.php'>Usuarios</a>
 		</div>
 		<div class="actualizar-grid">
-			<a class='celular.php' href=''>actualizar</a>
+			<a class='link' href='celular.php'>actualizar</a>
 		</div>
 
 	</div>
