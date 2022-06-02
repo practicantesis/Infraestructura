@@ -222,7 +222,7 @@
 
 
 			echo '<table id="datos" class="table table-hover">';
-			echo '<thead class="encabezado2"><tr><th>Oficina</th><th>Usuario</th><th>Telefono</th><th>Marca</th><th>TAG</th><th>Informacion</th></tr></thead>';
+			echo '<thead class="encabezado2"><tr><th>Oficina</th><th>Usuario</th><th>Telefono</th><th>Marca</th><th>TAG</th></tr></thead>';
 
 			for ($i = 0; $i < $count; $i++) {
 				if (
