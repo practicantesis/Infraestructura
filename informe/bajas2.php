@@ -139,12 +139,12 @@
 
 			<select id="officinas" name="oficinas" onchange="busquedaPorOfficina()">
 				<option value="">Todas</option>
-				<option value="BAJA_CEL_TRA">Baja cel TRA</option>
-				<option value="BAJA_CEL_SUR">Baja cel SUR</option>
-				<option value="BAJA_CEL_NOR">Baja cel NOR</option>
-				<option value="BAJA_CEL_OCT">Baja Cel OCT</option>
-				<option value="BAJA_CEL_NST">Baja Cel NST</option>
-				<option value="BAJA_CEL_CNT">Baja Cel CNT</option>
+				<option value="BAJA_CEL_TRA">TRANSPORTE</option>
+				<option value="BAJA_CEL_SUR">SUR</option>
+				<option value="BAJA_CEL_NOR">NORTE</option>
+				<option value="BAJA_CEL_OCT">OCCIDENTE</option>
+				<option value="BAJA_CEL_NST">NOROESTE</option>
+				<option value="BAJA_CEL_CNT">CENTRO</option>
 			</select>
 
 
