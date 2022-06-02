@@ -126,7 +126,7 @@
 
 			<label>Oficina:</label>
 
-			<select disabled id="officinas" name="oficinas" onchange="busquedaPorOfficina()">
+			<select  id="officinas" name="oficinas" onchange="busquedaPorOfficina()">
 			<option value="">Todas</option>
 					<option value="TRA">Transportes</option>
 					<option value="MT1">Monterrey 1</option>
@@ -190,7 +190,7 @@
 		$con = $objConLDAP->conectarLDAP();
 		if ($con) {
 			//$filter = "(duusernname=*)";duoficina
-			$filter = "(deviceoffice=TRA)";
+			$filter = "(deviceoffice=*)";
 			$srch = ldap_search($con, "ou=Celulares,ou=Devices,dc=transportespitic,dc=com", $filter);
 			$count = ldap_count_entries($con, $srch);
 			$info = ldap_get_entries($con, $srch);
