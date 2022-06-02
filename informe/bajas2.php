@@ -214,43 +214,34 @@
 		$con = $objConLDAP->conectarLDAP();
 		if ($con) {
 			//$filter = "(duusernname=*)";duoficina
-			
-		
-			$filter = "(duusernname=*)";
-			
-			$srch = ldap_search($con, "ou=DeviceUsers,dc=transportespitic,dc=com", $filter);
+			$filter = "(deviceoffice=*)";
+			$srch = ldap_search($con, "ou=Celulares,ou=Devices,dc=transportespitic,dc=com", $filter);
 			$count = ldap_count_entries($con, $srch);
 			$info = ldap_get_entries($con, $srch);
-		 	$arr = GetDevUsersFromLDAPCells("array", $info[$i]['duusernname'][0], $con);
 			//print_r($arr);
 
 
 			echo '<table id="datos" class="table table-hover">';
-			echo '<thead class="encabezado2"><tr><th>Nombre</th><th>Numero de empleado</th><th>Oficina</th><th>Usuario</th><th>Telefono</th><th>Tag</th><th>status</th><th>Informacion</th></tr></thead>';
+			echo '<thead class="encabezado2"><tr><th>Oficina</th><th>Usuario</th><th>Telefono</th><th>Marca</th><th>TAG</th><th>Informacion</th></tr></thead>';
 
 			for ($i = 0; $i < $count; $i++) {
-					
-				$lu = $info[$i]['duusernname'][0];
-// Condicion if para quitar aquellos registros con dispositivos de baja y que no se muestren en la tabla
-				if($arr[$lu]['ofi']=='BAJA_CEL_NOR' || $arr[$lu]['ofi']=='BAJA_CEL_NOR ' || $arr[$lu]['ofi']==' BAJA_CEL_NOR ' || $arr[$lu]['ofi']==' BAJA_CEL_NOR' 
-				|| $arr[$lu]['ofi']=='BAJA_CEL_NST' || $arr[$lu]['ofi']==' BAJA_CEL_NST' || $arr[$lu]['ofi']=='BAJA_CEL_NST ' || $arr[$lu]['ofi']==' BAJA_CEL_NST '
-				|| $arr[$lu]['ofi']=='BAJA_CEL_SUR' || $arr[$lu]['ofi']==' BAJA_CEL_SUR' || $arr[$lu]['ofi']=='BAJA_CEL_SUR ' || $arr[$lu]['ofi']==' BAJA_CEL_SUR '
-				|| $arr[$lu]['ofi']=='BAJA_CEL_OCT' || $arr[$lu]['ofi']==' BAJA_CEL_OCT' || $arr[$lu]['ofi']=='BAJA_CEL_OCT ' || $arr[$lu]['ofi']==' BAJA_CEL_OCT '
-				|| $arr[$lu]['ofi']=='BAJA_CEL_CNT' || $arr[$lu]['ofi']==' BAJA_CEL_CNT' || $arr[$lu]['ofi']=='BAJA_CEL_CNT ' || $arr[$lu]['ofi']==' BAJA_CEL_CNT '
-				){
-echo '<tbody class="tabladato"><tr><td>' . $info[$i]['dunombre'][0] . '</td>';
-				echo '<td>' . $info[$i]['dunumeroempleado'][0] . '</td>';
-				echo '<td>' . $info[$i]['duoficina'][0] . '</td>';
-				echo '<td>' . $info[$i]['duusernname'][0] . '</td>';
-				
-				echo '<td>' . $arr[$lu]['num'] . '</td>';
-				echo '<td>' . $arr[$lu]['tag'] . '</td>';
-                echo '<td>' . $arr[$lu]['ofi'] . '</td>';
-			
-
-				echo '<td>
+				if (
+					$info[$i]['deviceoffice'][0] == 'BAJA_CEL_NOR' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_NOR' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_NOR ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_NOR '
+					|| $info[$i]['deviceoffice'][0] == 'BAJA_CEL_NST' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_NST' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_NST ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_NST '
+					|| $info[$i]['deviceoffice'][0] == 'BAJA_CEL_SUR' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_SUR' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_SUR ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_SUR '
+					|| $info[$i]['deviceoffice'][0] == 'BAJA_CEL_OCT' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_OCT' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_OCT ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_OCT '
+					|| $info[$i]['deviceoffice'][0] == 'BAJA_CEL_CNT' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_CNT' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_CNT ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_CNT '
+					|| $info[$i]['deviceoffice'][0] == 'BAJA_CEL_TRA' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_TRA' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_TRA ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_TRA '
+				) {
+					echo '<tbody class="tabladato"><tr>';
+					echo '<td>' . $info[$i]['deviceoffice'][0] . '</td>';
+					echo '<td>' . $info[$i]['deviceassignedto'][0] . '</td>';
+					echo '<td>' . $info[$i]['devicenumber'][0] . '</td>';
+					echo '<td>' . $info[$i]['devicebrand'][0] . '</td>';
+					echo '<td>' . $info[$i]['devicetag'][0] . '</td>';
+					echo '<td>
 				<form id="formula' . $i . '"  method="POST">
-				<input type="hidden" id=' . $i . ' name="dato" value=' . $val = $info[$i]['duusernname'][0] . '>
+				<input type="hidden" id=' . $i . ' name="dato" value=' . $val = $info[$i]['deviceassignedto'][0] . '>
 				<button type="button" id="mandar' . $i . '" class="boton">Ver</button>
 				</form>
 				<script>
@@ -266,9 +257,7 @@ echo '<tbody class="tabladato"><tr><td>' . $info[$i]['dunombre'][0] . '</td>';
 				});
 				</script>
 				</td></tr></tbody>';
-				}
-
-				
+				} 
 			}
 			echo '</table>';
 			ldap_close($con);
