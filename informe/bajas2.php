@@ -239,24 +239,7 @@
 					echo '<td>' . $info[$i]['devicenumber'][0] . '</td>';
 					echo '<td>' . $info[$i]['devicebrand'][0] . '</td>';
 					echo '<td>' . $info[$i]['devicetag'][0] . '</td>';
-					echo '<td>
-				<form id="formula' . $i . '"  method="POST">
-				<input type="hidden" id=' . $i . ' name="dato" value=' . $val = $info[$i]['deviceassignedto'][0] . '>
-				<button type="button" id="mandar' . $i . '" class="boton">Ver</button>
-				</form>
-				<script>
-			$("#mandar' . $i . '").click(function() {
-				$.ajax({
-					url: "ventana.php",
-					type: "POST",
-					data:$("#formula' . $i . '").serialize(),
-					success: function(res){
-						$("#flotantedos").html(res);
-					}
-					});
-				});
-				</script>
-				</td></tr></tbody>';
+					echo '</tr></tbody>';
 				} 
 			}
 			echo '</table>';
