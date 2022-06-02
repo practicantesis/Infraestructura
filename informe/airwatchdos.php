@@ -16,8 +16,8 @@
             <input type="submit" value="Buscar">
         </form>
         <p>Ejemplos:</p>
-        <p>MXRNU19802100085</p>
-        <p>MXRNU19720104463</p>
+        <p>325106992014</p>
+        <p>325106992124</p>
     </center>
 <?php
 require('php/funciones.php');
@@ -39,7 +39,7 @@ echo '</table>';
 echo '</center>';
 echo '<br>';
 echo '<br>';
-print_r($out);
+print_r($array);
 ?>
 </body>
 
