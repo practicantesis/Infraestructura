@@ -314,7 +314,7 @@
 					type: "POST",
 					data:$("#formula' . $i . '").serialize(),
 					success: function(res){
-                        $("#editar").html(res);
+                        $("#edit").html(res);
                        
 					}
 					});
