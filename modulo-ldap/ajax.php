@@ -1,7 +1,10 @@
 <?php
-$extension = $_POST['extension'];
+$lanip = $_POST['lanip'];
+$lanmac = $_POST['lanmac'];
+$wip = $_POST['wip'];
+$wmac = $_POST['wmac'];
+$nivel = $_POST['nivel'];
 $usuario = $_POST['usuario'];
-$oficina = $_POST['oficina'];
 //echo "este es $extension  tambien  $usuario  y  $oficina"
 ?>
 
@@ -12,7 +15,7 @@ $oficina = $_POST['oficina'];
                 <label for="extension">Usuario:</label>
             </div>
             <div>
-                <input class="ext" id="extension" type="text" name="bextension" readonly value="<?php echo $extension; ?>">
+                <input class="ext" id="extension" type="text" name="bextension" readonly value="<?php echo $usuario; ?>">
             </div>
         </div>
         <div class="solicitud1">
@@ -20,7 +23,7 @@ $oficina = $_POST['oficina'];
                 <label for="usuario">Ip Lan:</label>
             </div>
             <div>
-                <input class="usuario" id="usuario" type="text" name="busuario" value="<?php echo $usuario; ?>">
+                <input class="usuario" id="usuario" type="text" name="busuario" value="<?php echo $lanip; ?>">
             </div>
 
         </div>
@@ -29,7 +32,7 @@ $oficina = $_POST['oficina'];
                 <label for="usuario">Wifi ip:</label>
             </div>
             <div>
-                <input class="usuario" id="usuario" type="text" name="busuario" value="<?php echo $usuario; ?>">
+                <input class="usuario" id="usuario" type="text" name="busuario" value="<?php echo $wip; ?>">
             </div>
 
         </div>
@@ -39,7 +42,7 @@ $oficina = $_POST['oficina'];
             </div>
             <div>
                 <select id="nivel" name="bnivel" class="ofi" required>
-                    <option hidden selected><?php echo $oficina; ?></option>
+                    <option hidden selected><?php echo $nivel; ?></option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -53,7 +56,7 @@ $oficina = $_POST['oficina'];
                 <label for="usuario">Mac Lan:</label>
             </div>
             <div>
-                <input class="usuario" id="usuario" type="text" name="busuario" value="<?php echo $usuario; ?>">
+                <input class="usuario" id="usuario" type="text" name="busuario" value="<?php echo $lanmac; ?>">
             </div>
 
         </div>
@@ -62,7 +65,7 @@ $oficina = $_POST['oficina'];
                 <label for="usuario">Wifi Mac:</label>
             </div>
             <div>
-                <input class="usuario" id="usuario" type="text" name="busuario" value="<?php echo $usuario; ?>">
+                <input class="usuario" id="usuario" type="text" name="busuario" value="<?php echo $wmac; ?>">
             </div>
 
         </div>

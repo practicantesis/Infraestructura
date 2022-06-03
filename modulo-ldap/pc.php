@@ -231,11 +231,12 @@
                 echo '<td>' . $info[$i]['lanmac'][0] . '</td>';
                 echo '<td>
 				<form id="formula' . $i . '"  method="POST">
-				<input type="hidden" id="ext" name="extension" value="' . $info[$i]['lanip'][0] . '">
-                <input type="hidden" id="user" name="usuario" value="' . $info[$i]['lanmac'][0] . '">
-                <input type="hidden" id="ofi" name="oficina" value="' . $info[$i]['wifiip'][0] . '">
-                <input type="hidden" id="ofi" name="oficina" value="' . $info[$i]['wifimac'][0] . '">
-                <input type="hidden" id="ofi" name="oficina" value="' . $info[$i]['accesosdered'][0] . '">
+				<input type="hidden" id="ext" name="lanip" value="' . $info[$i]['lanip'][0] . '">
+                <input type="hidden" id="user" name="lanmac" value="' . $info[$i]['lanmac'][0] . '">
+                <input type="hidden" id="ofi" name="wip" value="' . $info[$i]['wifiip'][0] . '">
+                <input type="hidden" id="ofi" name="wmac" value="' . $info[$i]['wifimac'][0] . '">
+                <input type="hidden" id="ofi" name="nivel" value="' . $info[$i]['accesosdered'][0] . '">
+                <input type="hidden" id="ofi" name="usuario" value="' . $info[$i]['uid'][0] . '">
 				<a href="#sup" class="link-a"><button href="#prueba" type="button" id="mandar' . $i . '" class="boton">Ver</button></a>
 				</form>
 
