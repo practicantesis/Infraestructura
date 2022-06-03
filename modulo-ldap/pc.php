@@ -20,6 +20,10 @@
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
     </style>
     <title>IPs Asignadas</title>
+    <?php
+    include('conexion.php');
+    include('funciones.php');
+    ?>
 </head>
 
 <body>
@@ -130,10 +134,6 @@
 
     </div>
     <?php
-
-
-
-
     //PROCESO PARA EDITAR UN DATOS
     if (isset($_POST['editar'])) {
 
@@ -264,9 +264,6 @@
 
     <article class="tabla">
         <?php
-        require_once('conexion.php');
-        // require_once('../php/funciones_generales.php');
-        require('funciones.php');
         $objConLDAP = new Conexion();
         $con = $objConLDAP->conectarLDAP();
 
