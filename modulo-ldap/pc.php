@@ -171,10 +171,10 @@
             $filtro2 = "(lanmac=$lanmac)";
             $filtro3 = "(wifiip=$wip)";
             $filtro4 = "(wifimac=$wmac)";
-            $srch1 = ldap_search($ds, "ou=Telefonos,ou=groups,dc=transportespitic,dc=com", $filtro1);
-            $srch2 = ldap_search($ds, "ou=Telefonos,ou=groups,dc=transportespitic,dc=com", $filtro2);
-            $srch3 = ldap_search($ds, "ou=Telefonos,ou=groups,dc=transportespitic,dc=com", $filtro3);
-            $srch4 = ldap_search($ds, "ou=Telefonos,ou=groups,dc=transportespitic,dc=com", $filtro4);
+            $srch1 = ldap_search($ds, "ou=People,dc=transportespitic,dc=com", $filtro1);
+            $srch2 = ldap_search($ds, "ou=People,dc=transportespitic,dc=com", $filtro2);
+            $srch3 = ldap_search($ds, "ou=People,dc=transportespitic,dc=com", $filtro3);
+            $srch4 = ldap_search($ds, "ou=People,dc=transportespitic,dc=com", $filtro4);
             $count1 = ldap_count_entries($ds, $srch1);
             $count2 = ldap_count_entries($ds, $srch2);
             $count3 = ldap_count_entries($ds, $srch3);
