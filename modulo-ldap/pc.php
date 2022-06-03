@@ -117,16 +117,20 @@
         //	busqueda();
     </script>
 
-    <div id="edit">
-
-    </div>
     <?php
     $lanip = $_POST["blanip"];
     $lanmac = $_POST["blanmac"];
     $wip = $_POST["bwip"];
     $wmac = $_POST["bwmac"];
     $nivel = $_POST["bnivel"];
-    $usuario= $_POST["busuario"];
+    $usuario = $_POST["busuario"];
+    ?>
+
+    <div id="edit">
+
+    </div>
+    <?php
+
 
 
 
@@ -153,6 +157,7 @@
         } else {
             $wmac = $_POST["bwmac"];
         }
+        $usuario = $_POST["busuario"];
 
         $objConLDAP = new Conexion();
         $ds = $objConLDAP->conectarLDAP();
@@ -164,18 +169,18 @@
             $r = ldap_bind($ds, "cn=feria,dc=transportespitic,dc=com", "sistemaspitic");
 
             // Preparar los datos
-            $info['lanip'] = $lanip;
-            $info['lanmac']=$lanmac;
-            $info['wifiip']=$wip;
-            $info['wifimac']=$wmac;
-            $info['accesosdered']=$nivel;
+            $info['lanip'][0] = $lanip;
+            $info['lanmac'][0] = $lanmac;
+            $info['wifiip'][0] = $wip;
+            $info['wifimac'][0] = $wmac;
+            $info['accesosdered'][0] = $nivel;
+            $info['uid'][0] = $usuario;
 
             // Agregar datos al directorio
 
             $r = ldap_modify($ds, "uid=$usuario,ou=People,dc=transportespitic,dc=com", $info);
             echo "<script>alert('Extension modificada correctamente');window.history.replaceState(null, null, window.location.href);</script>"; //mensaje y elimina historial para que no se recargue el post
             ldap_close($ds);
-
         }
     }
 
@@ -315,7 +320,6 @@
 					data:$("#formula' . $i . '").serialize(),
 					success: function(res){
                         $("#edit").html(res);
-                       
 					}
 					});
 				});
