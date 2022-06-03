@@ -179,10 +179,10 @@
             $count2 = ldap_count_entries($ds, $srch2);
             $count3 = ldap_count_entries($ds, $srch3);
             $count4 = ldap_count_entries($ds, $srch4);
-            if ($count1 <= 1) {
-                if ($count2 <= 1) {
-                    if ($count3 <= 1) {
-                        if ($count4 <= 1) {
+            if ($count1 < 1) {
+                if ($count2 < 1) {
+                    if ($count3 < 1) {
+                        if ($count4 < 1) {
                             // Preparar los datos
                             $info['lanip'][0] = $lanip;
                             $info['lanmac'][0] = $lanmac;
