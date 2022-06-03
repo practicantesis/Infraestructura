@@ -184,6 +184,12 @@
 
     </article>
 
+    <article class="botones">
+<div class="boton-actualizar">
+    <a class="boton-a" href="pc.php">Actualizar</a>
+</div>
+    </article>
+
 
 
     <article class="tabla">

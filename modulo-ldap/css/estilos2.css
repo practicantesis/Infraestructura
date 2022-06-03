@@ -72,6 +72,26 @@ form {
   padding-bottom: 1.5em;
 }
 
+
+.botones{
+  display: grid;
+}
+
+.boton-actualizar{
+  display: grid;
+  align-items: center;
+  justify-content: center;
+}
+
+.boton-a{
+  display: flex;
+  padding: 4px;
+  color: white;
+  background-color: #008e4f;
+  text-decoration: none;
+  
+}
+
 .combobox {
   display: grid;
   grid-template-columns: auto auto;
