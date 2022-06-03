@@ -210,3 +210,8 @@ footer {
   font-family: "Roboto", sans-serif;
   text-align: center;
 }
+
+.formulario{
+  display: grid;
+  grid-template-columns:repeat(1, auto)
+}

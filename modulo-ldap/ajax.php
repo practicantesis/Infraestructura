@@ -1,15 +1,15 @@
 <?php
-$extension=$_POST['extension'];
-$usuario=$_POST['usuario'];
-$oficina=$_POST['oficina'];
+$extension = $_POST['extension'];
+$usuario = $_POST['usuario'];
+$oficina = $_POST['oficina'];
 //echo "este es $extension  tambien  $usuario  y  $oficina"
 ?>
 
 <div>
-<form class="editar formulario" id="miform" action="index.php" method="POST">
+    <form class="editar formulario" id="miform" action="index.php" method="POST">
         <div class="solicitud1">
             <div>
-                <label for="extension">Extension:</label>
+                <label for="extension">Usuario:</label>
             </div>
             <div>
                 <input class="ext" id="extension" type="text" name="bextension" readonly value="<?php echo $extension; ?>">
@@ -17,7 +17,16 @@ $oficina=$_POST['oficina'];
         </div>
         <div class="solicitud1">
             <div>
-                <label for="usuario">Usuario:</label>
+                <label for="usuario">Ip Lan:</label>
+            </div>
+            <div>
+                <input class="usuario" id="usuario" type="text" name="busuario" value="<?php echo $usuario; ?>">
+            </div>
+
+        </div>
+        <div class="solicitud1">
+            <div>
+                <label for="usuario">Wifi ip:</label>
             </div>
             <div>
                 <input class="usuario" id="usuario" type="text" name="busuario" value="<?php echo $usuario; ?>">
@@ -39,6 +48,25 @@ $oficina=$_POST['oficina'];
                 </select>
             </div>
         </div>
+        <div class="solicitud1">
+            <div>
+                <label for="usuario">Mac Lan:</label>
+            </div>
+            <div>
+                <input class="usuario" id="usuario" type="text" name="busuario" value="<?php echo $usuario; ?>">
+            </div>
+
+        </div>
+        <div class="solicitud1">
+            <div>
+                <label for="usuario">Wifi Mac:</label>
+            </div>
+            <div>
+                <input class="usuario" id="usuario" type="text" name="busuario" value="<?php echo $usuario; ?>">
+            </div>
+
+        </div>
+
         <div class="area-boton">
             <div>
                 <input type="submit" name="editar" value="editar">

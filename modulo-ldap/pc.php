@@ -25,7 +25,7 @@
 <body>
 
 
-    <header>
+    <header id="sup">
         <div class="logo-empresa">
             <img src="./img/logo_adobe.png" alt="">
         </div>
