@@ -117,7 +117,7 @@
         //	busqueda();
     </script>
 
-    <div id="editar">
+    <div id="edit">
 
     </div>
     <?php
