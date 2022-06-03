@@ -117,6 +117,10 @@
         //	busqueda();
     </script>
 
+    <div id="editar">
+
+    </div>
+
     <article class="consultas">
         <div class="combobox">
             <div class="label-oficina">
@@ -194,7 +198,7 @@
 
         if ($con) {
             echo '<table id="datos" class="table table-hover">';
-            echo '<thead class="encabezado2"><th>Usuario</th><th>Nombre</th><th>Puesto</th><th>Oficina</th><th>Asignado</th><th>IP</th><th>MAC</th></tr></thead>';
+            echo '<thead class="encabezado2"><th>Usuario</th><th>Nombre</th><th>Puesto</th><th>Oficina</th><th>Asignado</th><th>IP</th><th>MAC</th><th>Ver</th></tr></thead>';
             $filter = "(uid=*)";
             //$filter = "(duusernname=*)";duoficina
 
@@ -219,6 +223,30 @@
                 }
                 echo '<td>' . $info[$i]['lanip'][0] . '</td>';
                 echo '<td>' . $info[$i]['lanmac'][0] . '</td>';
+                echo '<td>
+				<form id="formula' . $i . '"  method="POST">
+				<input type="hidden" id="ext" name="extension" value="' . $info[$i]['lanip'][0] . '">
+                <input type="hidden" id="user" name="usuario" value="' . $info[$i]['lanmac'][0] . '">
+                <input type="hidden" id="ofi" name="oficina" value="' . $info[$i]['wifiip'][0] . '">
+                <input type="hidden" id="ofi" name="oficina" value="' . $info[$i]['wifimac'][0] . '">
+                <input type="hidden" id="ofi" name="oficina" value="' . $info[$i]['accesosdered'][0] . '">
+				<a href="#sup" class="link-a"><button href="#prueba" type="button" id="mandar' . $i . '" class="boton">Ver</button></a>
+				</form>
+
+               <script>
+			$("#mandar' . $i . '").click(function() {
+				$.ajax({
+					url: "ajax.php",
+					type: "POST",
+					data:$("#formula' . $i . '").serialize(),
+					success: function(res){
+                        $("#editar").html(res);
+                       
+					}
+					});
+				});
+				</script>
+				</td>';
                 echo '</tr>';
             }
 
