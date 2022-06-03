@@ -15,41 +15,41 @@ $oficina = $_POST['oficina'];
         <div class="editar formulario">
             <div class="solicitud1">
                 <div>
-                    <label for="extension">Usuario:</label>
+                    <label for="usuario">Usuario:</label>
                 </div>
                 <div>
-                    <input class="ext" id="extension" type="text" name="busuario" readonly value="<?php echo $usuario; ?>">
-                </div>
-            </div>
-            <div class="solicitud1">
-                <div>
-                    <label for="extension">Puesto:</label>
-                </div>
-                <div>
-                    <input class="ext" id="extension" type="text" name="bpuesto" readonly value="<?php echo $puesto; ?>">
+                    <input class="ext" id="usuario" type="text" name="busuario" readonly value="<?php echo $usuario; ?>">
                 </div>
             </div>
             <div class="solicitud1">
                 <div>
-                    <label for="usuario">Ip Lan:</label>
+                    <label for="puesto">Puesto:</label>
                 </div>
                 <div>
-                    <input class="usuario" id="usuario" type="text" name="blanip" value="<?php echo $lanip; ?>">
+                    <input class="ext" id="puesto" type="text" name="bpuesto" readonly value="<?php echo $puesto; ?>">
+                </div>
+            </div>
+            <div class="solicitud1">
+                <div>
+                    <label for="iplan">Ip Lan:</label>
+                </div>
+                <div>
+                    <input class="usuario" id="iplan" type="text" name="blanip" value="<?php echo $lanip; ?>">
                 </div>
 
             </div>
             <div class="solicitud1">
                 <div>
-                    <label for="usuario">Wifi ip:</label>
+                    <label for="wip">Wifi ip:</label>
                 </div>
                 <div>
-                    <input class="usuario" id="usuario" type="text" name="bwip" value="<?php echo $wip; ?>">
+                    <input class="usuario" id="wip" type="text" name="bwip" value="<?php echo $wip; ?>">
                 </div>
 
             </div>
             <div class="solicitud1">
                 <div>
-                    <label for="ofi">Niveles de red:</label>
+                    <label for="nivel">Niveles de red:</label>
                 </div>
                 <div>
                     <select id="nivel" name="bnivel" class="ofi" required>
@@ -64,27 +64,27 @@ $oficina = $_POST['oficina'];
             </div>
             <div class="solicitud1">
                 <div>
-                    <label for="extension">oficina:</label>
+                    <label for="oficina">oficina:</label>
                 </div>
                 <div>
-                    <input class="ext" id="extension" type="text" name="boficina" readonly value="<?php echo $oficina; ?>">
+                    <input class="ext" id="oficina" type="text" name="boficina" readonly value="<?php echo $oficina; ?>">
                 </div>
             </div>
             <div class="solicitud1">
                 <div>
-                    <label for="usuario">Mac Lan:</label>
+                    <label for="mlan">Mac Lan:</label>
                 </div>
                 <div>
-                    <input class="usuario" id="usuario" type="text" name="blanmac" value="<?php echo $lanmac; ?>">
+                    <input class="usuario" id="mlan" type="text" name="blanmac" value="<?php echo $lanmac; ?>">
                 </div>
 
             </div>
             <div class="solicitud1">
                 <div>
-                    <label for="usuario">Wifi Mac:</label>
+                    <label for="bmac">Wifi Mac:</label>
                 </div>
                 <div>
-                    <input class="usuario" id="usuario" type="text" name="bwmac" value="<?php echo $wmac; ?>">
+                    <input class="usuario" id="bmac" type="text" name="bwmac" value="<?php echo $wmac; ?>">
                 </div>
 
             </div>
