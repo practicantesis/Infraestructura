@@ -131,7 +131,6 @@
             div = document.getElementById('edit');
             div.style.display = '';
         }
-
     </script>
 
     <?php
@@ -184,42 +183,21 @@
             $filtro2 = "(lanmac=$lanmac)";
             $filtro3 = "(wifiip=$wip)";
             $filtro4 = "(wifimac=$wmac)";
-            $srch1 = ldap_search($ds, "ou=People,dc=transportespitic,dc=com", $filtro1);
-            $srch2 = ldap_search($ds, "ou=People,dc=transportespitic,dc=com", $filtro2);
-            $srch3 = ldap_search($ds, "ou=People,dc=transportespitic,dc=com", $filtro3);
-            $srch4 = ldap_search($ds, "ou=People,dc=transportespitic,dc=com", $filtro4);
-            $count1 = ldap_count_entries($ds, $srch1);
-            $count2 = ldap_count_entries($ds, $srch2);
-            $count3 = ldap_count_entries($ds, $srch3);
-            $count4 = ldap_count_entries($ds, $srch4);
-            if ($count1 <= 6 ) {
-                if ($count2 <= 6) {
-                    if ($count3 <= 6) {
-                        if ($count4 <= 6) {
-                            // Preparar los datos
-                            $info['lanip'][0] = $lanip;
-                            $info['lanmac'][0] = $lanmac;
-                            $info['wifiip'][0] = $wip;
-                            $info['wifimac'][0] = $wmac;
-                            $info['accesosdered'][0] = $nivel;
-                            $info['uid'][0] = $usuario;
 
-                            // Agregar datos al directorio
 
-                            $r = ldap_modify($ds, "uid=$usuario,ou=People,dc=transportespitic,dc=com", $info);
-                            echo "<script>alert('Modificaste exitosamente al usuario: $usuario  =)');window.history.replaceState(null, null, window.location.href);</script>"; //mensaje y elimina historial para que no se recargue el post
-                        } else {
-                            echo "<script>alert('wifi mac ya existe');window.history.back();onclick='mostrar()';</script>";
-                        }
-                    } else {
-                        echo "<script>alert('wifi ip ya existe');window.history.back();</script>";
-                    }
-                } else {
-                    echo "<script>alert('lan mac ya existe');window.history.back();</script>";
-                }
-            } else {
-                echo "<script>alert('lan ip ya existe');window.history.back();</script>";
-            }
+            // Preparar los datos
+            $info['lanip'][0] = $lanip;
+            $info['lanmac'][0] = $lanmac;
+            $info['wifiip'][0] = $wip;
+            $info['wifimac'][0] = $wmac;
+            $info['accesosdered'][0] = $nivel;
+            $info['uid'][0] = $usuario;
+
+            // Agregar datos al directorio
+
+            $r = ldap_modify($ds, "uid=$usuario,ou=People,dc=transportespitic,dc=com", $info);
+            echo "<script>alert('Modificaste exitosamente al usuario: $usuario  =)');window.history.replaceState(null, null, window.location.href);</script>"; //mensaje y elimina historial para que no se recargue el post
+
             ldap_close($ds);
         }
     }
