@@ -34,7 +34,7 @@ $oficina = $_POST['oficina'];
                     <label for="iplan">Ip Lan:</label>
                 </div>
                 <div>
-                    <input class="usuario" id="iplan" type="text" name="blanip" value="<?php echo $lanip; ?>">
+                    <input class="usuario" id="iplan" type="text" name="blanip" pattern="^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)|NO$" value="<?php echo $lanip; ?>">
                 </div>
 
             </div>
@@ -43,7 +43,7 @@ $oficina = $_POST['oficina'];
                     <label for="wip">Wifi ip:</label>
                 </div>
                 <div>
-                    <input class="usuario" id="wip" type="text" name="bwip" value="<?php echo $wip; ?>">
+                    <input class="usuario" id="wip" type="text" name="bwip" pattern="^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)|NO$" value="<?php echo $wip; ?>">
                 </div>
 
             </div>
