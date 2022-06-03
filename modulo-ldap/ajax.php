@@ -11,7 +11,7 @@ $oficina = $_POST['oficina'];
 ?>
 
 <div>
-    <form  id="miform" action="index.php" method="POST">
+    <form  id="miform" action="pc.php" method="POST">
         <div class="editar formulario">
             <div class="solicitud1">
                 <div>
