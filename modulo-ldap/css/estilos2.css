@@ -215,7 +215,7 @@ footer {
 
 .formulario {
   display: grid;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: repeat(4, auto);
   grid-column-gap: 1em;
   grid-row-gap: 1em;
 }
