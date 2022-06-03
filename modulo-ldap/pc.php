@@ -209,7 +209,7 @@
                             $r = ldap_modify($ds, "uid=$usuario,ou=People,dc=transportespitic,dc=com", $info);
                             echo "<script>alert('Modificaste exitosamente al usuario: $usuario  =)');window.history.replaceState(null, null, window.location.href);</script>"; //mensaje y elimina historial para que no se recargue el post
                         } else {
-                            echo "<script>alert('wifi mac ya existe');window.history.back();</script>";
+                            echo "<script>alert('wifi mac ya existe');window.history.back();onclick='mostrar()';</script>";
                         }
                     } else {
                         echo "<script>alert('wifi ip ya existe');window.history.back();</script>";
