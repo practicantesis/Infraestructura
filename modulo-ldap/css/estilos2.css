@@ -24,16 +24,16 @@ header {
   justify-content: center;
 }
 
-.logo-empresa{
-    margin-left: 0.5em;
-    display: grid;
-    align-items: center;
-    width: 130px;
-  }
+.logo-empresa {
+  margin-left: 0.5em;
+  display: grid;
+  align-items: center;
+  width: 130px;
+}
 
 .logo-empresa img {
-    width: 130px;
-    height: 50px;
+  width: 130px;
+  height: 50px;
 }
 
 .titulo-imagen img {
@@ -51,9 +51,9 @@ header {
 
 .titulo-nombre {
 
-    display: flex;
-    align-items: center;
-  }
+  display: flex;
+  align-items: center;
+}
 
 form {
   display: grid;
@@ -72,18 +72,18 @@ form {
 }
 
 
-.botones{
+.botones {
   display: grid;
   margin-bottom: 0.3em;
 }
 
-.boton-actualizar{
+.boton-actualizar {
   display: grid;
   align-items: right;
   justify-content: flex-end;
 }
 
-.boton-a{
+.boton-a {
   transition: 0.1s;
   display: flex;
   text-decoration: none;
@@ -95,9 +95,9 @@ form {
   font-family: "readex";
 }
 
-.boton-a:hover{
-transform: scale(1.05);
-color:white;
+.boton-a:hover {
+  transform: scale(1.05);
+  color: white;
 }
 
 .combobox {
@@ -111,6 +111,7 @@ label {
   padding: 0;
   margin: 0;
 }
+
 select {
   width: 210px;
   height: 35px;
@@ -134,6 +135,7 @@ select:hover {
   outline: none;
   transform: scale(1.09);
 }
+
 option:hover {
   transform: scale(1.05);
 }
@@ -211,7 +213,13 @@ footer {
   text-align: center;
 }
 
-.formulario{
+.formulario {
   display: grid;
-  grid-template-columns:repeat(3, auto)
+  grid-template-columns: repeat(3, auto);
+  grid-column-gap: 1em;
+  grid-row-gap: 1em;
+}
+
+.editar {
+  margin-bottom: 1em;
 }
