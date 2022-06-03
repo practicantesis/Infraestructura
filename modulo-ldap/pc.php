@@ -179,7 +179,7 @@
             // Agregar datos al directorio
 
             $r = ldap_modify($ds, "uid=$usuario,ou=People,dc=transportespitic,dc=com", $info);
-            echo "<script>alert('Extension modificada correctamente');window.history.replaceState(null, null, window.location.href);</script>"; //mensaje y elimina historial para que no se recargue el post
+            echo "<script>alert('Modificacion exitosa para $usuario =)');window.history.replaceState(null, null, window.location.href);</script>"; //mensaje y elimina historial para que no se recargue el post
             ldap_close($ds);
         }
     }
