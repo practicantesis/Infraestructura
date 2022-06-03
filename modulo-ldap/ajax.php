@@ -75,7 +75,7 @@ $oficina = $_POST['oficina'];
                     <label for="mlan">Mac Lan:</label>
                 </div>
                 <div>
-                    <input class="usuario" id="mlan" type="text" name="blanmac" pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$" value="<?php echo $lanmac; ?>">
+                    <input class="usuario" id="mlan" type="text" name="blanmac" pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})|NO$" value="<?php echo $lanmac; ?>">
                 </div>
 
             </div>
@@ -84,7 +84,7 @@ $oficina = $_POST['oficina'];
                     <label for="bmac">Wifi Mac:</label>
                 </div>
                 <div>
-                    <input class="usuario" id="bmac" type="text" name="bwmac" pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$" value="<?php echo $wmac; ?>">
+                    <input class="usuario" id="bmac" type="text" name="bwmac" pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})|NO$" value="<?php echo $wmac; ?>">
                 </div>
 
             </div>
