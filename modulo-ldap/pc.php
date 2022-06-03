@@ -346,7 +346,7 @@
                 <input type="hidden" id="ofi" name="usuario" value="' . $info[$i]['uid'][0] . '">
                 <input type="hidden" id="ofi" name="puesto" value="' . $info[$i]['puesto'][0] . '">
                 <input type="hidden" id="ofi" name="oficina" value="' . $info[$i]['oficina'][0] . '">
-				<a  onclick="mostrar()" class="link-a"><button href="#prueba" type="button" id="mandar' . $i . '" class="boton">Ver</button></a>
+				<a href="#sup" onclick="mostrar()" class="link-a"><button href="#prueba" type="button" id="mandar' . $i . '" class="boton">Ver</button></a>
 				</form>
 
                <script>
