@@ -120,6 +120,62 @@
     <div id="editar">
 
     </div>
+    <?php
+    $usuario = $_POST['usuario'];
+    $oficina = $_POST['boficina'];
+    $lanip;
+    $lanmac;
+    $wip;
+    $wmac;
+    $puesto;
+
+
+
+    //PROCESO PARA EDITAR UN DATOS
+    if (isset($_POST['editar'])) {
+
+        if (empty($_POST['busuario'])) {
+            $usuario = "NO";
+        } else {
+            $usuario = $_POST['busuario'];
+        }
+        $extension = $_POST['bextension'];
+        $oficina = $_POST['boficina'];
+
+        $objConLDAP = new Conexion();
+        $ds = $objConLDAP->conectarLDAP();
+        //$ds = ldap_connect();  // Asumiendo que el servidor de LDAP está en el mismo host
+
+        if ($ds) {
+            // Asociar con el dn apropiado para dar acceso de actualización
+            ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+            $r = ldap_bind($ds, "cn=feria,dc=transportespitic,dc=com", "sistemaspitic");
+
+            // Preparar los datos
+            $info['extensiontelefono'] = $extension;
+            $info['oficinatelefono'] = $oficina;
+            $info['usuariotelefono'] = $usuario;
+            $info['objectClass'][0] = "telefonosparams";
+
+            // Agregar datos al directorio
+
+            $r = ldap_modify($ds, "extensiontelefono=$extension,ou=Telefonos,ou=groups,dc=transportespitic,dc=com", $info);
+            echo "<script>alert('Extension modificada correctamente');window.history.replaceState(null, null, window.location.href);</script>"; //mensaje y elimina historial para que no se recargue el post
+            ldap_close($ds);
+
+            $info['extensiontelefono'] = "";
+            $info['oficinatelefono'] = "";
+            $info['usuariotelefono'] = "";
+            $info['objectClass'][0] = "";
+        }
+    }
+
+    ?>
+
+
+
+
+
 
     <article class="consultas">
         <div class="combobox">
@@ -185,9 +241,9 @@
     </article>
 
     <article class="botones">
-<div class="boton-actualizar">
-    <a class="boton-a" href="pc.php">Actualizar</a>
-</div>
+        <div class="boton-actualizar">
+            <a class="boton-a" href="pc.php">Actualizar</a>
+        </div>
     </article>
 
 
@@ -237,6 +293,8 @@
                 <input type="hidden" id="ofi" name="wmac" value="' . $info[$i]['wifimac'][0] . '">
                 <input type="hidden" id="ofi" name="nivel" value="' . $info[$i]['accesosdered'][0] . '">
                 <input type="hidden" id="ofi" name="usuario" value="' . $info[$i]['uid'][0] . '">
+                <input type="hidden" id="ofi" name="puesto" value="' . $info[$i]['puesto'][0] . '">
+                <input type="hidden" id="ofi" name="oficina" value="' . $info[$i]['oficina'][0] . '">
 				<a href="#sup" class="link-a"><button href="#prueba" type="button" id="mandar' . $i . '" class="boton">Ver</button></a>
 				</form>
 
