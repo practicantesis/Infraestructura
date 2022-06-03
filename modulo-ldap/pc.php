@@ -119,6 +119,13 @@
             }
         }
         //	busqueda();
+
+
+
+        function cerrar() {
+            div = document.getElementById('edit');
+            div.style.display = 'none';
+        }
     </script>
 
     <?php

@@ -95,6 +95,9 @@ $oficina = $_POST['oficina'];
             <div>
                 <input type="submit" name="editar" value="editar">
             </div>
+            <div>
+                <input type="button" name="editar" value="ocultar" onclick="cerrar()">
+            </div>
             <!--
                <input type="submit" name="eliminar" value="eliminar">
                 <input type="submit" name="agregar" value="Agregar">
