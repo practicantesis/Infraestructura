@@ -121,26 +121,38 @@
 
     </div>
     <?php
-    $usuario = $_POST['usuario'];
-    $oficina = $_POST['boficina'];
-    $lanip;
-    $lanmac;
-    $wip;
-    $wmac;
-    $puesto;
+    $lanip = $_POST["blanip"];
+    $lanmac = $_POST["blanmac"];
+    $wip = $_POST["bwip"];
+    $wmac = $_POST["bwmac"];
+    $nivel = $_POST["bnivel"];
+    $usuario= $_POST["busuario"];
 
 
 
     //PROCESO PARA EDITAR UN DATOS
     if (isset($_POST['editar'])) {
 
-        if (empty($_POST['busuario'])) {
-            $usuario = "NO";
+        if (empty($_POST["blanip"])) {
+            $lanip = "NO";
         } else {
-            $usuario = $_POST['busuario'];
+            $lanip = $_POST["blanip"];
         }
-        $extension = $_POST['bextension'];
-        $oficina = $_POST['boficina'];
+        if (empty($_POST["blanmac"])) {
+            $lanmac = "NO";
+        } else {
+            $lanmac = $_POST["blanmac"];
+        }
+        if (empty($_POST["bwip"])) {
+            $wip = "NO";
+        } else {
+            $wip = $_POST["bwip"];
+        }
+        if (empty($_POST["bwmac"])) {
+            $wmac = "NO";
+        } else {
+            $wmac = $_POST["bwmac"];
+        }
 
         $objConLDAP = new Conexion();
         $ds = $objConLDAP->conectarLDAP();
@@ -152,21 +164,18 @@
             $r = ldap_bind($ds, "cn=feria,dc=transportespitic,dc=com", "sistemaspitic");
 
             // Preparar los datos
-            $info['extensiontelefono'] = $extension;
-            $info['oficinatelefono'] = $oficina;
-            $info['usuariotelefono'] = $usuario;
-            $info['objectClass'][0] = "telefonosparams";
+            $info['lanip'] = $lanip;
+            $info['lanmac']=$lanmac;
+            $info['wifiip']=$wip;
+            $info['wifimac']=$wmac;
+            $info['accesosdered']=$nivel;
 
             // Agregar datos al directorio
 
-            $r = ldap_modify($ds, "extensiontelefono=$extension,ou=Telefonos,ou=groups,dc=transportespitic,dc=com", $info);
+            $r = ldap_modify($ds, "uid=$usuario,ou=People,dc=transportespitic,dc=com", $info);
             echo "<script>alert('Extension modificada correctamente');window.history.replaceState(null, null, window.location.href);</script>"; //mensaje y elimina historial para que no se recargue el post
             ldap_close($ds);
 
-            $info['extensiontelefono'] = "";
-            $info['oficinatelefono'] = "";
-            $info['usuariotelefono'] = "";
-            $info['objectClass'][0] = "";
         }
     }
 
