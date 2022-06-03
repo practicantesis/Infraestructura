@@ -64,9 +64,10 @@ form {
 
 .consultas {
   display: grid;
-  grid-template-columns: auto;
+  grid-template-columns: auto auto;
   justify-content: center;
   align-items: center;
+  grid-column-gap: 1em;
   grid-row-gap: 0.5em;
   padding-bottom: 1.5em;
 }
