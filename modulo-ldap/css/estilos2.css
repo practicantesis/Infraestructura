@@ -226,8 +226,10 @@ footer {
 }
 
 .area-boton{
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto;
   align-items: center;
   justify-content: center;
   margin-bottom: 1em;
+  grid-template-columns: 1em;
 }
