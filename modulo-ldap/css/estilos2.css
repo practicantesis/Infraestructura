@@ -71,7 +71,7 @@ form {
   grid-row-gap: 0.5em;
 }
 
-.boton{
+.boton {
   font-family: "readex";
   display: flex;
   border-radius: 6px;
@@ -236,7 +236,7 @@ footer {
   margin-top: 1em;
 }
 
-.area-boton{
+.area-boton {
   display: grid;
   grid-template-columns: auto auto;
   align-items: center;
