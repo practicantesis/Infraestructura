@@ -81,7 +81,15 @@ form {
   transition: all 0.2s;
   padding-left: 2em;
   padding-right: 2em;
+  cursor: pointer;
 }
+
+.boton:hover {
+transform: scale(1.09);
+
+}
+
+
 
 .botones {
   display: grid;
