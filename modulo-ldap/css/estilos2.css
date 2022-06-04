@@ -71,6 +71,17 @@ form {
   grid-row-gap: 0.5em;
 }
 
+.boton{
+  font-family: "readex";
+  display: flex;
+  border-radius: 6px;
+  border: 0;
+  text-decoration: none;
+  box-shadow: 0 1px 6px 0 rgb(0 29 124 / 30%), 0 1px 2px 0 rgb(0 0 0 / 40%);
+  transition: all 0.2s;
+  padding-left: 2em;
+  padding-right: 2em;
+}
 
 .botones {
   display: grid;
