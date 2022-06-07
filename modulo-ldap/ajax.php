@@ -31,7 +31,7 @@ $oficina = $_POST['oficina'];
             </div>
             <div class="solicitud1">
                 <div>
-                    <label for="iplan">Ip Lan:</label>
+                    <label for="iplan">Lan ip:</label>
                 </div>
                 <div>
                     <input class="usuario" id="iplan" type="text" name="blanip" pattern="^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)|NO$" value="<?php echo $lanip; ?>">
@@ -72,7 +72,7 @@ $oficina = $_POST['oficina'];
             </div>
             <div class="solicitud1">
                 <div>
-                    <label for="mlan">Mac Lan:</label>
+                    <label for="mlan">Lan Mac:</label>
                 </div>
                 <div>
                     <input class="usuario" id="mlan" type="text" name="blanmac" pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})|NO$" value="<?php echo $lanmac; ?>">
