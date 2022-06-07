@@ -14,8 +14,8 @@
     grid-template-columns: repeat(3, auto);
     justify-content: center;
     align-items: center;
-    grid-column-gap: 0.5em;
-    grid-row-gap: 0.5em;
+    grid-column-gap: 0.25em;
+    grid-row-gap: 0.25em;
 }
 
 .botonn {
@@ -26,15 +26,15 @@
     text-decoration: none;
     box-shadow: 0 1px 6px 0 rgb(0 29 124 / 30%), 0 1px 2px 0 rgb(0 0 0 / 40%);
     transition: all 0.2s;
-    padding-left: 6em;
-    padding-right: 6em;
-    padding-top: 4em;
-    padding-bottom: 4em;
+    padding-left: 4.5em;
+    padding-right: 4.5em;
+    padding-top: 2.5em;
+    padding-bottom: 2.5em;
     cursor: pointer;
     color: black;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 25px;
 }
 
 .botonn:hover {
