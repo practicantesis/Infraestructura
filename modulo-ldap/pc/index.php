@@ -26,6 +26,15 @@
     ?>
 </head>
 
+<?php
+session_start();
+if (isset($_SESSION['scup_user'])) {
+} else {
+    header("Location: login.php");
+}
+?>
+
+
 <body>
 
 
@@ -41,6 +50,16 @@
                 <h1 class="dm">Equipos Asignados</h1>
             </div>
             <div class="titulo-imagen"> <img class="pitic" src="../img/ip.png" alt=""></div>
+        </div>
+
+        <div class="sup" >
+            <div class="sup-mensaje">
+                <p>Bienvenido:<?php echo "<b>" . $_SESSION['scup_user'] . "</b>"  ?></p>
+            </div>
+            <div class="sup-men">
+                <a href="logout.php">Cerrar sesion</a>
+            </div>
+
         </div>
 
     </header>
