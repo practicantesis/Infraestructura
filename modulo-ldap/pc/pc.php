@@ -31,7 +31,7 @@
 
     <header id="sup">
         <div class="logo-empresa">
-            <img src="./img/logo_adobe.png" alt="">
+            <img src="../img/logo_adobe.png" alt="">
         </div>
 
         <div class="titulo">
@@ -40,7 +40,7 @@
             <div class="titulo-nombre">
                 <h1 class="dm">Equipos Asignados</h1>
             </div>
-            <div class="titulo-imagen"> <img class="pitic" src="./img/ip.png" alt=""></div>
+            <div class="titulo-imagen"> <img class="pitic" src="../img/ip.png" alt=""></div>
         </div>
 
     </header>
@@ -308,9 +308,9 @@
                 //  if(preg_match('/\d\d\d.*/',$info[$i]['lanip'][0])&&
                 //  $info[$i]['lanmac'][0] ){
                 if (empty($info[$i]['lanip'][0]) || empty($info[$i]['lanmac'][0]) || $info[$i]['lanip'][0] == 'NO') {
-                    echo '<td class="text-center">' . '<img src="./css/redcircle.png" >' . '</td>';
+                    echo '<td class="text-center">' . '<img src="../css/redcircle.png" >' . '</td>';
                 } else {
-                    echo '<td class="text-center" >' . '<img src="./css/bluecircle.png" >' . '</td>';
+                    echo '<td class="text-center" >' . '<img src="../css/bluecircle.png" >' . '</td>';
                 }
                 echo '<td>' . $info[$i]['lanip'][0] . '</td>';
                 echo '<td>' . $info[$i]['lanmac'][0] . '</td>';
