@@ -305,7 +305,7 @@ if (isset($_SESSION['scup_user'])) {
 
         if ($con) {
             echo '<table id="datos" class="table table-hover">';
-            echo '<thead class="encabezado2"><th>Usuario</th><th>Nombre</th><th>Puesto</th><th>Oficina</th><th>Asignado</th><th>Ip Lan</th><th>Ver</th></tr></thead>';
+            echo '<thead class="encabezado2"><th>Usuario</th><th>Nombre</th><th>Puesto</th><th>Oficina</th><th>Asignado</th><th>Ip Lan</th><th>Editar</th></tr></thead>';
             $filter = "(uid=*)";
             //$filter = "(duusernname=*)";duoficina
 
