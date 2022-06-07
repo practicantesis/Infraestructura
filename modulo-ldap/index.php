@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/estilos2.css">
     <link rel="stylesheet" href="css/menu.css">
-    <link rel="shortcut icon" href="img/telefonia.png" type="image/x-icon">
+    <link rel="shortcut icon" href="img/ldap.png" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -20,7 +20,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
     </style>
-    <title>Extensiones Telefonicas</title>
+    <title>Modulo LDAP</title>
     <?php
     include('php/conexion.php');
     include('php/funciones.php');
