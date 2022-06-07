@@ -130,10 +130,10 @@ $oficina = $_POST['oficina'];
 
         <div class="area-boton">
             <div>
-                <input type="submit" name="editar" value="editar">
+                <input type="submit" name="editar" value="Guardar">
             </div>
             <div>
-                <input type="button" name="editar" value="ocultar" onclick="cerrar()">
+                <input type="button" name="editar" value="Ocultar" onclick="cerrar()">
             </div>
             <!--
                <input type="submit" name="eliminar" value="eliminar">
