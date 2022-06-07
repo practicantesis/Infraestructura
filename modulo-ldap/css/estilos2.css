@@ -18,6 +18,55 @@ header {
   margin-bottom: 1em;
 }
 
+.sup {
+  display: grid;
+  justify-content: end;
+  align-items: baseline;
+  grid-template-columns: auto auto;
+  grid-column-gap: 1em;
+  padding-right: 0.5em;
+}
+
+.sup-mensaje {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sup-mensaje p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "readex";
+}
+
+.sup a {
+  display: flex;
+  text-decoration: none;
+  color: #E7E7E7;
+  transition: 0.1s;
+  margin: 0px;
+  background-color: #1883BA;
+  border-radius: 6px;
+  color: #E7E7E7;
+  margin-left: 3px;
+  margin-bottom: 3px;
+  padding: 4px;
+  border-style: none;
+}
+
+.sup a:hover {
+  transform: scale(1.07);
+  color: #E7E7E7;
+}
+
+.titulo {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  align-items: center;
+  justify-content: center;
+}
+
 .titulo {
   display: grid;
   grid-template-columns: repeat(2, auto);
