@@ -67,9 +67,9 @@ if (isset($_SESSION['scup_user'])) {
 
     </header>
     <div class="contenedor-botones">
-        <div class="caja-boton"><a class="botonn" href="../../">Extensiones</a></div>
-        <div class="caja-boton"><a class="botonn" href="">Usuarios</a></div>
-        <div class="caja-boton"><a class="botonn" href="/pc/">Red</a></div>
+        <div class="caja-boton"><a class="botonn" href="../../extensiones/administrador/">Extensiones</a></div>
+        <div class="caja-boton"><a class="botonn" href="../../extensiones/empleados/administrador/">Usuarios</a></div>
+        <div class="caja-boton"><a class="botonn" href="pc/">Red</a></div>
         <div class="caja-boton"><a class="botonn" href="">Niveles de red</a></div>
         <div class="caja-boton"><a class="botonn" href="">Grupo de correo</a></div>
         <div class="caja-boton"><a class="botonn" href="">Celulares</a></div>
