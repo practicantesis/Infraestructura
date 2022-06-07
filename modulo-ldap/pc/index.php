@@ -271,7 +271,7 @@
 
     <article class="botones">
         <div class="boton-actualizar">
-            <a class="boton-a" href="index.php">Actualizar</a>
+            <a class="boton-a" href="">Actualizar</a>
         </div>
     </article>
 
