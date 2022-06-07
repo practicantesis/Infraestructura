@@ -67,7 +67,7 @@ $oficina = $_POST['oficina'];
                     <label for="oficina">oficina:</label>
                 </div>
                 <div>
-                    <select id="oficina" name="boficina" class="ext">
+                    <select id="oficina" name="boficina" class="ofi">
                         <option hidden selected><?php echo $oficina; ?></option>
                         <option value="TRA">Transportes</option>
                         <option value="VHL">Volvo Hermosillo</option>
@@ -104,6 +104,7 @@ $oficina = $_POST['oficina'];
                         <option value="TIJ">Tijuana</option>
                         <option value="COB">Ciudad obregon</option>
                         <option value="MTY">Monterrey</option>
+                        </select>
                 </div>
             </div>
             <div class="solicitud1">
