@@ -29,4 +29,10 @@
     padding-top: 4em;
     padding-bottom: 4em;
     cursor: pointer;
+    color: black;
+}
+
+.botonn:hover {
+    transform: scale(1.02);
+
 }
