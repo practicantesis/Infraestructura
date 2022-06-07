@@ -300,6 +300,7 @@
             echo '<tbody class="tabladato r">';
             for ($i = 0; $i < $count; $i++) {
                 //$lu = $info[$i]['usuariotelefono'][0];
+
                 echo '<tr>';
                 echo '<td>' . $info[$i]['uid'][0] . '</td>';
                 echo '<td>' . $info[$i]['cn'][0] . '</td>';
@@ -307,7 +308,7 @@
                 echo '<td>' . $info[$i]['oficina'][0] . '</td>';
                 //  if(preg_match('/\d\d\d.*/',$info[$i]['lanip'][0])&&
                 //  $info[$i]['lanmac'][0] ){
-                if (empty($info[$i]['lanip'][0]) || empty($info[$i]['lanmac'][0]) || $info[$i]['lanip'][0] == 'NO') {
+                if (empty($info[$i]['lanip'][0]) || empty($info[$i]['lanmac'][0]) || $info[$i]['lanip'][0] == 'NO' || $info[$i]['lanmac'][0] == 'NO') {
                     echo '<td class="text-center">' . '<img src="../css/redcircle.png" >' . '</td>';
                 } else {
                     echo '<td class="text-center" >' . '<img src="../css/bluecircle.png" >' . '</td>';
