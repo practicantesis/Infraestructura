@@ -289,7 +289,7 @@
 
         if ($con) {
             echo '<table id="datos" class="table table-hover">';
-            echo '<thead class="encabezado2"><th>Usuario</th><th>Nombre</th><th>Puesto</th><th>Oficina</th><th>Asignado</th><th>IP</th><th>MAC</th><th>Ver</th></tr></thead>';
+            echo '<thead class="encabezado2"><th>Usuario</th><th>Nombre</th><th>Puesto</th><th>Oficina</th><th>Asignado</th><th>Ip Lan</th><th>Ver</th></tr></thead>';
             $filter = "(uid=*)";
             //$filter = "(duusernname=*)";duoficina
 
@@ -313,7 +313,6 @@
                     echo '<td class="text-center" >' . '<img src="../css/bluecircle.png" >' . '</td>';
                 }
                 echo '<td>' . $info[$i]['lanip'][0] . '</td>';
-                echo '<td>' . $info[$i]['lanmac'][0] . '</td>';
                 echo '<td>
 				<form id="formula' . $i . '"  method="POST">
 				<input type="hidden" id="ext" name="lanip" value="' . $info[$i]['lanip'][0] . '">
