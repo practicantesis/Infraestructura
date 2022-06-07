@@ -19,7 +19,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
     </style>
-    <title>IPs Asignadas</title>
+    <title>Asignacion de equipo</title>
     <?php
     include('conexion.php');
     include('funciones.php');
