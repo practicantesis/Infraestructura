@@ -24,10 +24,10 @@ if (isset($_SESSION['scup_user'])) {
 
         <div class="titulo">
             <div class="titulo-nombre">
-                <h1 class="dm">Administrador Telefonico</h1>
+                <h1 class="dm">Administrador Equipos asignados</h1>
             </div>
             <div class="titulo-imagen">
-                <img class="pitic" src="../img/telefonia.png" alt="">
+                <img class="pitic" src="../img/ip.png" alt="">
             </div>
         </div>
         
