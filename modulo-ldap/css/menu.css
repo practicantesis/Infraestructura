@@ -14,8 +14,8 @@
     grid-template-columns: repeat(3, auto);
     justify-content: center;
     align-items: center;
-    grid-column-gap: 0.25em;
-    grid-row-gap: 0.25em;
+    grid-column-gap: 0.3em;
+    grid-row-gap: 0.3em;
 }
 
 .botonn {
