@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/estilos2.css">
+    <link rel="stylesheet" href="css/menu.css">
     <link rel="shortcut icon" href="img/telefonia.png" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -48,9 +49,9 @@ if (isset($_SESSION['scup_user'])) {
 
 
             <div class="titulo-nombre">
-                <h1 class="dm">Administrador Telefonico</h1>
+                <h1 class="dm">Administrador LDAP</h1>
             </div>
-            <div class="titulo-imagen"> <img class="pitic" src="img/telefonia.png" alt=""></div>
+            <div class="titulo-imagen"> <img class="pitic" src="img/ldap.png" alt=""></div>
         </div>
 
         <div class="sup" id="sup">
@@ -65,6 +66,15 @@ if (isset($_SESSION['scup_user'])) {
 
 
     </header>
+    <div class="contenedor-botones">
+        <div class="caja-boton"><a class="boton" href="">Extensiones</a></div>
+        <div class="caja-boton"><a class="boton" href="">Usuarios</a></div>
+        <div class="caja-boton"><a class="boton" href="">Red</a></div>
+        <div class="caja-boton"><a class="boton" href="">Niveles de red</a></div>
+        <div class="caja-boton"><a class="boton" href="">Grupo de correo</a></div>
+        <div class="caja-boton"><a class="boton" href="">Celulares</a></div>
+        <div class="caja-boton"><a class="boton" href="">Cambiar Clave</a></div>
+    </div>
     
 </body>
 

@@ -1,0 +1,32 @@
+@font-face {
+    font-family: "readex";
+    src: url("font/readex/ReadexPro-Regular.ttf");
+}
+
+@font-face {
+    font-family: "hk-regular";
+    src: url("font/hk/HKGrotesk-Medium.ttf");
+}
+
+
+.contendedor-botones {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    justify-content: center;
+    align-items: center;
+}
+
+.boton {
+    font-family: "readex";
+    display: flex;
+    border-radius: 6px;
+    border: 0;
+    text-decoration: none;
+    box-shadow: 0 1px 6px 0 rgb(0 29 124 / 30%), 0 1px 2px 0 rgb(0 0 0 / 40%);
+    transition: all 0.2s;
+    padding-left: 6em;
+    padding-right: 6em;
+    padding-top: 4em;
+    padding-bottom: 4em;
+    cursor: pointer;
+}
