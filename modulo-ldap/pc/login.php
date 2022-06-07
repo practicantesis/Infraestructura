@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar sesion</title>
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="../css/login.css">
 </head>
 
 <body>
@@ -19,7 +19,7 @@ if (isset($_SESSION['scup_user'])) {
 
     <header>
         <div class="logo-empresa">
-            <img src="img/logo_adobe.png" alt="">
+            <img src="../img/logo_adobe.png" alt="">
         </div>
 
         <div class="titulo">
@@ -27,7 +27,7 @@ if (isset($_SESSION['scup_user'])) {
                 <h1 class="dm">Administrador Telefonico</h1>
             </div>
             <div class="titulo-imagen">
-                <img class="pitic" src="img/telefonia.png" alt="">
+                <img class="pitic" src="../img/telefonia.png" alt="">
             </div>
         </div>
         
