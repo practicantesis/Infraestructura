@@ -170,6 +170,7 @@
             $wmac = $_POST["bwmac"];
         }
         $usuario = $_POST["busuario"];
+        $oficina = $_POST["boficina"];
 
         $objConLDAP = new Conexion();
         $ds = $objConLDAP->conectarLDAP();
@@ -179,12 +180,7 @@
             // Asociar con el dn apropiado para dar acceso de actualización
             ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
             $r = ldap_bind($ds, "cn=feria,dc=transportespitic,dc=com", "sistemaspitic");
-            $filtro1 = "(lanip=$lanip)";
-            $filtro2 = "(lanmac=$lanmac)";
-            $filtro3 = "(wifiip=$wip)";
-            $filtro4 = "(wifimac=$wmac)";
-
-
+        
             // Preparar los datos
             $info['lanip'][0] = $lanip;
             $info['lanmac'][0] = $lanmac;
@@ -192,6 +188,7 @@
             $info['wifimac'][0] = $wmac;
             $info['accesosdered'][0] = $nivel;
             $info['uid'][0] = $usuario;
+            $info['oficina'][0] = $oficina;
 
             // Agregar datos al directorio
 
