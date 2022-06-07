@@ -19,7 +19,7 @@ if (isset($_SESSION['scup_user'])) {
 
     <header>
         <div class="logo-empresa">
-            <img src="img/ldap.png" alt="">
+            <img src="img/logo_adobe.png" alt="">
         </div>
 
         <div class="titulo">
@@ -27,7 +27,7 @@ if (isset($_SESSION['scup_user'])) {
                 <h1 class="dm">Administrador LDAP</h1>
             </div>
             <div class="titulo-imagen">
-                <img class="pitic" src="img/telefonia.png" alt="">
+                <img class="pitic" src="img/ldap.png" alt="">
             </div>
         </div>
 
