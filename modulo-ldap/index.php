@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -30,7 +30,7 @@
 
 <?php
 session_start();
-if (isset($_SESSION['scup_user'])) {
+if (isset($_SESSION['user'])) {
 } else {
     header("Location: login.php");
 }
