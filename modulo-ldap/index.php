@@ -74,7 +74,7 @@ if (isset($_SESSION['user'])) {
         <div class="caja-boton"><a class="botonn" href="">Grupo de correo</a></div>
         <div class="caja-boton"><a class="botonn" href="">Celulares</a></div>
         <div class="caja-boton"><a class="botonn" href="">Cambiar Clave</a></div>
-        <div class="caja-boton"><a class="botonn" href="">Hand Held</a></div>
+        <div class="caja-boton"><a class="botonn" href="handheld/">Hand Held</a></div>
         <div class="caja-boton"><a class="botonn" href="">Impresoras</a></div>
 
     </div>
