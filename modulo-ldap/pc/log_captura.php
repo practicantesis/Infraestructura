@@ -49,7 +49,7 @@ if($con){
 		if($logstate){
 			if($info[0]["nivelscup"][0] == 1 or $info[0]["uid"][0]=="mdurazo"){
 				session_start();
-				$_SESSION['scup_user'] = $info[0]["uid"][0]; //$_SESSION['scup_user']
+				$_SESSION['user'] = $info[0]["uid"][0]; //$_SESSION['scup_user']
 				header('Location: index.php');
 			}else{
 				echo "<script>alert('No tiene permisos para accesar a SCUP');history.back(-1);</script>";
