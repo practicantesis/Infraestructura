@@ -56,7 +56,7 @@ if (isset($_SESSION['scup_user'])) {
 
         <div class="sup" id="sup">
             <div class="sup-mensaje">
-                <p>Bienvenido:<?php echo "<b>" . $_SESSION['scup_user'] . "</b>"  ?></p>
+                <p>Bienvenido:<?php echo "<b>" . $_SESSION['user'] . "</b>"  ?></p>
             </div>
             <div class="sup-men">
                 <a href="logout.php">Cerrar sesion</a>
