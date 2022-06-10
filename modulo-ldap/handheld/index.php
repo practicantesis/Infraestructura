@@ -305,11 +305,11 @@ if (isset($_SESSION['user'])) {
 
         if ($con) {
             echo '<table id="datos" class="table table-hover">';
-            echo '<thead class="encabezado2"><th>Usuario</th><th>Nombre</th><th>Puesto</th><th>Oficina</th><th>Asignado</th><th>Ip Lan</th><th>Editar</th></tr></thead>';
-            $filter = "(uid=*)";
+            echo '<thead class="encabezado2"><th>TAG</th><th>Marca</th><th>Oficina</th><th>Serial</th><th>IP</th><th>MAC</th><th>Editar</th></tr></thead>';
+            $filter = "(devicetag=*)";
             //$filter = "(duusernname=*)";duoficina
 
-            $srch = ldap_search($con, "ou=People,dc=transportespitic,dc=com", $filter);
+            $srch = ldap_search($con, "ou=Handhelds,ou=Devices,dc=transportespitic,dc=com", $filter);
             $count = ldap_count_entries($con, $srch);
             $info = ldap_get_entries($con, $srch);
             //$arr = GetDevUsersFromLDAPCells("array", $info[$i]['usuariotelefono'][0], $con);
@@ -317,28 +317,22 @@ if (isset($_SESSION['user'])) {
             for ($i = 0; $i < $count; $i++) {
                 //$lu = $info[$i]['usuariotelefono'][0];
                 echo '<tr>';
-                echo '<td>' . $info[$i]['uid'][0] . '</td>';
-                echo '<td>' . $info[$i]['cn'][0] . '</td>';
-                echo '<td>' . $info[$i]['puesto'][0] . '</td>';
-                echo '<td>' . $info[$i]['oficina'][0] . '</td>';
+                echo '<td>' . $info[$i]['devicebrand'][0] . '</td>';
+                echo '<td>' . $info[$i]['deviceip'][0] . '</td>';
+                echo '<td>' . $info[$i]['devicemac'][0] . '</td>';
+                echo '<td>' . $info[$i]['deviceoffice'][0] . '</td>';
+                echo '<td>' . $info[$i]['deviceserial'][0] . '</td>';
+                echo '<td>' . $info[$i]['devicetag'][0] . '</td>';
                 //  if(preg_match('/\d\d\d.*/',$info[$i]['lanip'][0])&&
                 //  $info[$i]['lanmac'][0] ){
-                if (empty($info[$i]['lanip'][0]) || empty($info[$i]['lanmac'][0]) || $info[$i]['lanip'][0] == 'NO' || $info[$i]['lanmac'][0] == 'NO' || $info[$i]['accesosdered'][0]=='9') {
-                    echo '<td class="text-center">' . '<img src="../css/redcircle.png" >' . '</td>';
-                } else {
-                    echo '<td class="text-center" >' . '<img src="../css/bluecircle.png" >' . '</td>';
-                }
-                echo '<td>' . $info[$i]['lanip'][0] . '</td>';
                 echo '<td>
 				<form id="formula' . $i . '"  method="POST">
-				<input type="hidden" id="ext" name="lanip" value="' . $info[$i]['lanip'][0] . '">
-                <input type="hidden" id="user" name="lanmac" value="' . $info[$i]['lanmac'][0] . '">
-                <input type="hidden" id="ofi" name="wip" value="' . $info[$i]['wifiip'][0] . '">
-                <input type="hidden" id="ofi" name="wmac" value="' . $info[$i]['wifimac'][0] . '">
-                <input type="hidden" id="ofi" name="nivel" value="' . $info[$i]['accesosdered'][0] . '">
-                <input type="hidden" id="ofi" name="usuario" value="' . $info[$i]['uid'][0] . '">
-                <input type="hidden" id="ofi" name="puesto" value="' . $info[$i]['puesto'][0] . '">
-                <input type="hidden" id="ofi" name="oficina" value="' . $info[$i]['oficina'][0] . '">
+				<input type="hidden" id="ext" name="lanip" value="' . $info[$i]['devicebrand'][0] . '">
+                <input type="hidden" id="user" name="lanmac" value="' . $info[$i]['deviceip'][0] . '">
+                <input type="hidden" id="ofi" name="wip" value="' . $info[$i]['devicemac'][0] . '">
+                <input type="hidden" id="ofi" name="wmac" value="' . $info[$i]['deviceoffice'][0] . '">
+                <input type="hidden" id="ofi" name="nivel" value="' . $info[$i]['deviceserial'][0] . '">
+                <input type="hidden" id="ofi" name="usuario" value="' . $info[$i]['devicetag'][0] . '">
 				<a href="#sup" onclick="mostrar()" class="link-a"><button href="#prueba" type="button" id="mandar' . $i . '" class="boton">Editar</button></a>
 				</form>
 
