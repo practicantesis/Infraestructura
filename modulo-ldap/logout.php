@@ -6,7 +6,7 @@ $_SESSION = array();
 //guardar el nombre de la sessi�n para luego borrar las cookies
 $session_name = session_name();
 //Para destruir una variable en espec�fico
-unset($_SESSION['usuario']);
+unset($_SESSION['user']);
 // Finalmente, destruye la sesi�n
 session_destroy();
 // Para borrar las cookies asociadas a la sesi�n
