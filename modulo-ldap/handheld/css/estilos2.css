@@ -1,11 +1,11 @@
 @font-face {
   font-family: "readex";
-  src: url("../font/readex/ReadexPro-Regular.ttf");
+  src: url("../../font/readex/ReadexPro-Regular.ttf");
 }
 
 @font-face {
   font-family: "hk-regular";
-  src: url("../font/hk/HKGrotesk-Medium.ttf");
+  src: url("../../font/hk/HKGrotesk-Medium.ttf");
 }
 
 body {
