@@ -153,12 +153,12 @@ if (isset($_SESSION['user'])) {
     </script>
 
     <?php
-    $lanip = $_POST["blanip"];
-    $lanmac = $_POST["blanmac"];
-    $wip = $_POST["bwip"];
-    $wmac = $_POST["bwmac"];
-    $nivel = $_POST["bnivel"];
-    $usuario = $_POST["busuario"];
+    $brand = $_POST['bmarca'];
+    $ip = $_POST['bip'];
+    $mac = $_POST['bmac'];
+    $office = $_POST['boffice'];
+    $serial = $_POST['bserial'];
+    $tag = $_POST['btag'];
     ?>
 
     <div id="edit">
@@ -317,12 +317,12 @@ if (isset($_SESSION['user'])) {
             for ($i = 0; $i < $count; $i++) {
                 //$lu = $info[$i]['usuariotelefono'][0];
                 echo '<tr>';
+                echo '<td>' . $info[$i]['devicetag'][0] . '</td>';
                 echo '<td>' . $info[$i]['devicebrand'][0] . '</td>';
-                echo '<td>' . $info[$i]['deviceip'][0] . '</td>';
-                echo '<td>' . $info[$i]['devicemac'][0] . '</td>';
                 echo '<td>' . $info[$i]['deviceoffice'][0] . '</td>';
                 echo '<td>' . $info[$i]['deviceserial'][0] . '</td>';
-                echo '<td>' . $info[$i]['devicetag'][0] . '</td>';
+                echo '<td>' . $info[$i]['deviceip'][0] . '</td>';
+                echo '<td>' . $info[$i]['devicemac'][0] . '</td>';
                 //  if(preg_match('/\d\d\d.*/',$info[$i]['lanip'][0])&&
                 //  $info[$i]['lanmac'][0] ){
                 echo '<td>
