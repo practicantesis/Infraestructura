@@ -153,12 +153,13 @@ if (isset($_SESSION['user'])) {
     </script>
 
     <?php
+    /*
     $brand = $_POST['bmarca'];
     $ip = $_POST['bip'];
     $mac = $_POST['bmac'];
     $office = $_POST['boffice'];
     $serial = $_POST['bserial'];
-    $tag = $_POST['btag'];
+    $tag = $_POST['btag'];*/
     ?>
 
     <div id="edit">
@@ -168,28 +169,28 @@ if (isset($_SESSION['user'])) {
     //PROCESO PARA EDITAR UN DATOS
     if (isset($_POST['editar'])) {
 
-        if (empty($_POST["blanip"])) {
+        if (empty($_POST["bip"])) {
             $lanip = "NO";
         } else {
-            $lanip = $_POST["blanip"];
+            $lanip = $_POST["bip"];
         }
-        if (empty($_POST["blanmac"])) {
+        if (empty($_POST["bmac"])) {
             $lanmac = "NO";
         } else {
-            $lanmac = $_POST["blanmac"];
+            $lanmac = $_POST["bmac"];
         }
-        if (empty($_POST["bwip"])) {
+        if (empty($_POST["bmarca"])) {
             $wip = "NO";
         } else {
-            $wip = $_POST["bwip"];
+            $wip = $_POST["bmarca"];
         }
-        if (empty($_POST["bwmac"])) {
+        if (empty($_POST["bserial"])) {
             $wmac = "NO";
         } else {
-            $wmac = $_POST["bwmac"];
+            $wmac = $_POST["bserial"];
         }
-        $usuario = $_POST["busuario"];
-        $oficina = $_POST["boficina"];
+        $tag = $_POST["btag"];
+        $office = $_POST["boffice"];
 
         $objConLDAP = new Conexion();
         $ds = $objConLDAP->conectarLDAP();
