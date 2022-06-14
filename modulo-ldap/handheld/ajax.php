@@ -33,7 +33,7 @@ $tag = $_POST['tag'];
                 </div>
                 <div>
                     <select id="oficina" name="boficina" class="ofi">
-                        <option hidden selected><?php echo $oficina; ?></option>
+                        <option hidden selected><?php echo $office; ?></option>
                         <option value="TRA">Transportes</option>
                         <option value="VHL">Volvo Hermosillo</option>
                         <option value="TDI">Tecnologia Diesel</option>
