@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/estilos2.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/estilos2.css">
     <link rel="shortcut icon" href="../img/handheld.png" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -327,12 +327,12 @@ if (isset($_SESSION['user'])) {
                 //  $info[$i]['lanmac'][0] ){
                 echo '<td>
 				<form id="formula' . $i . '"  method="POST">
-				<input type="hidden" id="ext" name="lanip" value="' . $info[$i]['devicebrand'][0] . '">
-                <input type="hidden" id="user" name="lanmac" value="' . $info[$i]['deviceip'][0] . '">
-                <input type="hidden" id="ofi" name="wip" value="' . $info[$i]['devicemac'][0] . '">
-                <input type="hidden" id="ofi" name="wmac" value="' . $info[$i]['deviceoffice'][0] . '">
-                <input type="hidden" id="ofi" name="nivel" value="' . $info[$i]['deviceserial'][0] . '">
-                <input type="hidden" id="ofi" name="usuario" value="' . $info[$i]['devicetag'][0] . '">
+				<input type="hidden" id="ext" name="brand" value="' . $info[$i]['devicebrand'][0] . '">
+                <input type="hidden" id="user" name="ip" value="' . $info[$i]['deviceip'][0] . '">
+                <input type="hidden" id="ofi" name="mac" value="' . $info[$i]['devicemac'][0] . '">
+                <input type="hidden" id="ofi" name="office" value="' . $info[$i]['deviceoffice'][0] . '">
+                <input type="hidden" id="ofi" name="serial" value="' . $info[$i]['deviceserial'][0] . '">
+                <input type="hidden" id="ofi" name="tag" value="' . $info[$i]['devicetag'][0] . '">
 				<a href="#sup" onclick="mostrar()" class="link-a"><button href="#prueba" type="button" id="mandar' . $i . '" class="boton">Editar</button></a>
 				</form>
 
