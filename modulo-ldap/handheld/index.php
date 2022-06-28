@@ -363,7 +363,7 @@ if (isset($_SESSION['user'])) {
             echo '</tbody></table>';
             ldap_close($con);
         }
-
+/*
         if (isset($_POST['eliminar'])) {
             $usuario = $_POST['busuario'];
             $extension = $_POST['bextension'];
@@ -389,7 +389,7 @@ if (isset($_SESSION['user'])) {
                 $r = ldap_delete($ds, "extensiontelefono=$extension,ou=Telefonos,ou=groups,dc=transportespitic,dc=com", $info);
                 ldap_close($ds);
             }
-
+*/
 
 
         ?>
