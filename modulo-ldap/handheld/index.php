@@ -306,7 +306,7 @@ if (isset($_SESSION['user'])) {
 
         if ($con) {
             echo '<table id="datos" class="table table-hover">';
-            echo '<thead class="encabezado2"><th>TAG</th><th>Marca</th><th>Oficina</th><th>Serial</th><th>IP</th><th>MAC</th><th>Editar</th></tr></thead>';
+            echo '<thead class="encabezado2"><th>TAG</th><th>Marca</th><th>Oficina</th><th>Serial</th><th>IP</th><th>MAC</th><th>Editar</th><th>Eliminar</th></tr></thead>';
             $filter = "(devicetag=*)";
             //$filter = "(duusernname=*)";duoficina
 
@@ -350,12 +350,48 @@ if (isset($_SESSION['user'])) {
 				});
 				</script>
 				</td>';
+                echo '<td>
+                <form method="post" action="index.php">
+                <input type="hidden" name="tags" value="' . $info[$i]['devicetag'][0] . '">
+                <input type="submit" name="eliminar" value="Eliminar">
+                </form>
+                </td>';
                 echo '</tr>';
+                
             }
 
             echo '</tbody></table>';
             ldap_close($con);
         }
+
+        if (isset($_POST['eliminar'])) {
+            $usuario = $_POST['busuario'];
+            $extension = $_POST['bextension'];
+            $oficina = $_POST['boficina'];
+    
+            $objConLDAP = new Conexion();
+            $ds = $objConLDAP->conectarLDAP();
+            //$ds = ldap_connect();  // Asumiendo que el servidor de LDAP está en el mismo host
+    
+            if ($ds) {
+                // Asociar con el dn apropiado para dar acceso de actualización
+                ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+                $r = ldap_bind($ds, "cn=feria,dc=transportespitic,dc=com", "sistemaspitic");
+    
+                // Preparar los datos
+                $info['extensiontelefono'] = $extension;
+                $info['oficinatelefono'] = $oficina;
+                $user = $info['usuariotelefono'] = $usuario;
+                $info['objectClass'][0] = "telefonosparams";
+    
+                // Agregar datos al directorio
+    
+                $r = ldap_delete($ds, "extensiontelefono=$extension,ou=Telefonos,ou=groups,dc=transportespitic,dc=com", $info);
+                ldap_close($ds);
+            }
+
+
+
         ?>
     </article>
 
