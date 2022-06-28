@@ -120,7 +120,7 @@ form {
   grid-row-gap: 0.5em;
 }
 
-.boton {
+input[type="submit"] {
   font-family: "readex";
   display: flex;
   border-radius: 6px;

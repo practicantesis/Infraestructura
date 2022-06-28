@@ -359,7 +359,7 @@ if (isset($_SESSION['user'])) {
                 echo '<td>
                 <form method="post" action="index.php">
                 <input type="hidden" name="tags" value="' . $info[$i]['devicetag'][0] . '">
-                <input class="boton" type="submit" name="eliminar" value="Eliminar">
+                <input type="submit" name="eliminar" value="Eliminar">
                 </form>
                 </td>';
                 echo '</tr>';
