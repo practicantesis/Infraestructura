@@ -105,9 +105,10 @@ header {
   align-items: center;
 }
 
-form {
+#miform {
   display: grid;
   grid-template-columns: auto;
+  justify-content:center;
   align-items: center;
 }
 
