@@ -67,15 +67,15 @@ if (isset($_SESSION['user'])) {
 
     </header>
     <div class="contenedor-botones">
-        <div class="caja-boton"><a class="botonn" href="../../extensiones/administrador/">Extensiones</a></div>
-        <div class="caja-boton"><a class="botonn" href="../../extensiones/empleados/administrador/">Usuarios</a></div>
-        <div class="caja-boton"><a class="botonn" href="pc/">Red</a></div>
-        <div class="caja-boton"><a class="botonn" href="">Niveles de red</a></div>
-        <div class="caja-boton"><a class="botonn" href="">Grupo de correo</a></div>
-        <div class="caja-boton"><a class="botonn" href="">Celulares</a></div>
-        <div class="caja-boton"><a class="botonn" href="">Cambiar Clave</a></div>
-        <div class="caja-boton"><a class="botonn" href="handheld/">Hand Held</a></div>
-        <div class="caja-boton"><a class="botonn" href="">Impresoras</a></div>
+        <div class="caja-boton"><a class="botonn" target="_blank" href="../../extensiones/administrador/">Extensiones</a></div>
+        <div class="caja-boton"><a class="botonn" target="_blank" href="../../extensiones/empleados/administrador/">Usuarios</a></div>
+        <div class="caja-boton"><a class="botonn" target="_blank" href="pc/">Red</a></div>
+        <div class="caja-boton"><a class="botonn" target="_blank" href="">Niveles de red</a></div>
+        <div class="caja-boton"><a class="botonn" target="_blank" href="">Grupo de correo</a></div>
+        <div class="caja-boton"><a class="botonn" target="_blank" href="">Celulares</a></div>
+        <div class="caja-boton"><a class="botonn" target="_blank" href="">Cambiar Clave</a></div>
+        <div class="caja-boton"><a class="botonn" target="_blank" href="handheld/">Hand Held</a></div>
+        <div class="caja-boton"><a class="botonn" target="_blank" href="">Impresoras</a></div>
 
     </div>
     
