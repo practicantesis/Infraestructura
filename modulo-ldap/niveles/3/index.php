@@ -309,7 +309,7 @@ if (isset($_SESSION['user'])) {
             $filter = "(member=*)";
             //$filter = "(duusernname=*)";duoficina
 
-            $srch = ldap_search($con, "ou=nivel3,ou=groups,dc=transportespitic,dc=com", $filter);
+            $srch = ldap_search($con, "cn=Nivel3,ou=groups,dc=transportespitic,dc=com", $filter);
             $count = ldap_count_entries($con, $srch);
             $info = ldap_get_entries($con, $srch);
             //$arr = GetDevUsersFromLDAPCells("array", $info[$i]['usuariotelefono'][0], $con);
