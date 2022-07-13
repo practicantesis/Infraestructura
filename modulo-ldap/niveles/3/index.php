@@ -320,6 +320,7 @@ if (isset($_SESSION['user'])) {
                 echo '<td>' . $info[$i]['member'][$i] . '</td>';
                 echo '</tr>';
             }
+            echo $srch;
 
             echo '</tbody></table>';
             ldap_close($con);
