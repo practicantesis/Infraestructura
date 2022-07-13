@@ -306,7 +306,7 @@ if (isset($_SESSION['user'])) {
         if ($con) {
             echo '<table id="datos" class="table table-hover">';
             echo '<thead class="encabezado2"><th>Usuario</th></tr></thead>';
-            $filter = "member=*";
+            $filter = "member=uid=*,ou=People,dc=transportespitic,dc=com";
             //$filter = "(duusernname=*)";duoficina
 
             $srch = ldap_search($con, "cn=Nivel3,ou=Niveles,ou=groups,dc=transportespitic,dc=com", $filter);
