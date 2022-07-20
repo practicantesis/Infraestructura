@@ -231,9 +231,11 @@ MTY";
 					<option value="CH">Capital Humano</option>
 					<option value="SIS">Sistemas</option>
 					<option value="FA">Finanzas</option>
-					<option value="DC">Direccion comercial</option>}
+					<option value="DC">Direccion comercial</option>
 					<option value="DG">Direccion General</option>
 					<option value="DO">Direccion de operaciones</option>
+					<option value="PMQ">Mars Queretaro</option>
+					<option value="PMP">Mars Poncitlan</option>
 				</select>
 
 			<?php
