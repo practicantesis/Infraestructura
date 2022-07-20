@@ -233,7 +233,7 @@ if (isset($_SESSION['user'])) {
 
             <div class="select">
                 <select id="officinas" name="oficinas" onchange="busquedaPorOfficina()">
-                    <option value="">Todos</option>
+                <option value="">Todos</option>
                     <option value="TRA">Transportes</option>
                     <option value="VHL">Volvo Hermosillo</option>
                     <option value="TDI">Tecnologia Diesel</option>
@@ -260,6 +260,7 @@ if (isset($_SESSION['user'])) {
                     <option value="CHI">Chihuahua</option>
                     <option value="STA">Santa ana</option>
                     <option value="TOL">Toluca</option>
+                    <option value="TOR">Torreon</option>
                     <option value="JUA">Juarez</option>
                     <option value="TPZ">Tepozotlan</option>
                     <option value="GDL">Guadalajara</option>
