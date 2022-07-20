@@ -137,7 +137,7 @@
 				<label>Oficina:</label>
 
 				<select id="officinas" name="oficinas" onchange="busquedaPorOfficina()">
-				<option value="">Todas</option>
+					<option value="">Todas</option>
 					<option value="TRA">Transportes</option>
 					<option value="MT1">Monterrey 1</option>
 					<option value="MER">Merida</option>
@@ -169,9 +169,11 @@
 					<option value="CH">Capital Humano</option>
 					<option value="SIS">Sistemas</option>
 					<option value="FA">Finanzas</option>
-					<option value="DC">Direccion comercial</option>}
+					<option value="DC">Direccion comercial</option>
 					<option value="DG">Direccion General</option>
 					<option value="DO">Direccion de operaciones</option>
+					<option value="PMQ">Mars Queretaro</option>
+					<option value="PMP">Mars Poncitlan</option>
 				</select>
 		
 
