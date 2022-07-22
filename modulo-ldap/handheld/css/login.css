@@ -1,0 +1,156 @@
+* {
+    padding: 0;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f5f5f8;
+}
+
+@font-face {
+    font-family: "readex";
+    src: url("../font/readex/ReadexPro-Regular.ttf");
+  }
+  
+  @font-face {
+    font-family: "hk-regular";
+    src: url("../font/hk/HKGrotesk-Medium.ttf");
+  }
+
+  header {
+    display: grid;
+    grid-template-columns: 130px auto;
+  }
+
+  .logo-empresa {
+    margin-left: 0.5em;
+    display: grid;
+    align-items: center;
+    width: 130px;
+  }
+  
+  .logo-empresa img {
+    width: 130px;
+    height: 50px;
+  }
+  
+  .titulo-imagen img {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .titulo-nombre h1 {
+    font-family: "hk-regular";
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    font-size: 2.5rem;
+  }
+
+  .titulo {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    align-items: center;
+    justify-content: center;
+  }
+
+
+label{
+    font-family: "readex";
+}
+
+input[type="submit"]{
+    font-family: "readex";
+    display: flex;
+    padding: 10px;
+    border-radius: 6px;
+    border: 0;
+    text-decoration: none;
+    box-shadow: 0 1px 6px 0 rgb(0 29 124 / 30%), 0 1px 2px 0 rgb(0 0 0 / 40%);
+    transition: all 0.2s;
+    padding-left: 4em;
+    padding-right: 4em;
+    margin-left: 2em;
+}
+
+input[type="text"],input[type="password"]{
+        display: flex;
+        padding: 10px;
+        border-radius: 6px;
+        border: 0;
+        text-decoration: none;
+        box-shadow: 0 1px 6px 0 rgb(0 29 124 / 30%), 0 1px 2px 0 rgb(0 0 0 / 40%);
+        transition: all 0.2s;
+}
+
+
+
+input[type="text"]:hover,input[type="password"]:hover{
+  transform: scale(1.05);
+}
+
+input[type="submit"]:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+
+
+.caja-madre{
+    max-height: 550px;
+    min-height: 550px;
+    height: 100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.titulo-f {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+
+.titulo-f h1{
+    font-family: "readex";
+    margin-left: 1em;
+}
+
+.formulario {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1em;
+}
+
+.caja {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    justify-content: right;
+    grid-column-gap: 0.7em;
+}
+
+.boton {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+
+.caja-formulario {
+    display: grid;
+    grid-template-columns: auto;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding-top: 6em;
+    padding-bottom:  6em;
+    padding-left: 10em;
+    padding-right: 10em;
+    transition: 0.1s;
+    box-shadow: 0 1px 16px 0 rgb(0 29 124 / 30%), 0 1px 2px 0 rgb(0 0 0 / 40%);
+}

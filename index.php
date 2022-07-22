@@ -757,6 +757,9 @@ var html = '<b>' + $('<div>').text(value.city).html() + '</b>, ' + $('<div>').te
                 <div class="header-left mambo">
                 <a href="http://ti.tpitic.com.mx/Infraestructura/informe/index.php?666U2lzdGVtYXM=897" target="_blank" >Moviles</a>
                 </div>
+                <div class="header-left mambo">
+                <a href="modulo-ldap/" target="_blank" >Modulo LDAP</a>
+                </div>
                 <!--Menu de enlaces-->
                 <div class="header-right">
                     <ul class="clearfix">

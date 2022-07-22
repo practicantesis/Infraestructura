@@ -133,53 +133,20 @@
 		</div>
 		<br>
 		<div id="obsiones_officina" class="form-group oficina">
-		
 
-				<label>Oficina:</label>
 
-				<select id="officinas" name="oficinas" onchange="busquedaPorOfficina()">
+			<label>Oficina:</label>
+
+			<select id="officinas" name="oficinas" onchange="busquedaPorOfficina()">
 				<option value="">Todas</option>
-					<option value="TRA">Transportes</option>
-					<option value="MT1">Monterrey 1</option>
-					<option value="MER">Merida</option>
-					<option value="CUL">Culiacan</option>
-					<option value="MCH">Mochis</option>
-					<option value="NOG">Nogales</option>
-					<option value="CCN">Cancun</option>
-					<option value="MAZ">Mazatlan</option>
-					<option value="MXL">Mexicali</option>
-					<option value="PUE">Puebla</option>
-					<option value="QUE">Queretaro</option>
-					<option value="TEP">Tepic</option>
-					<option value="LGT">Leon</option>
-					<option value="IZT">Iztapalapa</option>
-					<option value="ZAP">Zapopan</option>
-					<option value="CHI">Chihuahua</option>
-					<option value="STA">Santa ana</option>
-					<option value="TOL">Toluca</option>
-					<option value="TOR">Torreon</option>
-					<option value="JUA">Juarez</option>
-					<option value="TPZ">Tepozotlan</option>
-					<option value="GDL">Guadalajara</option>
-					<option value="HLO">Hermosillo</option>
-					<option value="MEX">Mexico</option>
-					<option value="VIL">Villahermosa</option>
-					<option value="TIJ">Tijuana</option>
-					<option value="COB">Ciudad obregon</option>
-					<option value="MTY">Monterrey</option>
-					<option value="CH">Capital Humano</option>
-					<option value="SIS">Sistemas</option>
-					<option value="FA">Finanzas</option>
-					<option value="DC">Direccion comercial</option>}
-					<option value="DG">Direccion General</option>
-					<option value="DO">Direccion de operaciones</option>
-					<option value="BAJA_CEL_SUR">Baja cel SUR</option>
-					<option value="BAJA_CEL_NOR">Baja cel NOR</option>
-					<option value="BAJA_CEL_OCT">Baja Cel OCT</option>
-					<option value="BAJA_CEL_NST">Baja Cel NST</option>
-					<option value="BAJA_CEL_CNT">Baja Cel CNT</option>
-				</select>
-		
+				<option value="BAJA_CEL_TRA">TRANSPORTE</option>
+				<option value="BAJA_CEL_SUR">SUR</option>
+				<option value="BAJA_CEL_NOR">NORTE</option>
+				<option value="BAJA_CEL_OCT">OCCIDENTE</option>
+				<option value="BAJA_CEL_NST">NOROESTE</option>
+				<option value="BAJA_CEL_CNT">CENTRO</option>
+			</select>
+
 
 		</div>
 		<label for="">Buscador: <input id="searchTerm" onkeyup="doSearch()" type="text" name="buscador"></label>
@@ -191,19 +158,19 @@
 			<div><a class='link' href='http://ti.tpitic.com.mx/Infraestructura/informe/index.php?666U2lzdGVtYXM=897'>Inicio</a></div>
 			<div><a class='link' href='celular.php'>Celulares</a></div>
 			<div><a class='link' href='usuarios.php'>Usuarios</a></div>
-			
+
 		</div>
 		<div class="actualizar-grid">
-		<a class='link' href='bajas2.php'>actualizar</a>
+			<a class='link' href='bajas2.php'>actualizar</a>
 		</div>
-		
+
 	</div>
 
 	<div class="ventana" id="directorio" style="display: none; height: 490px; overflow: scroll;">
 		<div id="cerrar">
 			<a href="javascript:cerrardirectorio()"><img src="img/cancel.png" alt="cerrar"></a>
 		</div>
-		
+
 
 	</div>
 	<center>
@@ -214,61 +181,33 @@
 		$con = $objConLDAP->conectarLDAP();
 		if ($con) {
 			//$filter = "(duusernname=*)";duoficina
-			
-		
-			$filter = "(duusernname=*)";
-			
-			$srch = ldap_search($con, "ou=DeviceUsers,dc=transportespitic,dc=com", $filter);
+			$filter = "(deviceoffice=*)";
+			$srch = ldap_search($con, "ou=Celulares,ou=Devices,dc=transportespitic,dc=com", $filter);
 			$count = ldap_count_entries($con, $srch);
 			$info = ldap_get_entries($con, $srch);
-		 	$arr = GetDevUsersFromLDAPCells("array", $info[$i]['duusernname'][0], $con);
 			//print_r($arr);
 
 
 			echo '<table id="datos" class="table table-hover">';
-			echo '<thead class="encabezado2"><tr><th>Nombre</th><th>Numero de empleado</th><th>Oficina</th><th>Usuario</th><th>Telefono</th><th>Tag</th><th>status</th><th>Informacion</th></tr></thead>';
+			echo '<thead class="encabezado2"><tr><th>Oficina</th><th>Usuario</th><th>Telefono</th><th>Marca</th><th>TAG</th></tr></thead>';
 
 			for ($i = 0; $i < $count; $i++) {
-					
-				$lu = $info[$i]['duusernname'][0];
-// Condicion if para quitar aquellos registros con dispositivos de baja y que no se muestren en la tabla
-				if($arr[$lu]['ofi']=='BAJA_CEL_NOR' || $arr[$lu]['ofi']=='BAJA_CEL_NOR ' || $arr[$lu]['ofi']==' BAJA_CEL_NOR ' || $arr[$lu]['ofi']==' BAJA_CEL_NOR' 
-				|| $arr[$lu]['ofi']=='BAJA_CEL_NST' || $arr[$lu]['ofi']==' BAJA_CEL_NST' || $arr[$lu]['ofi']=='BAJA_CEL_NST ' || $arr[$lu]['ofi']==' BAJA_CEL_NST '
-				|| $arr[$lu]['ofi']=='BAJA_CEL_SUR' || $arr[$lu]['ofi']==' BAJA_CEL_SUR' || $arr[$lu]['ofi']=='BAJA_CEL_SUR ' || $arr[$lu]['ofi']==' BAJA_CEL_SUR '
-				|| $arr[$lu]['ofi']=='BAJA_CEL_OCT' || $arr[$lu]['ofi']==' BAJA_CEL_OCT' || $arr[$lu]['ofi']=='BAJA_CEL_OCT ' || $arr[$lu]['ofi']==' BAJA_CEL_OCT '
-				|| $arr[$lu]['ofi']=='BAJA_CEL_CNT' || $arr[$lu]['ofi']==' BAJA_CEL_CNT' || $arr[$lu]['ofi']=='BAJA_CEL_CNT ' || $arr[$lu]['ofi']==' BAJA_CEL_CNT '
-				){
-echo '<tbody class="tabladato"><tr><td>' . $info[$i]['dunombre'][0] . '</td>';
-				echo '<td>' . $info[$i]['dunumeroempleado'][0] . '</td>';
-				echo '<td>' . $info[$i]['duoficina'][0] . '</td>';
-				echo '<td>' . $info[$i]['duusernname'][0] . '</td>';
-				
-				echo '<td>' . $arr[$lu]['num'] . '</td>';
-				echo '<td>' . $arr[$lu]['tag'] . '</td>';
-                echo '<td>' . $arr[$lu]['ofi'] . '</td>';
-			
-
-				echo '<td>
-				<form id="formula' . $i . '"  method="POST">
-				<input type="hidden" id=' . $i . ' name="dato" value=' . $val = $info[$i]['duusernname'][0] . '>
-				<button type="button" id="mandar' . $i . '" class="boton">Ver</button>
-				</form>
-				<script>
-			$("#mandar' . $i . '").click(function() {
-				$.ajax({
-					url: "ventana.php",
-					type: "POST",
-					data:$("#formula' . $i . '").serialize(),
-					success: function(res){
-						$("#flotantedos").html(res);
-					}
-					});
-				});
-				</script>
-				</td></tr></tbody>';
+				if (
+					$info[$i]['deviceoffice'][0] == 'BAJA_CEL_NOR' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_NOR' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_NOR ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_NOR '
+					|| $info[$i]['deviceoffice'][0] == 'BAJA_CEL_NST' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_NST' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_NST ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_NST '
+					|| $info[$i]['deviceoffice'][0] == 'BAJA_CEL_SUR' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_SUR' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_SUR ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_SUR '
+					|| $info[$i]['deviceoffice'][0] == 'BAJA_CEL_OCT' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_OCT' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_OCT ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_OCT '
+					|| $info[$i]['deviceoffice'][0] == 'BAJA_CEL_CNT' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_CNT' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_CNT ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_CNT '
+					|| $info[$i]['deviceoffice'][0] == 'BAJA_CEL_TRA' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_TRA' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_TRA ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_TRA '
+				) {
+					echo '<tbody class="tabladato"><tr>';
+					echo '<td>' . $info[$i]['deviceoffice'][0] . '</td>';
+					echo '<td>' . $info[$i]['deviceassignedto'][0] . '</td>';
+					echo '<td>' . $info[$i]['devicenumber'][0] . '</td>';
+					echo '<td>' . $info[$i]['devicebrand'][0] . '</td>';
+					echo '<td>' . $info[$i]['devicetag'][0] . '</td>';
+					echo '</tr></tbody>';
 				}
-
-				
 			}
 			echo '</table>';
 			ldap_close($con);

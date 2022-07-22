@@ -137,7 +137,7 @@
 				<label>Oficina:</label>
 
 				<select id="officinas" name="oficinas" onchange="busquedaPorOfficina()">
-				<option value="">Todas</option>
+					<option value="">Todas</option>
 					<option value="TRA">Transportes</option>
 					<option value="MT1">Monterrey 1</option>
 					<option value="MER">Merida</option>
@@ -169,9 +169,11 @@
 					<option value="CH">Capital Humano</option>
 					<option value="SIS">Sistemas</option>
 					<option value="FA">Finanzas</option>
-					<option value="DC">Direccion comercial</option>}
+					<option value="DC">Direccion comercial</option>
 					<option value="DG">Direccion General</option>
 					<option value="DO">Direccion de operaciones</option>
+					<option value="PMQ">Mars Queretaro</option>
+					<option value="PMP">Mars Poncitlan</option>
 				</select>
 		
 
@@ -182,7 +184,7 @@
 	</div>
 	<div class="menu-grid">
 		<div class="enlaces-grid">
-		<a class="link" href="http://ti.tpitic.com.mx/Infraestructura/informe/index.php?666U2lzdGVtYXM=897">Regresar</a>
+		<a class="link" href="index.php?666U2lzdGVtYXM=897">Inicio</a>
 			<div><a class='link' href='bajas2.php'>Bajas</a></div>
 			<div><a class='link' href='celular.php'>Celulares</a></div>
 		</div>

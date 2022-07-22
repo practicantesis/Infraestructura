@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/estilos2.css">
-    <link rel="shortcut icon" href="./img/ipIcon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/estilos2.css">
+    <link rel="shortcut icon" href="../../img/ipIcon.png" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -19,15 +19,28 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
     </style>
-    <title>IPs Asignadas</title>
+    <title>Asignacion de equipo</title>
+    <?php
+    include('conexion.php');
+    include('funciones.php');
+    ?>
 </head>
+
+<?php
+session_start();
+if (isset($_SESSION['user'])) {
+} else {
+    header("Location: login.php");
+}
+?>
+
 
 <body>
 
 
-    <header>
+    <header id="sup">
         <div class="logo-empresa">
-            <img src="./img/logo_adobe.png" alt="">
+            <img src="../../img/logo_adobe.png" alt="">
         </div>
 
         <div class="titulo">
@@ -36,7 +49,17 @@
             <div class="titulo-nombre">
                 <h1 class="dm">Equipos Asignados</h1>
             </div>
-            <div class="titulo-imagen"> <img class="pitic" src="./img/ip.png" alt=""></div>
+            <div class="titulo-imagen"> <img class="pitic" src="../../img/ip.png" alt=""></div>
+        </div>
+
+        <div class="sup" >
+            <div class="sup-mensaje">
+                <p>Bienvenido:<?php echo "<b>" . $_SESSION['user'] . "</b>"  ?></p>
+            </div>
+            <div class="sup-men">
+                <a href="logout.php">Cerrar sesion</a>
+            </div>
+
         </div>
 
     </header>
@@ -115,7 +138,92 @@
             }
         }
         //	busqueda();
+
+
+
+        function cerrar() {
+            div = document.getElementById('edit');
+            div.style.display = 'none';
+        }
+
+        function mostrar() {
+            div = document.getElementById('edit');
+            div.style.display = '';
+        }
     </script>
+
+    <?php
+    $lanip = $_POST["blanip"];
+    $lanmac = $_POST["blanmac"];
+    $wip = $_POST["bwip"];
+    $wmac = $_POST["bwmac"];
+    $nivel = $_POST["bnivel"];
+    $usuario = $_POST["busuario"];
+    ?>
+
+    <div id="edit">
+
+    </div>
+    <?php
+    //PROCESO PARA EDITAR UN DATOS
+    if (isset($_POST['editar'])) {
+
+        if (empty($_POST["blanip"])) {
+            $lanip = "NO";
+        } else {
+            $lanip = $_POST["blanip"];
+        }
+        if (empty($_POST["blanmac"])) {
+            $lanmac = "NO";
+        } else {
+            $lanmac = $_POST["blanmac"];
+        }
+        if (empty($_POST["bwip"])) {
+            $wip = "NO";
+        } else {
+            $wip = $_POST["bwip"];
+        }
+        if (empty($_POST["bwmac"])) {
+            $wmac = "NO";
+        } else {
+            $wmac = $_POST["bwmac"];
+        }
+        $usuario = $_POST["busuario"];
+        $oficina = $_POST["boficina"];
+
+        $objConLDAP = new Conexion();
+        $ds = $objConLDAP->conectarLDAP();
+        //$ds = ldap_connect();  // Asumiendo que el servidor de LDAP está en el mismo host
+
+        if ($ds) {
+            // Asociar con el dn apropiado para dar acceso de actualización
+            ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+            $r = ldap_bind($ds, "cn=feria,dc=transportespitic,dc=com", "sistemaspitic");
+        
+            // Preparar los datos
+            $info['lanip'][0] = $lanip;
+            $info['lanmac'][0] = $lanmac;
+            $info['wifiip'][0] = $wip;
+            $info['wifimac'][0] = $wmac;
+            $info['accesosdered'][0] = $nivel;
+            $info['uid'][0] = $usuario;
+            $info['oficina'][0] = $oficina;
+
+            // Agregar datos al directorio
+
+            $r = ldap_modify($ds, "uid=$usuario,ou=People,dc=transportespitic,dc=com", $info);
+            echo "<script>alert('Modificaste exitosamente al usuario: $usuario  =)');window.history.replaceState(null, null, window.location.href);</script>"; //mensaje y elimina historial para que no se recargue el post
+
+            ldap_close($ds);
+        }
+    }
+    // window.history.back();
+    ?>
+
+
+
+
+
 
     <article class="consultas">
         <div class="combobox">
@@ -180,13 +288,16 @@
 
     </article>
 
+    <article class="botones">
+        <div class="boton-actualizar">
+            <a class="boton-a" href="">Actualizar</a>
+        </div>
+    </article>
+
 
 
     <article class="tabla">
         <?php
-        require_once('conexion.php');
-        // require_once('../php/funciones_generales.php');
-        require('funciones.php');
         $objConLDAP = new Conexion();
         $con = $objConLDAP->conectarLDAP();
 
@@ -194,11 +305,11 @@
 
         if ($con) {
             echo '<table id="datos" class="table table-hover">';
-            echo '<thead class="encabezado2"><th>Usuario</th><th>Nombre</th><th>Puesto</th><th>Oficina</th><th>Asignado</th><th>IP</th><th>MAC</th></tr></thead>';
-            $filter = "(uid=*)";
+            echo '<thead class="encabezado2"><th>Usuario</th></tr></thead>';
+            $filter = "member=uid=kpartida,ou=People,dc=transportespitic,dc=com";
             //$filter = "(duusernname=*)";duoficina
 
-            $srch = ldap_search($con, "ou=People,dc=transportespitic,dc=com", $filter);
+            $srch = ldap_search($con, "cn=Nivel3,ou=Niveles,ou=groups,dc=transportespitic,dc=com", $filter);
             $count = ldap_count_entries($con, $srch);
             $info = ldap_get_entries($con, $srch);
             //$arr = GetDevUsersFromLDAPCells("array", $info[$i]['usuariotelefono'][0], $con);
@@ -206,25 +317,15 @@
             for ($i = 0; $i < $count; $i++) {
                 //$lu = $info[$i]['usuariotelefono'][0];
                 echo '<tr>';
-                echo '<td>' . $info[$i]['uid'][0] . '</td>';
-                echo '<td>' . $info[$i]['cn'][0] . '</td>';
-                echo '<td>' . $info[$i]['puesto'][0] . '</td>';
-                echo '<td>' . $info[$i]['oficina'][0] . '</td>';
-                //  if(preg_match('/\d\d\d.*/',$info[$i]['lanip'][0])&&
-                //  $info[$i]['lanmac'][0] ){
-                if (empty($info[$i]['lanip'][0]) || empty($info[$i]['lanmac'][0]) || $info[$i]['lanip'][0] == 'NO') {
-                    echo '<td class="text-center">' . '<img src="./css/redcircle.png" >' . '</td>';
-                } else {
-                    echo '<td class="text-center" >' . '<img src="./css/bluecircle.png" >' . '</td>';
-                }
-                echo '<td>' . $info[$i]['lanip'][0] . '</td>';
-                echo '<td>' . $info[$i]['lanmac'][0] . '</td>';
+                echo '<td>' . $info[$i]['member'][0] . '</td>';
                 echo '</tr>';
             }
+            
 
             echo '</tbody></table>';
             ldap_close($con);
         }
+        echo $count;
         ?>
     </article>
 

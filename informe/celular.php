@@ -121,12 +121,13 @@
 			<h1 class="dm">Dispositivos moviles <img class="movil" src="img/moviles.png" alt="celular"></h1>
 
 		</div>
-<br>
+		<br>
 		<div id="obsiones_officina" class="form-group oficina">
 
 			<label>Oficina:</label>
 
-			<select disabled id="officinas" name="oficinas" onchange="busquedaPorOfficina()">
+			<select id="officinas" name="oficinas" onchange="busquedaPorOfficina()">
+			<option value="">Todas</option>
 			<option value="">Todas</option>
 					<option value="TRA">Transportes</option>
 					<option value="MT1">Monterrey 1</option>
@@ -159,9 +160,11 @@
 					<option value="CH">Capital Humano</option>
 					<option value="SIS">Sistemas</option>
 					<option value="FA">Finanzas</option>
-					<option value="DC">Direccion comercial</option>}
+					<option value="DC">Direccion comercial</option>
 					<option value="DG">Direccion General</option>
 					<option value="DO">Direccion de operaciones</option>
+					<option value="PMQ">Mars Queretaro</option>
+					<option value="PMP">Mars Poncitlan</option>
 			</select>
 
 		</div>
@@ -171,12 +174,12 @@
 	</div>
 	<div class="menu-grid">
 		<div class="enlaces-grid">
-			<a class="link" href="http://ti.tpitic.com.mx/Infraestructura/informe/index.php?666U2lzdGVtYXM=897">Regresar</a>
+			<a class="link" href="index.php?666U2lzdGVtYXM=897">Inicio</a>
 			<a class='link' href='bajas2.php'>Bajas</a>
 			<a class='link' href='usuarios.php'>Usuarios</a>
 		</div>
 		<div class="actualizar-grid">
-			<a class='link' href=''>actualizar</a>
+			<a class='link' href='celular.php'>actualizar</a>
 		</div>
 
 	</div>
@@ -184,13 +187,13 @@
 	<center>
 		<?php
 
-		include ('conexion.php');
+		include('conexion.php');
 		include('../php/funciones.php');
 		$objConLDAP = new Conexion();
 		$con = $objConLDAP->conectarLDAP();
 		if ($con) {
 			//$filter = "(duusernname=*)";duoficina
-			$filter = "(deviceoffice=TRA)";
+			$filter = "(deviceoffice=*)";
 			$srch = ldap_search($con, "ou=Celulares,ou=Devices,dc=transportespitic,dc=com", $filter);
 			$count = ldap_count_entries($con, $srch);
 			$info = ldap_get_entries($con, $srch);
@@ -203,21 +206,29 @@
 			echo '<thead class="encabezado2"><tr><th>Oficina</th><th>Usuario</th><th>Telefono</th><th>Marca</th><th>TAG</th><th>Asignado</th><th>Informacion</th></tr></thead>';
 
 			for ($i = 0; $i < $count; $i++) {
-				//
-				echo '<tbody class="tabladato"><tr>';
-				echo '<td>' . $info[$i]['deviceoffice'][0] . '</td>';
-				echo '<td>' . $info[$i]['deviceassignedto'][0] . '</td>';
-				echo '<td>' . $info[$i]['devicenumber'][0] . '</td>';
-				echo '<td>' . $info[$i]['devicebrand'][0] . '</td>';
-				echo '<td>' . $info[$i]['devicetag'][0] . '</td>';
-				if ($info[$i]['deviceassignedto'][0] == 'PENDIENTE1' || $info[$i]['devicenumber'][0] == 'PENDIENTE1' || $info[$i]['devicenumber'][0] == 'NO') {
-					echo '<td style="padding-left: 40px;"><img src="img/circulorojo.png" alt=""></td>';
-				} elseif ($info[$i]['deviceassignedto'][0] == '' || $info[$i]['devicenumber'][0] == '') {
-					echo '<td style="padding-left: 40px;"><img src="img/circulorojo.png" alt=""></td>';
+				if (
+					$info[$i]['deviceoffice'][0] == 'BAJA_CEL_NOR' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_NOR' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_NOR ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_NOR '
+					|| $info[$i]['deviceoffice'][0] == 'BAJA_CEL_NST' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_NST' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_NST ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_NST '
+					|| $info[$i]['deviceoffice'][0] == 'BAJA_CEL_SUR' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_SUR' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_SUR ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_SUR '
+					|| $info[$i]['deviceoffice'][0] == 'BAJA_CEL_OCT' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_OCT' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_OCT ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_OCT '
+					|| $info[$i]['deviceoffice'][0] == 'BAJA_CEL_CNT' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_CNT' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_CNT ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_CNT '
+					|| $info[$i]['deviceoffice'][0] == 'BAJA_CEL_TRA' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_TRA' || $info[$i]['deviceoffice'][0] == 'BAJA_CEL_TRA ' || $info[$i]['deviceoffice'][0] == ' BAJA_CEL_TRA '
+				) {
 				} else {
-					echo '<td style="padding-left: 40px;"><img src="img/circuloazul.png" alt=""></td>';
-				}
-				echo '<td>
+					echo '<tbody class="tabladato"><tr>';
+					echo '<td>' . $info[$i]['deviceoffice'][0] . '</td>';
+					echo '<td>' . $info[$i]['deviceassignedto'][0] . '</td>';
+					echo '<td>' . $info[$i]['devicenumber'][0] . '</td>';
+					echo '<td>' . $info[$i]['devicebrand'][0] . '</td>';
+					echo '<td>' . $info[$i]['devicetag'][0] . '</td>';
+					if ($info[$i]['deviceassignedto'][0] == 'PENDIENTE1' || $info[$i]['devicenumber'][0] == 'PENDIENTE1' || $info[$i]['devicenumber'][0] == 'NO') {
+						echo '<td style="padding-left: 40px;"><img src="img/circulorojo.png" alt=""></td>';
+					} elseif ($info[$i]['deviceassignedto'][0] == '' || $info[$i]['devicenumber'][0] == '') {
+						echo '<td style="padding-left: 40px;"><img src="img/circulorojo.png" alt=""></td>';
+					} else {
+						echo '<td style="padding-left: 40px;"><img src="img/circuloazul.png" alt=""></td>';
+					}
+					echo '<td>
 				<form id="formula' . $i . '"  method="POST">
 				<input type="hidden" id=' . $i . ' name="dato" value=' . $val = $info[$i]['deviceassignedto'][0] . '>
 				<button type="button" id="mandar' . $i . '" class="boton">Ver</button>
@@ -235,6 +246,7 @@
 				});
 				</script>
 				</td></tr></tbody>';
+				}
 			}
 			echo '</table>';
 			ldap_close($con);

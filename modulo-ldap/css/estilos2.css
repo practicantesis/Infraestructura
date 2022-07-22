@@ -14,7 +14,50 @@ body {
 
 header {
   display: grid;
-  grid-template-columns: 130px auto;
+  grid-template-columns: 270px auto 285px;
+  margin-bottom: 1em;
+}
+
+.sup {
+  display: grid;
+  justify-content: end;
+  align-items: baseline;
+  grid-template-columns: auto auto;
+  grid-column-gap: 1em;
+  padding-right: 0.5em;
+}
+
+.sup-mensaje {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sup-mensaje p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "readex";
+}
+
+.sup a {
+  display: flex;
+  text-decoration: none;
+  color: #E7E7E7;
+  transition: 0.1s;
+  margin: 0px;
+  background-color: #1883BA;
+  border-radius: 6px;
+  color: #E7E7E7;
+  margin-left: 3px;
+  margin-bottom: 3px;
+  padding: 4px;
+  border-style: none;
+}
+
+.sup a:hover {
+  transform: scale(1.07);
+  color: #E7E7E7;
 }
 
 .titulo {
@@ -24,16 +67,23 @@ header {
   justify-content: center;
 }
 
-.logo-empresa{
-    margin-left: 0.5em;
-    display: grid;
-    align-items: center;
-    width: 130px;
-  }
+.titulo {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-empresa {
+  margin-left: 0.5em;
+  display: grid;
+  align-items: center;
+  width: 130px;
+}
 
 .logo-empresa img {
-    width: 130px;
-    height: 50px;
+  width: 130px;
+  height: 50px;
 }
 
 .titulo-imagen img {
@@ -51,9 +101,9 @@ header {
 
 .titulo-nombre {
 
-    display: flex;
-    align-items: center;
-  }
+  display: flex;
+  align-items: center;
+}
 
 form {
   display: grid;
@@ -64,11 +114,59 @@ form {
 
 .consultas {
   display: grid;
-  grid-template-columns: auto;
+  grid-template-columns: auto auto;
   justify-content: center;
   align-items: center;
+  grid-column-gap: 1em;
   grid-row-gap: 0.5em;
-  padding-bottom: 1.5em;
+}
+
+.boton {
+  font-family: "readex";
+  display: flex;
+  border-radius: 6px;
+  border: 0;
+  text-decoration: none;
+  box-shadow: 0 1px 6px 0 rgb(0 29 124 / 30%), 0 1px 2px 0 rgb(0 0 0 / 40%);
+  transition: all 0.2s;
+  padding-left: 2em;
+  padding-right: 2em;
+  cursor: pointer;
+}
+
+.boton:hover {
+  transform: scale(1.09);
+
+}
+
+
+
+.botones {
+  display: grid;
+  margin-bottom: 0.3em;
+}
+
+.boton-actualizar {
+  display: grid;
+  align-items: right;
+  justify-content: flex-end;
+}
+
+.boton-a {
+  transition: 0.1s;
+  display: flex;
+  text-decoration: none;
+  color: white;
+  background-color: #008e4f;
+  padding: 0.2em;
+  margin-right: 0.5em;
+  border-radius: 6px;
+  font-family: "readex";
+}
+
+.boton-a:hover {
+  transform: scale(1.05);
+  color: white;
 }
 
 .combobox {
@@ -82,6 +180,7 @@ label {
   padding: 0;
   margin: 0;
 }
+
 select {
   width: 210px;
   height: 35px;
@@ -105,6 +204,7 @@ select:hover {
   outline: none;
   transform: scale(1.09);
 }
+
 option:hover {
   transform: scale(1.05);
 }
@@ -180,4 +280,24 @@ thead {
 footer {
   font-family: "Roboto", sans-serif;
   text-align: center;
+}
+
+.formulario {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  grid-column-gap: 1em;
+  grid-row-gap: 1em;
+}
+
+.editar {
+  margin-bottom: 1em;
+}
+
+.area-boton {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1em;
+  grid-column-gap: 1em;
 }
