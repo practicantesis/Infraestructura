@@ -55,14 +55,16 @@ if (preg_match("/^[a-zA-Z]+$/i",$_POST["param"],$matches)) {
       }            
 }      
 
-if (preg_match("/^CEL(\w\w\w)\d+$/i",$_POST["param"],$matches)) {
+// CEL
+if (preg_match("/^(C[E|P][L|H])(\w\w\w)\d+$/i",$_POST["param"],$matches)) {
       //$mes.='<div>-</div>';
       $regsig = "DUNNO";      
       $mes .='<div class="alert alert-success" role="alert">';
-      $mes .=  "TAG Con Formato valido para OFICINA ".$matches[1];
+      $mes .=  "TAG Con Formato valido para OFICINA ".$matches[2]. " TIPO:".$matches[1];
       $mes.='</div>';
-      $ofi =  $matches[1];
-      $reg = getRegFromSiglas($matches[1]);
+      $ofi =  $matches[2];
+      $tipo =  $matches[1];
+      $reg = getRegFromSiglas($matches[2]);
       $regsig=getRegSiglaFromRegional($reg);
       $di=GetDeviceInfoFromLDAP("ou=Celulares,ou=Devices,dc=transportespitic,dc=com","devicetag",$_POST["param"]);
       $dupocs=CheckOCSDupTAG($_POST["param"],$conn);
@@ -104,10 +106,11 @@ if (preg_match("/^CEL(\w\w\w)\d+$/i",$_POST["param"],$matches)) {
                   $mes.=" DEVICE DADO DE BAJA EN LDAP REGION ".$matchesb[1];
                   $mes.='</div>';
                   $dadodebaja="YES";
-}
-// test
-if (1 == 1) {
-                  if ($dadodebaja != "YES") {
+                  //print_r($di);
+            }
+            // test
+            if (1 == 1) {
+            if ($dadodebaja != "YES") {
             //} else {
                         $mes .='<div class="alert alert-success" role="alert">';
                         $mes.=" DEVICE EXISTENTE EN LDAP PERETENECE A OFICINA ".$di[0]['deviceoffice'][0]." <br>IMEI LDAP: ".$di[0]['deviceimei'][0]." <br>SERIAL LDAP: ".$di[0]['deviceserial'][0] ;

@@ -123,12 +123,13 @@ if ($forma['wifimac'] == "NO APLICA") {
 }	
 
 $entry['accesostemporales'] = "NO";
-
+$correo="DUNNO";
 // MAIL
 if ($forma['EmailService'] == "SELECCIONE") {
 	$ERROR="ERROR: INDIQUE SI EL USUARIO TENDRA EMAIL";
 } 
 if ($forma['EmailService'] == "SI") {
+  $correo="SI";
 	//$entry['EmailService']= $forma['EmailService'];
 	$entry['aliasgoogle'] = "user1";
 }
@@ -208,6 +209,10 @@ echo $ERROR;
 
 
 if ($ERROR == "NO") {
+  if ($correo =="SI") {
+    $emailsuccess=AppendLDAPVAl("cn=userspiticcorp_jc,ou=TPiticGoogleAliases,ou=groups,dc=transportespitic,dc=com",$dn,"member");
+
+  }
   $MAMBOERR=SaveMamboUser($entry);
 	$mod = ldap_add($con, $dn , $entry);
 	$ERROR=ldap_error($con);

@@ -54,7 +54,19 @@ $elmax=(max($numbas)+1);
 $tagbody=$tipo.$_POST['ofi'];
 
 
-//echo "el max es ".$tagbody.$elmax;
+// Validar que no exista el tag dado de baja
+$chkval=CheckExistentValueLDAP("ou=Celulares,ou=Devices,dc=transportespitic,dc=com","devicetag",$tagbody.$elmax);
+if ($chkval == "NO") {
+    $elmax=$elmax+1;
+    $chkvalb=CheckExistentValueLDAP("ou=Celulares,ou=Devices,dc=transportespitic,dc=com","devicetag",$tagbody.$elmax);
+    if ($chkvalb == "NO") {
+        $elmax=$elmax+1;
+    }
+}
+
+
+
+//echo "el max es ".$tagbody.$elmax."----".$chkval."---------";
 //print_r($numbas);
 
 //print_r($devs);

@@ -181,7 +181,7 @@ function getRegSiglaFromRegional($reg) {
 
 
 function QueryToAirwatchAPI($tipo,$val) {
-    $basic_auth = base64_encode("jferia:TP1nghm0R1hM0zaUqt");
+    $basic_auth = base64_encode("jferia:TP1nghm0R1hM0zaUqtyx");
     //$basic_auth='amZlcmlhOkxldHR5b3J0ZWdh';
     $ch = curl_init();
     $api_key='Zbh2S+e0ejNOibdtwlFDFssflXSeCniu2oh1/7lVg5A=';
@@ -216,10 +216,21 @@ function QueryToAirwatchAPI($tipo,$val) {
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');    
     }
 
+
     
 
     $ch_result = curl_exec($ch);
     $infos = curl_getinfo($ch);
+
+
+
+if ($infos['http_code'] == 401) {
+    echo "UNAUTH!!!!!!!!!!!!!!!!!!!!!!!!!!";
+    return "UNAUTH";
+    //exit;
+}
+
+
     //If http_code is not 200, then there's an error
     if ($infos['http_code'] != 200) {
         $result['status'] = AIRWATCH_API_RESULT_ERROR;
@@ -231,6 +242,7 @@ function QueryToAirwatchAPI($tipo,$val) {
     //print_r($result);
     //echo $tipo,$val;
     curl_close($ch);
+
     if ($result['status'] == "AIRWATCH_API_RESULT_ERROR") {
         return $result['error'];
     } else {
@@ -320,6 +332,12 @@ function VerifyMACOwner($mac) {
 function ConectaSQL($base) {
     include 'configuraciones.class.php';
     global $conn;
+    if ($base == "local") {
+        $mysqlhost="localhost";
+        $mysqluser="feria";
+        $mysqlpass="bodycombat";
+        $base="memorias";
+    }
     if ($base == "ocsweb") {
         $mysqlhost="mysqlo";
         $mysqluser="ocs";
@@ -2452,6 +2470,10 @@ function CheckExistentValueLDAP($base,$what,$val) {
     if ($what == "deviceassignedto") {
         $LDAPUserBase="ou=Celulares,ou=Devices,dc=transportespitic,dc=com";
     }
+    if ($what == "devicetag") {
+        $LDAPUserBase="ou=Devices,dc=transportespitic,dc=com";
+    }
+
     $ldapconn=ConectaLDAP();
     ini_set('display_errors', 'On');
     set_time_limit(30);

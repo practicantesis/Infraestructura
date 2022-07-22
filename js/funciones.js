@@ -1,3 +1,26 @@
+function saveserie() {
+    var e = document.getElementById("SEL");
+    var laserie = document.getElementById("laserie").value;
+    var lamac = document.getElementById("lamac").value;
+    if (e) {
+        var multi = e.options[e.selectedIndex].value;
+        //alert(multi+laserie+lamac);
+    }
+    $.ajax({
+        type: "POST",
+        url: 'php/SaveWifi.php',
+        data: { multi: multi, laserie: laserie, lamac: lamac },
+        dataType: "json",
+        success: function(data) {
+            //alert(data[0].success);
+            if (data[0].success == "YES") {
+                $('#msgm').html("OK! -> "+multi);
+            } 
+        }
+    });
+}
+
+
 function SaveNewCellOffice(tag) {
     var selid="CMBCAMBIOFI"+tag;
     var e = document.getElementById(selid);

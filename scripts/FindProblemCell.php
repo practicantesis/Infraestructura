@@ -7,16 +7,6 @@ $awdevs=QueryToAirwatchAPI("ALLDEVS","ALLDEVS");
 $awdevsa=json_decode($awdevs, true);
 $con=ConectaLDAP();
 
-
-if ($awdevs == "UNAUTH") {
-$debs="SIN AUTORIZACION PARA API DE AW";
-EnviaTelegram($debs,"jferia");  
-EnviaTelegram($debs,"acota");  
-EnviaTelegram($debs,"eresendiz");  
-EnviaTelegram($debs,"gsalazar");  
-}
-
-
 //print_r($celdap);
 
 $a=array();
@@ -24,18 +14,52 @@ $b=array();
 
 $tags=array_keys($celdap);
 
+$nowt=date("Y-m-d");
+$now = date_create_from_format('Y-m-d', $nowt);
+$processed="";
+foreach ($awdevsa['Devices'] as &$valuex) {
+    if (preg_match("/(\d\d\d\d-\d\d-\d\d)T/i",$valuex['LastSeen'],$mat)) {
+        $lst=$mat[1];
+        $ls = date_create_from_format('Y-m-d', $lst);
+    }
+    //print_r($ls);
+    //print_r($now);
+    $diff = (array) date_diff($now,$ls);
+    //echo $valuex['DeviceFriendlyName']." -> ".gettype($ls)." -> ".gettype($now)." --- ".$nowt."\n";
+    //print_r($diff);
+    if ($diff["d"] > 20) {
+        $processed .= $valuex['DeviceFriendlyName']." -> ".$lst."\n";
+    }
+
+    /*
+    
+    echo $valuex['DeviceFriendlyName']." -> ".$ls."\n";    
+    */
+
+}    
+
+    $debs .= "\nDISPOSITIVOS CON MAS DE 20 DIAS SIN REPORTARSE CON AW\n";
+    $debs .=  $processed;
+
+
+EnviaTelegram($debs,"jferia");  
+EnviaTelegram($debs,"acota");  
+
+
+// 2022-06-06T15:20:40.740
+
+return false;
+//DeviceFriendlyName
+//LastSeen
+
 echo "---------------------------------------------------  \n";
 echo "OBTENIENDO DISPOSITIVOS EN LDAP CON IMEI POR ASIGNAR \n";
 echo "---------------------------------------------------  \n";
 $debs="DISPOSITIVOS EN LDAP CON IMEI POR ASIGNAR\n";
 foreach ($tags as &$value) {
-    $note="";
-    if ($celdap[$value]['deviceassignedto'] == "PORDEFINIR") {
-        $note = " (IGNORADO POR ESTE PROCESO)";
-    }
 	if (strlen($celdap[$value]['devicetag']) == 9 ) {
-		echo $celdap[$value]['devicetag']." -> ".$celdap[$value]['deviceassignedto'].$note."\n";
-        $debs.=$celdap[$value]['devicetag']." -> ".$celdap[$value]['deviceassignedto'].$note."\n";
+		echo $celdap[$value]['devicetag']." -> ".$celdap[$value]['deviceassignedto']."\n";
+        $debs.=$celdap[$value]['devicetag']." -> ".$celdap[$value]['deviceassignedto']."\n";
 		array_push($a,$celdap[$value]['devicetag']);
 		$b[$celdap[$value]['devicetag']]=$celdap[$value]['deviceassignedto'];
 		//print_r($celdap[$value]);
@@ -53,10 +77,8 @@ echo "------------------------------------------------------------------------- 
 $processed="DUNNO";
 foreach ($awdevsa['Devices'] as &$valuex) {
 	$tag="DUNNO";
-    $skipthis="DUNNO";
 	//echo $valuex['DeviceFriendlyName']."\n";
-	//if (in_array($valuex['DeviceFriendlyName'], $a)) {
-    if ( (in_array($valuex['DeviceFriendlyName'], $a)) and ($b[$valuex['DeviceFriendlyName']] != "PORDEFINIR") ) {    
+	if (in_array($valuex['DeviceFriendlyName'], $a)) {
 		$tg = $valuex['DeviceFriendlyName'];
 		echo "Validando parametos locales para ".$valuex['DeviceFriendlyName']."\n";
 		echo "Validando usuario ".$b[$valuex['DeviceFriendlyName']]."\n";
@@ -86,37 +108,34 @@ foreach ($awdevsa['Devices'] as &$valuex) {
         if ($tagz['count'] > 1) {
             $tagzname=GetDeviceTagInfoFromAssignedUserLDAP($b[$valuex['DeviceFriendlyName']],"tags");
             echo  "Hay mas de un device asignado al usuario ".$b[$valuex['DeviceFriendlyName']].": ".$tagzname."\n";
-            $debs.="\n ERROR!!! Hay mas de un device asignado al usuario ".$b[$valuex['DeviceFriendlyName']].": ".$tagzname." \n";
-            $skipthis="YES";
-            //TelegramATelefonia($debs);
-            //exit;
+            $debs.="ERROR!!! Hay mas de un device asignado al usuario ".$b[$valuex['DeviceFriendlyName']].": ".$tagzname." IMPORTACION ABORTADA!\n";
+            TelegramATelefonia($debs);
+            exit;
         } 
         echo "VALIDACIONES TERMINADAS OBTENIENDO INFO DESDE AIRWATCH PARA ".$b[$valuex['DeviceFriendlyName']]."\n";
         //print_r($tagz);
-        if ($skipthis == "DUNNO") {
-            $sn=$valuex['SerialNumber'];
-    		echo $dn="DeviceTAG=".$tg.",ou=Celulares,ou=Devices,dc=transportespitic,dc=com";
-    		$brand=GetBrandFromModel($valuex[ModelId][Name]);
-    		$entry = array();
-    		$entry['devicebrand']=$brand;
-    		$entry['deviceimei']=$valuex['Imei'];
-    		$entry['devicelastenrolledon']=$valuex['LastEnrolledOn'];
-    		$entry['devicelastseen']=$valuex['LastSeen'];
-    		$entry['devicemac']=$valuex['MacAddress'];
-    		$entry['devicemodel']=$valuex[ModelId][Name];
-    		$entry['deviceserial']=$valuex['SerialNumber'];
-    		$entry['objectClass'][0] = "top";
-    		$entry['objectClass'][1] = "DeviceInfo";
-    		print_r($entry);  
-    	   	$ldm=ldap_modify($con, $dn, $entry);
-        	echo $ldm;
-        	echo $RES=ldap_error($con);
-            if ($processed != "DUNNO") {
-                $processed .= "IMPORTED ".$b[$valuex['DeviceFriendlyName']]." FROM AW TO LDAP\n";
-            } else {
-                $processed = "IMPORTED ".$b[$valuex['DeviceFriendlyName']]." FROM AW TO LDAP\n";
-            }
-        }    
+        $sn=$valuex['SerialNumber'];
+		echo $dn="DeviceTAG=".$tg.",ou=Celulares,ou=Devices,dc=transportespitic,dc=com";
+		$brand=GetBrandFromModel($valuex[ModelId][Name]);
+		$entry = array();
+		$entry['devicebrand']=$brand;
+		$entry['deviceimei']=$valuex['Imei'];
+		$entry['devicelastenrolledon']=$valuex['LastEnrolledOn'];
+		$entry['devicelastseen']=$valuex['LastSeen'];
+		$entry['devicemac']=$valuex['MacAddress'];
+		$entry['devicemodel']=$valuex[ModelId][Name];
+		$entry['deviceserial']=$valuex['SerialNumber'];
+		$entry['objectClass'][0] = "top";
+		$entry['objectClass'][1] = "DeviceInfo";
+		print_r($entry);  
+	   	$ldm=ldap_modify($con, $dn, $entry);
+    	echo $ldm;
+    	echo $RES=ldap_error($con);
+        if ($processed != "DUNNO") {
+            $processed .= "IMPORTED ".$b[$valuex['DeviceFriendlyName']]." FROM AW TO LDAP\n";
+        } else {
+            $processed = "IMPORTED ".$b[$valuex['DeviceFriendlyName']]." FROM AW TO LDAP\n";
+        }
 	} else {
 
 	}
