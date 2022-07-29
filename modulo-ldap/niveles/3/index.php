@@ -52,7 +52,7 @@ if (isset($_SESSION['user'])) {
             <div class="titulo-imagen"> <img class="pitic" src="../../img/ip.png" alt=""></div>
         </div>
 
-        <div class="sup" >
+        <div class="sup">
             <div class="sup-mensaje">
                 <p>Bienvenido:<?php echo "<b>" . $_SESSION['user'] . "</b>"  ?></p>
             </div>
@@ -199,7 +199,7 @@ if (isset($_SESSION['user'])) {
             // Asociar con el dn apropiado para dar acceso de actualización
             ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
             $r = ldap_bind($ds, "cn=feria,dc=transportespitic,dc=com", "sistemaspitic");
-        
+
             // Preparar los datos
             $info['lanip'][0] = $lanip;
             $info['lanmac'][0] = $lanmac;
@@ -232,13 +232,17 @@ if (isset($_SESSION['user'])) {
             </div>
 
             <div class="select">
-                <select id="officinas" name="oficinas" onchange="busquedaPorOfficina()">
-                    <option value="Nivel1">Nivel 1</option>
-                    <option value="Nivel2">Nivel 2</option>
-                    <option value="Nivel3">Nivel 3</option>
-                    <option value="Nivel5">Nivel 5</option>
-                    <option value="Nivel9">Nivel 9</option>
-                </select>
+                <form action="index.php" method="post">
+                    <select id="officinas" name="oficinas">
+                        <option value="Nivel1">Nivel 1</option>
+                        <option value="Nivel2">Nivel 2</option>
+                        <option value="Nivel3">Nivel 3</option>
+                        <option value="Nivel5">Nivel 5</option>
+                        <option value="Nivel9">Nivel 9</option>
+                    </select>
+                    <input type="submit" name='niveles' value="enviar">
+                </form>
+
             </div>
         </div>
         <div class="input-buscador">
@@ -272,21 +276,21 @@ if (isset($_SESSION['user'])) {
 
 
 
-        if ($con) {
+        if ($con && isset($_POST['niveles'])) {
             echo '<table id="datos" class="table table-hover">';
             echo '<thead class="encabezado2"><th>Usuario</th></tr></thead>';
             $filter2 = "member=uid=kpartida,ou=People,dc=transportespitic,dc=com";
             $filter = "member=*";
             //$filter = "(duusernname=*)";duoficina
 
-            $srch = ldap_search($con, "ou=Niveles,ou=groups,dc=transportespitic,dc=com", "(cn=Nivel3)");
+            $srch = ldap_search($con, "ou=Niveles,ou=groups,dc=transportespitic,dc=com", "(cn=".$_POST['oficinas'].")");
             $contar = ldap_count_entries($con, $srch);
             $info = ldap_get_entries($con, $srch);
             //$arr = GetDevUsersFromLDAPCells("array", $info[$i]['usuariotelefono'][0], $con);
             echo '<tbody class="tabladato r">';
             for ($i = 0; $i < $info["count"]; $i++) {
 
-                $count=$info[$i]['member']['count'];
+                $count = $info[$i]['member']['count'];
                 //$lu = $info[$i]['usuariotelefono'][0];
 
                 for ($x = 0; $x < $count; $x++) {
@@ -295,13 +299,12 @@ if (isset($_SESSION['user'])) {
                     echo '<td>' . $info[$i]['member'][$x] . '</td>';
                     echo '</tr>';
                 }
-                
             }
             echo '</tbody></table>';
             ldap_close($con);
         }
-    //    echo $info["count"];
-     //   echo $count;
+        //    echo $info["count"];
+        //   echo $count;
         ?>
     </article>
 
