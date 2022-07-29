@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/estilos2.css">
-    <link rel="shortcut icon" href="../../img/ipIcon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/ipIcon.png" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -40,7 +40,7 @@ if (isset($_SESSION['user'])) {
 
     <header id="sup">
         <div class="logo-empresa">
-            <img src="../../img/logo_adobe.png" alt="">
+            <img src="../img/logo_adobe.png" alt="">
         </div>
 
         <div class="titulo">
