@@ -151,6 +151,11 @@ form {
   justify-content: flex-start;
   align-items: center;
 }
+.mensaje-php{
+  display: grid;
+  justify-content:center;
+  align-items: center;
+}
 
 .boton-actualizar {
   display: grid;
