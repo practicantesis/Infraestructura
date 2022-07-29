@@ -307,12 +307,11 @@ if (isset($_SESSION['user'])) {
             echo '<table id="datos" class="table table-hover">';
             echo '<thead class="encabezado2"><th>Usuario</th></tr></thead>';
             $filter2 = "member=uid=kpartida,ou=People,dc=transportespitic,dc=com";
-            $filter = "member=uid=*";
+            $filter = "member=uid=*,ou=People,dc=transportespitic,dc=com";
             //$filter = "(duusernname=*)";duoficina
 
             $srch = ldap_search($con, "cn=Nivel3,ou=Niveles,ou=groups,dc=transportespitic,dc=com", $filter);
             $count = ldap_count_entries($con, $srch);
-            echo $count;
             $info = ldap_get_entries($con, $srch);
             //$arr = GetDevUsersFromLDAPCells("array", $info[$i]['usuariotelefono'][0], $con);
             echo '<tbody class="tabladato r">';
