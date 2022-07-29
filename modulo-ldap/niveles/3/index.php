@@ -307,7 +307,7 @@ if (isset($_SESSION['user'])) {
             echo '<table id="datos" class="table table-hover">';
             echo '<thead class="encabezado2"><th>Usuario</th></tr></thead>';
             $filter2 = "member=uid=kpartida,ou=People,dc=transportespitic,dc=com";
-            $filter = "member=uid=*,ou=People,dc=transportespitic,dc=com";
+            $filter = "member=*";
             //$filter = "(duusernname=*)";duoficina
 
             $srch = ldap_search($con, "cn=Nivel3,ou=Niveles,ou=groups,dc=transportespitic,dc=com", $filter);
@@ -327,6 +327,8 @@ if (isset($_SESSION['user'])) {
             ldap_close($con);
         }
         echo $count;
+        echo $info["count"];
+        echo $info;
         ?>
     </article>
 
