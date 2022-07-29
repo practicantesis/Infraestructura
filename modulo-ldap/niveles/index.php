@@ -49,7 +49,7 @@ if (isset($_SESSION['user'])) {
             <div class="titulo-nombre">
                 <h1 class="dm">Equipos Asignados</h1>
             </div>
-            <div class="titulo-imagen"> <img class="pitic" src="../../img/ip.png" alt=""></div>
+            <div class="titulo-imagen"> <img class="pitic" src="../img/ip.png" alt=""></div>
         </div>
 
         <div class="sup">
