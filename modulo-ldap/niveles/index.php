@@ -265,7 +265,9 @@ if (isset($_SESSION['user'])) {
     <article class="botones">
         <div>
             <div>
-                <h6><?php echo "Acceso de ".  $_POST["nivel"] ?></h6>
+                <h6><?php if(isset($_POST["niveles"])){
+                    echo "Acceso de ".  $_POST["nivel"];
+                }  ?></h6>
             </div>
         </div>
         <div class="boton-actualizar">
