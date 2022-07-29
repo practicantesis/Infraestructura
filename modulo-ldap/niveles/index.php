@@ -233,7 +233,7 @@ if (isset($_SESSION['user'])) {
 
             <div class="select">
                 <form action="index.php" method="post" class="formulario-niveles">
-                    <select id="officinas" name="oficinas">
+                    <select id="officinas" name="niveles">
                         <option hidden></option>
                         <option value="Nivel1">Nivel 1</option>
                         <option value="Nivel2">Nivel 2</option>
@@ -266,6 +266,11 @@ if (isset($_SESSION['user'])) {
         <div class="boton-actualizar">
             <a class="boton-a" href="">Actualizar</a>
         </div>
+        <div>
+            <div>
+                <h6>Acceso de <b><?php echo $_POST["niveles"] ?></b></h6>
+            </div>
+        </div>
     </article>
 
 
@@ -284,7 +289,7 @@ if (isset($_SESSION['user'])) {
             $filter = "member=*";
             //$filter = "(duusernname=*)";duoficina
 
-            $srch = ldap_search($con, "ou=Niveles,ou=groups,dc=transportespitic,dc=com", "(cn=".$_POST['oficinas'].")");
+            $srch = ldap_search($con, "ou=Niveles,ou=groups,dc=transportespitic,dc=com", "(cn=".$_POST['niveles'].")");
             $contar = ldap_count_entries($con, $srch);
             $info = ldap_get_entries($con, $srch);
             //$arr = GetDevUsersFromLDAPCells("array", $info[$i]['usuariotelefono'][0], $con);
@@ -311,7 +316,7 @@ if (isset($_SESSION['user'])) {
 
 
     <footer>
-        <p class="copyright">© 2022 Desarrollo y Mantenimiento por: Andres Salazar</p>
+        <p class="copyright">© 2022 - Desarrollo y Mantenimiento: Andres Salazar (gsalazar) - Versión del sitio 1.0</p>
     </footer>
 </body>
 

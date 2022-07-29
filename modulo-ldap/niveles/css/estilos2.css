@@ -143,6 +143,7 @@ form {
 
 .botones {
   display: grid;
+  grid-template-columns: auto auto;
   margin-bottom: 0.3em;
 }
 
