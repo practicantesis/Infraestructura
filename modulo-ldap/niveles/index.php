@@ -233,7 +233,7 @@ if (isset($_SESSION['user'])) {
 
             <div class="select">
                 <form action="index.php" method="post" class="formulario-niveles">
-                    <select id="officinas" name="niveles">
+                    <select id="officinas" name="nivel">
                         <option hidden></option>
                         <option value="Nivel1">Nivel 1</option>
                         <option value="Nivel2">Nivel 2</option>
@@ -268,7 +268,7 @@ if (isset($_SESSION['user'])) {
         </div>
         <div>
             <div>
-                <h6>Acceso de <b><?php echo $_POST["niveles"] ?></b></h6>
+                <h6>Acceso de <b><?php echo $_POST["nivel"] ?></b></h6>
             </div>
         </div>
     </article>
@@ -289,7 +289,7 @@ if (isset($_SESSION['user'])) {
             $filter = "member=*";
             //$filter = "(duusernname=*)";duoficina
 
-            $srch = ldap_search($con, "ou=Niveles,ou=groups,dc=transportespitic,dc=com", "(cn=".$_POST['niveles'].")");
+            $srch = ldap_search($con, "ou=Niveles,ou=groups,dc=transportespitic,dc=com", "(cn=".$_POST['nivel'].")");
             $contar = ldap_count_entries($con, $srch);
             $info = ldap_get_entries($con, $srch);
             //$arr = GetDevUsersFromLDAPCells("array", $info[$i]['usuariotelefono'][0], $con);
