@@ -234,6 +234,7 @@ if (isset($_SESSION['user'])) {
             <div class="select">
                 <form action="index.php" method="post" class="formulario-niveles">
                     <select id="officinas" name="oficinas">
+                        <option hidden></option>
                         <option value="Nivel1">Nivel 1</option>
                         <option value="Nivel2">Nivel 2</option>
                         <option value="Nivel3">Nivel 3</option>
