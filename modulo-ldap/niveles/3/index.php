@@ -310,7 +310,7 @@ if (isset($_SESSION['user'])) {
             $filter = "member=*";
             //$filter = "(duusernname=*)";duoficina
 
-            $srch = ldap_search($con, "cn=Nivel3,ou=Niveles,ou=groups,dc=transportespitic,dc=com", $filter);
+            $srch = ldap_search($con, "ou=TPiticGoogleAliases,ou=groups,dc=transportespitic,dc=com", "(cn=becas)");
             $count = ldap_count_entries($con, $srch);
             $info = ldap_get_entries($con, $srch);
             //$arr = GetDevUsersFromLDAPCells("array", $info[$i]['usuariotelefono'][0], $con);
@@ -318,7 +318,7 @@ if (isset($_SESSION['user'])) {
             for ($i = 0; $i < $info["count"]; $i++) {
                 //$lu = $info[$i]['usuariotelefono'][0];
                 echo '<tr>';
-                echo '<td>' . $info[$i]['member'][$i] . '</td>';
+                echo '<td>' . $info[$i]['dn'] . '</td>';
                 echo '</tr>';
             }
             
@@ -326,7 +326,6 @@ if (isset($_SESSION['user'])) {
             echo '</tbody></table>';
             ldap_close($con);
         }
-        echo $count;
         echo $info["count"];
         echo $info;
         ?>
