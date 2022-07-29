@@ -315,10 +315,10 @@ if (isset($_SESSION['user'])) {
             $info = ldap_get_entries($con, $srch);
             //$arr = GetDevUsersFromLDAPCells("array", $info[$i]['usuariotelefono'][0], $con);
             echo '<tbody class="tabladato r">';
-            for ($i = 0; $i < $count; $i++) {
+            for ($i = 0; $i < $info["count"]; $i++) {
                 //$lu = $info[$i]['usuariotelefono'][0];
                 echo '<tr>';
-                echo '<td>' . $info[$i]['member'][0] . '</td>';
+                echo '<td>' . $info[$i]['member'][$i] . '</td>';
                 echo '</tr>';
             }
             
