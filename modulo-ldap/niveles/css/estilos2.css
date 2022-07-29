@@ -146,6 +146,11 @@ form {
   grid-template-columns: auto auto auto;
   margin-bottom: 0.3em;
 }
+.agregar{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
 
 .boton-actualizar {
   display: grid;

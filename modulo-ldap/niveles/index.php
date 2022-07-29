@@ -263,14 +263,14 @@ if (isset($_SESSION['user'])) {
     </article>
 
     <article class="botones">
-    <div class="boton-actualizar">
+        <div class="boton-actualizar agregar">
             <a class="boton-a" href="">Agregar</a>
         </div>
-        <div>
+        <div class="mensaje-php">
             <div>
-                <h6><?php if(isset($_POST["niveles"])){
-                    echo "Acceso de ".  $_POST["nivel"];
-                }  ?></h6>
+                <h6><?php if (isset($_POST["niveles"])) {
+                        echo "Acceso de " .  $_POST["nivel"];
+                    }  ?></h6>
             </div>
         </div>
         <div class="boton-actualizar">
