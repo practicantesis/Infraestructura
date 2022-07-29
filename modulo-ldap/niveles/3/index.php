@@ -232,7 +232,7 @@ if (isset($_SESSION['user'])) {
             </div>
 
             <div class="select">
-                <form action="index.php" method="post">
+                <form action="index.php" method="post" class="formulario-niveles">
                     <select id="officinas" name="oficinas">
                         <option value="Nivel1">Nivel 1</option>
                         <option value="Nivel2">Nivel 2</option>
@@ -240,7 +240,7 @@ if (isset($_SESSION['user'])) {
                         <option value="Nivel5">Nivel 5</option>
                         <option value="Nivel9">Nivel 9</option>
                     </select>
-                    <input type="submit" name='niveles' value="enviar">
+                    <input type="submit" name='niveles' value="Mostrar">
                 </form>
 
             </div>
