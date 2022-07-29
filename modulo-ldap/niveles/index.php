@@ -263,7 +263,7 @@ if (isset($_SESSION['user'])) {
     </article>
 
     <article class="botones">
-        <div class="agregar boton-actualizar">
+        <div class="agregar">
             <div><a class="boton-a" href="">Agregar</a></div>
         </div>
         <div class="mensaje-php">
