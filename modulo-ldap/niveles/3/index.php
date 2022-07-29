@@ -323,7 +323,7 @@ if (isset($_SESSION['user'])) {
                 for ($x = 0; $x < $count; $x++) {
                     //echo "The number is: $x <br>";
                     echo '<tr>';
-                    echo '<td>' . $info[$i]['uid'][$x] . '</td>';
+                    echo '<td>' . $info[$i]['member'][$x] . '</td>';
                     echo '</tr>';
                 }
                 
