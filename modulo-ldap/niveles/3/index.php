@@ -323,18 +323,16 @@ if (isset($_SESSION['user'])) {
                 for ($x = 0; $x < $count; $x++) {
                     //echo "The number is: $x <br>";
                     echo '<tr>';
-                    echo '<td>' . $info[$i]['member'][$x] . '</td>';
+                    echo '<td>' . $info[$i]['member']['uid'][$x] . '</td>';
                     echo '</tr>';
                 }
                 
             }
-            
-
             echo '</tbody></table>';
             ldap_close($con);
         }
-        echo $info["count"];
-        echo $count;
+    //    echo $info["count"];
+     //   echo $count;
         ?>
     </article>
 
