@@ -305,4 +305,5 @@ footer {
 .formulario-niveles{
   display: grid;
   grid-template-columns: auto auto;
+  grid-column-gap: 1em;
 }
