@@ -264,7 +264,7 @@ if (isset($_SESSION['user'])) {
 
     <article class="botones">
         <div class="boton-actualizar agregar">
-            <a class="boton-a" href="">Agregar</a>
+            <div><a class="boton-a" href="">Agregar</a></div>
         </div>
         <div class="mensaje-php">
             <div>
@@ -274,7 +274,7 @@ if (isset($_SESSION['user'])) {
             </div>
         </div>
         <div class="boton-actualizar">
-            <a class="boton-a" href="">Actualizar</a>
+          <div><a class="boton-a" href="">Actualizar</a></div>  
         </div>
     </article>
 
