@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/estilos2.css">
-    <link rel="shortcut icon" href="../img/ipIcon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/acceso.png" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -49,7 +49,7 @@ if (isset($_SESSION['user'])) {
             <div class="titulo-nombre">
                 <h1 class="dm">Nivel de acceso</h1>
             </div>
-            <div class="titulo-imagen"> <img class="pitic" src="../img/ip.png" alt=""></div>
+            <div class="titulo-imagen"> <img class="pitic" src="../img/acceso.png" alt=""></div>
         </div>
 
         <div class="sup">
