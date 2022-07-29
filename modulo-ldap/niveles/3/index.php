@@ -318,7 +318,7 @@ if (isset($_SESSION['user'])) {
             for ($i = 0; $i < $info["count"]; $i++) {
                 //$lu = $info[$i]['usuariotelefono'][0];
                 echo '<tr>';
-                echo '<td>' . $info[$i]['dn'] . '</td>';
+                echo '<td>' . $info[$i]['member'] . '</td>';
                 echo '</tr>';
             }
             
