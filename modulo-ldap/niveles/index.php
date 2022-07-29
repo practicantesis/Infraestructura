@@ -47,7 +47,7 @@ if (isset($_SESSION['user'])) {
 
 
             <div class="titulo-nombre">
-                <h1 class="dm">Equipos Asignados</h1>
+                <h1 class="dm">Nivel de acceso</h1>
             </div>
             <div class="titulo-imagen"> <img class="pitic" src="../img/ip.png" alt=""></div>
         </div>
@@ -228,7 +228,7 @@ if (isset($_SESSION['user'])) {
     <article class="consultas">
         <div class="combobox">
             <div class="label-oficina">
-                <label>Oficina:</label>
+                <label>Nivel:</label>
             </div>
 
             <div class="select">
