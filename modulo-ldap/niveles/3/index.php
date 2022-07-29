@@ -311,7 +311,7 @@ if (isset($_SESSION['user'])) {
             //$filter = "(duusernname=*)";duoficina
 
             $srch = ldap_search($con, "ou=TPiticGoogleAliases,ou=groups,dc=transportespitic,dc=com", "(cn=becas)");
-            $count = ldap_count_entries($con, $srch);
+            $contar = ldap_count_entries($con, $srch);
             $info = ldap_get_entries($con, $srch);
             //$arr = GetDevUsersFromLDAPCells("array", $info[$i]['usuariotelefono'][0], $con);
             echo '<tbody class="tabladato r">';
