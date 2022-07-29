@@ -263,13 +263,13 @@ if (isset($_SESSION['user'])) {
     </article>
 
     <article class="botones">
-        <div class="boton-actualizar">
-            <a class="boton-a" href="">Actualizar</a>
-        </div>
         <div>
             <div>
-                <h6>Acceso de <b><?php echo $_POST["nivel"] ?></b></h6>
+                <h6><?php echo "Acceso de".  $_POST["nivel"] ?></h6>
             </div>
+        </div>
+        <div class="boton-actualizar">
+            <a class="boton-a" href="">Actualizar</a>
         </div>
     </article>
 
@@ -289,7 +289,7 @@ if (isset($_SESSION['user'])) {
             $filter = "member=*";
             //$filter = "(duusernname=*)";duoficina
 
-            $srch = ldap_search($con, "ou=Niveles,ou=groups,dc=transportespitic,dc=com", "(cn=".$_POST['nivel'].")");
+            $srch = ldap_search($con, "ou=Niveles,ou=groups,dc=transportespitic,dc=com", "(cn=" . $_POST['nivel'] . ")");
             $contar = ldap_count_entries($con, $srch);
             $info = ldap_get_entries($con, $srch);
             //$arr = GetDevUsersFromLDAPCells("array", $info[$i]['usuariotelefono'][0], $con);
