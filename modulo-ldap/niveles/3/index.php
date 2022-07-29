@@ -316,10 +316,17 @@ if (isset($_SESSION['user'])) {
             //$arr = GetDevUsersFromLDAPCells("array", $info[$i]['usuariotelefono'][0], $con);
             echo '<tbody class="tabladato r">';
             for ($i = 0; $i < $info["count"]; $i++) {
+
+                $count=$info[$i]['member']['count'];
                 //$lu = $info[$i]['usuariotelefono'][0];
-                echo '<tr>';
-                echo '<td>' . $info[$i]['member'] . '</td>';
-                echo '</tr>';
+
+                for ($x = 0; $x < $count; $x++) {
+                    //echo "The number is: $x <br>";
+                    echo '<tr>';
+                    echo '<td>' . $info[$i]['member'][$x] . '</td>';
+                    echo '</tr>';
+                }
+                
             }
             
 
