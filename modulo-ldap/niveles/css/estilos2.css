@@ -148,8 +148,8 @@ form {
 }
 .agregar{
   display: grid;
-  justify-content: flex-end;
-  align-items: left;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .boton-actualizar {
