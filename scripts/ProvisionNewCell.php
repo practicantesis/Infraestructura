@@ -24,6 +24,9 @@ $b=array();
 
 $tags=array_keys($celdap);
 
+
+//EnviaTelegram("hi","jferia");
+
 echo "---------------------------------------------------  \n";
 echo "OBTENIENDO DISPOSITIVOS EN LDAP CON IMEI POR ASIGNAR \n";
 echo "---------------------------------------------------  \n";
@@ -67,7 +70,9 @@ foreach ($awdevsa['Devices'] as &$valuex) {
 		} else {
 			if ($user[count] == 0) {
 				echo "ERROR NO EXISTE EL USUARIO DE DEVICE ".$b[$valuex['DeviceFriendlyName']]."\n";
-				exit;
+				$debs.="\n ERROR NO EXISTE EL USUARIO DE DEVICE ".$b[$valuex['DeviceFriendlyName']]." \n";
+				$skipthis="YES";
+				//exit;
 			} else {
 				echo "ERROR HAY MAS DE UN USUARIO DE DEVICES CON EL MISMO USERNAME";
 				exit;
@@ -370,8 +375,8 @@ echo "Total: ".$cnt;
 
 
 
-DeviceModel
-DeviceSerial
+//DeviceModel
+//DeviceSerial
 
 $entry['deviceimei']=$forma['val-devicimei'];
 

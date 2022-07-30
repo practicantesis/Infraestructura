@@ -2,11 +2,8 @@
 
 function EnviaTelegram($response,$who) {
     $ui=GetUserInfoFromLDAP($who,"array");
-    //print_r($ui);
-    //feria
-
+    print_r($ui);
     $chatId=$ui[0][telegram][0];
-    //"1835595419";
     $token = '2018772774:AAEIoNJsUaQdSVCrVJP97E8DoLUFBAy85zk';
     $website = 'https://api.telegram.org/bot'.$token;
     $url = $website.'/sendMessage?chat_id='.$chatId.'&parse_mode=HTML&text='.urlencode($response);
@@ -1042,7 +1039,7 @@ function DevUserForm($ldata) {
                                         </div>
 
 
-//
+
                             <!-- Segundo Reglon Nombre -->
                             <div class="form-group row">';
                                 $cu='dunumeroempleado';
@@ -1056,10 +1053,10 @@ function DevUserForm($ldata) {
                                     </div>
                                 </div>
                                 ';
-                                $cu='oficina';
+                                $cu='duoficina';
                                 $forma .='
                                 <div class="col">
-                                    <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'"><p class="text-danger">DU Oficina: </p></label><div id="edit-'.$cu.'"><a href="#" onclick="UVal('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
+                                    <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">DU Oficina: </p></label><div id="edit-'.$cu.'"><a href="#" onclick="UVal('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
                                     <div class="col-lg-6">
                                         <div class="form-row" id="elinput-'.$cu.'">
                                             <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="'.$cu.'" value="'.$ldata[0][$cu][0].'" '.$ldata[0][$cu][0].' '.$rouser.'>
@@ -1068,7 +1065,7 @@ function DevUserForm($ldata) {
                                 </div>
                             </div>                                
 
-//                                        
+                                        
 
 
                                     </div>

@@ -32,8 +32,24 @@ if(!empty($_POST["keyword"])) {
       }
 
 
-      if (preg_match("/^[A-Z]{2,4}$/i",$_POST["keyword"],$matches)) {
+      if (preg_match("/^[A-Z]{2,4}$/",$_POST["keyword"],$matches)) {
             $ldapfilter="(oficina=".$_POST["keyword"].")";
+            //echo $ldapfilter;
+      }
+      if (preg_match("/^MT1$/i",$_POST["keyword"],$matches)) {
+            $ldapfilter="(oficina=".$_POST["keyword"].")";
+            //echo $ldapfilter;
+      }
+      if (preg_match("/^\d{3,6}/i",$_POST["keyword"],$matches)) {
+            $ldapfilter="(noempleado=".$_POST["keyword"].")";
+            //echo $ldapfilter;
+      }
+      if (preg_match("/el mas guapo/",$_POST["keyword"],$matches)) {
+            $ldapfilter="uid=jferia";
+            //echo $ldapfilter;
+      }
+      if (preg_match("/el mas inteligente/",$_POST["keyword"],$matches)) {
+            $ldapfilter="uid=iaguiar";
             //echo $ldapfilter;
       }
 
@@ -63,7 +79,7 @@ if(!empty($_POST["keyword"])) {
                         //echo "</pre>";
                   }
                   if ($i == 0) {
-                        echo "No matches found!";
+                        echo "No matches found! ";
                   }
             }
       }

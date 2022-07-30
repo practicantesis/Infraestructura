@@ -14,7 +14,8 @@ if(!empty($_POST["keyword"])) {
       //$ldapfilter='';
       //$ldaptree='';
       if ($matches[2][0] == 'Pornom') {
-            $ldapfilter="(cn=".$matches[1][0]."*)";
+            //$ldapfilter="(cn=".$matches[1][0]."*)";
+            $ldapfilter="(|(cn=".$matches[1][0]."*)(description=".$matches[1][0]."*))";
             $ldaptree    = "ou=Samba,ou=groups,dc=transportespitic,dc=com";
             //$ldaptree    = "ou=groups,dc=transportespitic,dc=com";
       }
@@ -22,7 +23,6 @@ if(!empty($_POST["keyword"])) {
             $ldapfilter="(uid=".$matches[1][0]."*)";
             $ldaptree    = "ou=People,dc=transportespitic,dc=com";
       }
-
       //$ldapfilter="(cn=".$_POST["keyword"]."*)";
       $aut='';
       //echo $ldapfilter;
@@ -34,7 +34,10 @@ if(!empty($_POST["keyword"])) {
                   for ($i = 0; $i < $ldata["count"]; $i++) {
                         $return_arr[] =  $ldata[$i]["cn"][0];
                         if ($matches[2][0] == 'Pornom') {
-                              $aut .= '<li> <a href="#" onClick="SmbselectGroup('."'".$ldata[$i]["cn"][0]."'".','."'".$matches[2][0]."'".');" >'.$ldata[$i]["cn"][0].'</a></li>';
+                        	  if (isset($ldata[$i]["description"][0]))  {
+                        	  	$desc=" -> ".$ldata[$i]["description"][0];
+                        	  }
+                              $aut .= '<li> <a href="#" onClick="SmbselectGroup('."'".$ldata[$i]["cn"][0]."'".','."'".$matches[2][0]."'".');" >'.$ldata[$i]["cn"][0].$desc.'</a></li>';
                         }
                         if ($matches[2][0] == 'Poruse') {
                               $aut .= '<li> <a href="#" onClick="SmbselectGroup('."'".$ldata[$i]["uid"][0]."'".','."'".$matches[2][0]."'".');" >'.$ldata[$i]["uid"][0].'</a></li>';
