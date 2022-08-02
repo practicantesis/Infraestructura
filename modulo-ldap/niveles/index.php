@@ -264,7 +264,11 @@ if (isset($_SESSION['user'])) {
 
     <article class="botones">
         <div class="agregar">
-            <div><a class="boton-a" href="">Agregar</a></div>
+            <form action="agregar.php" method="POST">
+                <div><input type="submit" value="Agregar" class="boton-a"></div>
+                <!--<div><a class="boton-a" href="">Agregar</a></div>-->
+            </form>
+
         </div>
         <div class="mensaje-php">
             <div>
@@ -274,7 +278,7 @@ if (isset($_SESSION['user'])) {
             </div>
         </div>
         <div class="boton-actualizar">
-          <div><a class="boton-a" href="">Actualizar</a></div>  
+            <div><a class="boton-a" href="">Actualizar</a></div>
         </div>
     </article>
 
