@@ -222,7 +222,9 @@ if (isset($_SESSION['user'])) {
 
 
 
+<div id="divagregar">
 
+</div>
 
 
     <article class="consultas">
@@ -255,20 +257,28 @@ if (isset($_SESSION['user'])) {
                 <abbr title="Ya puedes buscar por usuario, nombre, oficina e incluso por puesto "> <input id="searchTerm" onkeyup="doSearch()" type="text" name="buscador"></abbr>
             </div>
         </div>
-
-
-
-
-
     </article>
 
     <article class="botones">
         <div class="agregar">
-            <form action="agregar.php" method="POST">
-                <div><input type="submit" value="Agregar" class="boton-a"></div>
-                <!--<div><a class="boton-a" href="">Agregar</a></div>-->
-            </form>
-
+            <div>
+                <form id="formagregar" method="POST">
+                <a class="boton-a" type="button" href="#divagregar" id="agregar">Agregar</a>
+                </form>
+            </div>
+            <script>
+                $("#agregar").click(function() {
+				$.ajax({
+					url: "agregar.php",
+					type: "POST",
+					data:$("#formagregar").serialize(),
+					success: function(res){
+                        $("#divagregar").html(res);
+                       
+					}
+					});
+				});
+            </script>
         </div>
         <div class="mensaje-php">
             <div>
