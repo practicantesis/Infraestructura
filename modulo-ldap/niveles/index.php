@@ -183,13 +183,12 @@ if (isset($_SESSION['user'])) {
             $srch = ldap_search($ds, "ou=Niveles,ou=groups,dc=transportespitic,dc=com", $filter);
             $count = ldap_count_entries($ds, $srch);
           
-            $info = ldap_get_entries($con, $srch);
+            $info = ldap_get_entries($ds, $srch);
             //$arr = GetDevUsersFromLDAPCells("array", $info[$i]['usuariotelefono'][0], $con);
-            echo '<tbody class="tabladato r">';
             for ($i = 0; $i < $info["count"]; $i++) {
                 $contar = $info[$i]['member']['count'];
             }
-            echo "total contadas: $count";
+            echo "total contadas: $contar";
             
 
 
