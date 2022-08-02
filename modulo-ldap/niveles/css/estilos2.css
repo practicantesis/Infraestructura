@@ -171,6 +171,8 @@ form {
   margin-right: 0.5em;
   border-radius: 6px;
   font-family: "readex";
+  width: auto;
+  height: auto;
 }
 
 .boton-a:hover {
