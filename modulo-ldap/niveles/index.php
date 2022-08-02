@@ -220,7 +220,7 @@ if (isset($_SESSION['user'])) {
 
 
 
-<div id="divagregar">
+<div id="divagregar" class="divagregar">
 
 </div>
 

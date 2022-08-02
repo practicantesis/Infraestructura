@@ -182,6 +182,10 @@ form {
   height: auto;
 }
 
+.divagregar{
+  margin-bottom: 2em;
+}
+
 .combobox {
   display: grid;
   grid-template-columns: auto auto;
@@ -300,12 +304,15 @@ footer {
   grid-template-columns: repeat(2, auto);
   grid-column-gap: 1em;
   grid-row-gap: 1em;
+
 }
 
 .solicitud1{
   display: grid;
   grid-template-columns: repeat(2, auto);
   grid-column-gap: 0.5em;
+  justify-content: center;
+    align-items: center;
 }
 
 .editar {
