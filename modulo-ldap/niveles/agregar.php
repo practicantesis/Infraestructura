@@ -6,7 +6,7 @@
                     <label for="usuario">Usuario:</label>
                 </div>
                 <div>
-                    <input class="ext" id="usuario" type="text" name="busuario" readonly>
+                    <input class="ext" id="usuario" type="text" name="busuario" required>
                 </div>
             </div>
            
