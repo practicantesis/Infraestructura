@@ -196,7 +196,7 @@ if (isset($_SESSION['user'])) {
 
             // Agregar datos al directorio
             if ($count >= 1) {
-                ldap_mod_add($ds, "cn=$nivel,ou=Niveles,ou=groups,dc=transportespitic,dc=com", $info);
+                ldap_mod_add($ds,"cn=$nivel,ou=Niveles,ou=groups,dc=transportespitic,dc=com", $info);
                 ldap_close($ds);
             } else {
                 echo "<script>alert('Usuario ya existe');</script>";
