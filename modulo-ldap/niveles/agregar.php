@@ -6,7 +6,7 @@
                     <label for="usuario">Usuario:</label>
                 </div>
                 <div>
-                    <input class="ext" id="usuario" type="text" name="busuario" readonly value="<?php echo $usuario; ?>">
+                    <input class="ext" id="usuario" type="text" name="busuario" readonly>
                 </div>
             </div>
            
@@ -16,12 +16,12 @@
                 </div>
                 <div>
                     <select id="nivel" name="bnivel" class="ofi" required>
-                        <option hidden selected><?php echo $nivel; ?></option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
+                       <!--<option hidden selected>?php echo $nivel; ?></option>--> 
+                        <option value="Nivel1">1</option>
+                        <option value="Nivel2">2</option>
+                        <option value="Nivel3">3</option>
+                        <option value="Nivel8">8</option>
+                        <option value="Nivel9">9</option>
                     </select>
                 </div>
             </div>

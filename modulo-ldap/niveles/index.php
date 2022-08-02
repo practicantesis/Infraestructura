@@ -153,17 +153,13 @@ if (isset($_SESSION['user'])) {
     </script>
 
     <?php
-    $lanip = $_POST["blanip"];
-    $lanmac = $_POST["blanmac"];
-    $wip = $_POST["bwip"];
-    $wmac = $_POST["bwmac"];
     $nivel = $_POST["bnivel"];
     $usuario = $_POST["busuario"];
     ?>
 
     
     <?php
-    //PROCESO PARA EDITAR UN DATOS
+    /*PROCESO PARA EDITAR UN DATOS
     if (isset($_POST['editar'])) {
 
         if (empty($_POST["blanip"])) {
@@ -215,7 +211,9 @@ if (isset($_SESSION['user'])) {
             ldap_close($ds);
         }
     }
-    // window.history.back();
+    // window.history.back();*/
+
+
     ?>
 
 
