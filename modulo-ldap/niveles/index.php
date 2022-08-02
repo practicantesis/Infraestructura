@@ -177,7 +177,7 @@ if (isset($_SESSION['user'])) {
 
             // Preparar los datos
             $contenido="uid=$usuario,ou=People,dc=transportespitic,dc=com";
-            $info['member'][1] = $contenido;
+            $info['member'] = $contenido;
 
             $filter = "(cn=$nivel)";
             $srch = ldap_search($ds, "ou=Niveles,ou=groups,dc=transportespitic,dc=com", $filter);
