@@ -20,7 +20,7 @@
                         <option value="Nivel1">1</option>
                         <option value="Nivel2">2</option>
                         <option value="Nivel3">3</option>
-                        <option value="Nivel8">8</option>
+                        <option value="Nivel5">5</option>
                         <option value="Nivel9">9</option>
                     </select>
                 </div>
@@ -30,7 +30,7 @@
 
         <div class="area-boton">
             <div>
-                <input type="submit" name="editar" value="Guardar">
+                <input type="submit" name="ingresar" value="Guardar">
             </div>
             <div>
                 <input type="button" name="editar" value="Ocultar" onclick="cerrar()">

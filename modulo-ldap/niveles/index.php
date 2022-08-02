@@ -153,12 +153,52 @@ if (isset($_SESSION['user'])) {
     </script>
 
     <?php
-    $nivel = $_POST["bnivel"];
-    $usuario = $_POST["busuario"];
+   
     ?>
 
     
     <?php
+
+// PROCESO PARA AGREGAR DATOS
+     if (isset($_POST['ingresar'])) {
+
+        $nivel = $_POST["bnivel"];
+        $usuario = $_POST["busuario"];
+
+
+        $objConLDAP = new Conexion();
+        $ds = $objConLDAP->conectarLDAP();
+        //$ds = ldap_connect();  // Asumiendo que el servidor de LDAP está en el mismo host
+
+        if ($ds) {
+            // Asociar con el dn apropiado para dar acceso de actualización
+            ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+            $r = ldap_bind($ds, "ou=Niveles,ou=groups,dc=transportespitic,dc=com", "sistemaspitic");
+
+            // Preparar los datos
+        
+            $info['member'][1] = "uid=$usuario,ou=People,dc=transportespitic,dc=com";
+
+            $filter = "(cn=$nivel)";
+            $srch = ldap_search($ds, "ou=Niveles,ou=groups,dc=transportespitic,dc=com", $filter);
+            $count = ldap_count_entries($ds, $srch);
+            echo "total contadas: $count";
+
+
+            // Agregar datos al directorio
+            if ($count < 1) {
+                $r = ldap_add($ds, "cn=$nivel,ou=Niveles,ou=groups,dc=transportespitic,dc=com", $info);
+                ldap_close($ds);
+            } else {
+                echo "<script>alert('Usuario ya existe');</script>";
+            }
+        } else {
+            echo "No se pudo conectar al servidor LDAP";
+        }
+    }
+
+
+
     /*PROCESO PARA EDITAR UN DATOS
     if (isset($_POST['editar'])) {
 
