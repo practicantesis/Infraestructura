@@ -263,7 +263,7 @@ if (isset($_SESSION['user'])) {
         <div class="agregar">
             <div>
                 <form id="formagregar" method="POST">
-                <a class="boton-a" type="button" href="#divagregar" id="agregar">Agregar</a>
+                <a class="boton-a" type="button" href="#sup" id="agregar">Agregar</a>
                 </form>
             </div>
             <script>
