@@ -173,7 +173,7 @@ if (isset($_SESSION['user'])) {
         if ($ds) {
             // Asociar con el dn apropiado para dar acceso de actualización
             ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
-            $r = ldap_bind($ds, "ou=Niveles,ou=groups,dc=transportespitic,dc=com", "sistemaspitic");
+            $r = ldap_bind($ds, "cn=$nivel,ou=Niveles,ou=groups,dc=transportespitic,dc=com", "sistemaspitic");
 
             // Preparar los datos
         
