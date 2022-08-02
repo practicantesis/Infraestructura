@@ -302,6 +302,12 @@ footer {
   grid-row-gap: 1em;
 }
 
+.solicitud1{
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-column-gap: 0.5em;
+}
+
 .editar {
   margin-bottom: 1em;
 }
