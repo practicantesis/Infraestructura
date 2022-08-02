@@ -178,6 +178,8 @@ form {
 .boton-a:hover {
   transform: scale(1.05);
   color: white;
+  width: auto;
+  height: auto;
 }
 
 .combobox {
