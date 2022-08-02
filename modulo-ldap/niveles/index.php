@@ -199,6 +199,7 @@ if (isset($_SESSION['user'])) {
                 ldap_close($ds);
             } else {
                 echo "<script>alert('Usuario ya existe');</script>";
+                echo '<script>window.history.replaceState(null, null, window.location.href);</script>';
             }
         } else {
             echo "No se pudo conectar al servidor LDAP";
