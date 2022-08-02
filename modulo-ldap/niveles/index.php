@@ -189,7 +189,7 @@ if (isset($_SESSION['user'])) {
             for ($i = 0; $i < $info["count"]; $i++) {
                 $contar = $info[$i]['member']['count'];
             }
-            echo "total contadas: $contar";
+            echo "total contadas: $count";
             
 
 
