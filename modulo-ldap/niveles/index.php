@@ -187,8 +187,10 @@ if (isset($_SESSION['user'])) {
             //$arr = GetDevUsersFromLDAPCells("array", $info[$i]['usuariotelefono'][0], $con);
             for ($i = 0; $i < $info["count"]; $i++) {
                 $contar = $info[$i]['member']['count'];
+                echo $info[$i]['member'];
             }
             echo "total contadas: $contar";
+
             
 
 
