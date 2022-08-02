@@ -142,7 +142,7 @@ if (isset($_SESSION['user'])) {
 
 
         function cerrar() {
-            div = document.getElementById('edit');
+            div = document.getElementById('divagregar');
             div.style.display = 'none';
         }
 
@@ -161,9 +161,7 @@ if (isset($_SESSION['user'])) {
     $usuario = $_POST["busuario"];
     ?>
 
-    <div id="edit">
-
-    </div>
+    
     <?php
     //PROCESO PARA EDITAR UN DATOS
     if (isset($_POST['editar'])) {
