@@ -183,11 +183,10 @@ if (isset($_SESSION['user'])) {
             $srch = ldap_search($ds, "ou=Niveles,ou=groups,dc=transportespitic,dc=com", $filter);
             $count = ldap_count_entries($ds, $srch);
           
-            $info = ldap_get_entries($ds, $srch);
+            $infos = ldap_get_entries($ds, $srch);
             //$arr = GetDevUsersFromLDAPCells("array", $info[$i]['usuariotelefono'][0], $con);
-            for ($i = 0; $i < $info["count"]; $i++) {
-                $contar = $info[$i]['member']['count'];
-                echo $info['member'][$i];
+            for ($i = 0; $i < $infos["count"]; $i++) {
+                $contar = $infos[$i]['member']['count'];
             }
             echo "total contadas: $contar";
 
@@ -195,7 +194,7 @@ if (isset($_SESSION['user'])) {
 
 
             // Agregar datos al directorio
-            if ($count < 1) {
+            if ($count >= 1) {
                 $r = ldap_add($ds, "cn=$nivel,ou=Niveles,ou=groups,dc=transportespitic,dc=com", $info);
                 ldap_close($ds);
             } else {
