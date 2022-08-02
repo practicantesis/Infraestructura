@@ -261,7 +261,7 @@ if (isset($_SESSION['user'])) {
         <div class="agregar">
             <div>
                 <form id="formagregar" method="POST">
-                <a class="boton-a"  onclick="mostrar()" type="button" href="#sup" id="agregar">Agregar</a>
+                <a class="boton-b"  onclick="mostrar()" type="button" href="#sup" id="agregar">Agregar</a>
                 </form>
             </div>
             <script>
