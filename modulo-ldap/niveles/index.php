@@ -176,8 +176,8 @@ if (isset($_SESSION['user'])) {
             $r = ldap_bind($ds, "cn=$nivel,ou=Niveles,ou=groups,dc=transportespitic,dc=com", "sistemaspitic");
 
             // Preparar los datos
-        
-            $info['member'][1] = "uid=$usuario,ou=People,dc=transportespitic,dc=com";
+            $contenido="uid=$usuario,ou=People,dc=transportespitic,dc=com";
+            $info['member'][0] = $contenido;
 
             $filter = "(cn=$nivel)";
             $srch = ldap_search($ds, "ou=Niveles,ou=groups,dc=transportespitic,dc=com", $filter);
@@ -188,7 +188,8 @@ if (isset($_SESSION['user'])) {
             for ($i = 0; $i < $infos["count"]; $i++) {
                 $contar = $infos[$i]['member']['count'];
             }
-            echo "total contadas: $contar";
+            echo "total contadas: $contar , $nivel , $usuario";
+            
 
             
 
