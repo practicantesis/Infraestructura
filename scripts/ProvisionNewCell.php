@@ -138,6 +138,7 @@ EnviaTelegram($debs,"jferia");
 EnviaTelegram($debs,"acota");  
 EnviaTelegram($debs,"eresendiz");  
 EnviaTelegram($debs,"gsalazar");  
+EnviaTelegram($debs,"mruiz");
 
 /*
 print_r($awdevsa);

@@ -1,3 +1,37 @@
+function validarofival(of) {
+    var selid="val-"+of;
+    var e = document.getElementById(selid);
+    if (e) {
+        var multi = e.options[e.selectedIndex].value;
+        if (multi == "SELECCIONE") {
+            alert('Selecciona una oficina Mcenzie!!!');
+            return false;
+        }
+        //alert(multi);
+    }
+    $.ajax({
+        type: "POST",
+        url: 'php/ValidateValidAliasOFI.php',
+        data: { multi: multi },
+        dataType: "json",
+        success: function(data) {
+            //alert(data[0].success);
+            if (data[0].success == "YES") {
+                $("#elaliasofi").val(data[0].nomofi);
+                $("#aliasdiv").show();
+                $('#aliasval').html("El alias de la oficina para este usuario sera -> "+data[0].nomofi+"@tpitic.com.mx");
+                
+            } 
+            if (data[0].success == "NO") {
+                $("#elaliasofi").val("NOAPLICA");
+                $("#aliasdiv").hide();
+            } 
+
+        }
+    });
+
+}    
+
 function saveserie() {
     var e = document.getElementById("SEL");
     var laserie = document.getElementById("laserie").value;
@@ -423,7 +457,7 @@ function SrchParam() {
     if ($("#confirm").is(':checked')) {
         action = 'CHANGE';
     }
-    alert(action);
+    //alert(action);
     $.ajax({
         type: "POST",
         data: { param: param, action: action },
@@ -434,6 +468,10 @@ function SrchParam() {
                 $('#BOTTDIV').html(data[0].mes);
                 $('#confirm').removeAttr("disabled");
             }
+            if (data[0].success == "NO") {
+                alert(data[0].mes);
+            }
+
         }
     });
 }

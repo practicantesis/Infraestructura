@@ -1,5 +1,25 @@
 <?php
 
+
+function GetOficinaValidAliases() {
+    //global $conn;
+    $conn=ConectaSQL('firewall');
+    $sql = "select * from oficinas where LAN is not null";
+    $result = $conn->query($sql);
+    $res=array();
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            array_push($res, $row[abrev]);
+            $res[$row['abrev']]["name"] = $row['oficina'];
+            //print_r($row);
+
+        }
+        array_push($res, 'HLO');
+        $res['HLO']["name"] = 'Hermosillo';
+        return $res;
+    }
+ }
+
 function EnviaTelegram($response,$who) {
     $ui=GetUserInfoFromLDAP($who,"array");
     print_r($ui);
@@ -178,7 +198,7 @@ function getRegSiglaFromRegional($reg) {
 
 
 function QueryToAirwatchAPI($tipo,$val) {
-    $basic_auth = base64_encode("jferia:TP1nghm0R1hM0zaUqtyx");
+    $basic_auth = base64_encode("jferiago:TP1nghm0R1hM0zaUqfXx");
     //$basic_auth='amZlcmlhOkxldHR5b3J0ZWdh';
     $ch = curl_init();
     $api_key='Zbh2S+e0ejNOibdtwlFDFssflXSeCniu2oh1/7lVg5A=';
@@ -222,7 +242,7 @@ function QueryToAirwatchAPI($tipo,$val) {
 
 
 if ($infos['http_code'] == 401) {
-    echo "UNAUTH!!!!!!!!!!!!!!!!!!!!!!!!!!";
+    //echo "UNAUTH!!!!!!!!!!!!!!!!!!!!!!!!!!";
     return "UNAUTH";
     //exit;
 }
@@ -2068,6 +2088,7 @@ function NewUserForm() {
                 <div class="card-body">
                     <div class="form-validation">
                         <form class="form-valide" name="newuser" id="newuser" action="#" method="post">
+                            <input type="hidden" id="elaliasofi" name="elaliasofi" value="NOAPLICA">
                             <!-- CARD -->
                             <div class="card"><div class="card-body"><h4 class="card-title">Informacion del Usuario</h4>
                             <!-- Primer Reglon -->
@@ -2137,7 +2158,7 @@ function NewUserForm() {
                                             
 
 
-                                            <select style="width:5" class="form-control" name="val-'.$cu.'" id="val-'.$cu.'">
+                                            <select onchange="validarofival('."'$cu'".')"   style="width:5" class="form-control" name="val-'.$cu.'" id="val-'.$cu.'">
                                                 <option value="SELECCIONE">SELECCIONE</option>'.$CmbOfi.'
 
                                             </select>
@@ -2420,6 +2441,17 @@ function NewUserForm() {
 
 </form>
 
+                            <div style="display: none;" id="aliasdiv">                            
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Aliases</h4>
+                                            <div id="aliasval">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
                             <div class="col-lg-12">

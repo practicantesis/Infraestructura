@@ -5,6 +5,7 @@ print_r($_POST);
 echo "</pre>";
 return false;
 */
+
 require('funciones.php');
 include('configuraciones.class.php');
 
@@ -36,6 +37,7 @@ print_r($forma);
 echo "</pre>";
 return false;
 */
+
 $shapass = "{SHA}".base64_encode(sha1($forma['userpassword'], TRUE));
 $entry['userPassword']=$shapass;
 $entry['uid']=$forma['uid'];
@@ -209,9 +211,11 @@ echo $ERROR;
 
 
 if ($ERROR == "NO") {
-  if ($correo =="SI") {
+  if ( $correo == "SI" ) {
     $emailsuccess=AppendLDAPVAl("cn=userspiticcorp_jc,ou=TPiticGoogleAliases,ou=groups,dc=transportespitic,dc=com",$dn,"member");
-
+    if ($forma['elaliasofi'] != "NOAPLICA") {
+      $emailsuccess=AppendLDAPVAl("cn=".$forma['elaliasofi'].",ou=TPiticGoogleAliases,ou=groups,dc=transportespitic,dc=com",$dn,"member");
+    }
   }
   $MAMBOERR=SaveMamboUser($entry);
 	$mod = ldap_add($con, $dn , $entry);

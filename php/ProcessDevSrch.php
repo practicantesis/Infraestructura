@@ -161,6 +161,15 @@ if (preg_match("/^(C[E|P][L|H])(\w\w\w)\d+$/i",$_POST["param"],$matches)) {
                   $snl=strlen($di[0]['deviceserial'][0]);
                   if ($snl != 0) {
                         $airwatchPorSerie=QueryToAirwatchAPI('DEVICE',$di[0]['deviceserial'][0]);
+                        if ($airwatchPorSerie == "UNAUTH") {
+                              $jsonSearchResults[] =  array(
+                                  'success' => 'NO',
+                                  'mes' => 'UNAUTHORIZED API',
+
+                              );
+                              echo json_encode ($jsonSearchResults);
+                              return false;
+                        }
                         $eljson = json_decode ($airwatchPorSerie, true);
                         if ($eljson == "404") {
                               $mes .='<div class="alert alert-warning" role="alert">';
