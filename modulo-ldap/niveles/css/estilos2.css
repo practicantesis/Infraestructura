@@ -171,11 +171,41 @@ form {
   margin-right: 0.5em;
   border-radius: 6px;
   font-family: "readex";
+  width: auto;
+  height: auto;
 }
 
 .boton-a:hover {
   transform: scale(1.05);
   color: white;
+  width: auto;
+  height: auto;
+}
+
+
+.boton-b {
+  transition: 0.1s;
+  display: flex;
+  text-decoration: none;
+  color: white;
+  background-color: #008e4f;
+  padding: 0.2em;
+  margin-left: 0.5em;
+  border-radius: 6px;
+  font-family: "readex";
+  width: auto;
+  height: auto;
+}
+
+.boton-b:hover {
+  transform: scale(1.05);
+  color: white;
+  width: auto;
+  height: auto;
+}
+
+.divagregar{
+  margin-bottom: 2em;
 }
 
 .combobox {
@@ -293,9 +323,18 @@ footer {
 
 .formulario {
   display: grid;
-  grid-template-columns: repeat(4, auto);
+  grid-template-columns: repeat(2, auto);
   grid-column-gap: 1em;
   grid-row-gap: 1em;
+
+}
+
+.solicitud1{
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-column-gap: 0.5em;
+  justify-content: center;
+    align-items: center;
 }
 
 .editar {

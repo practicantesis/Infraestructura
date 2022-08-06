@@ -70,9 +70,9 @@ if (isset($_SESSION['user'])) {
         <div class="caja-boton"><a class="botonn" target="_blank" href="../../extensiones/administrador/">Extensiones</a></div>
         <div class="caja-boton"><a class="botonn" target="_blank" href="../../extensiones/empleados/administrador/">Usuarios</a></div>
         <div class="caja-boton"><a class="botonn" target="_blank" href="pc/">Red</a></div>
-        <div class="caja-boton"><a class="botonn" target="_blank" href="">Niveles de red</a></div>
+        <div class="caja-boton"><a class="botonn" target="_blank" href="niveles/">Niveles de red</a></div>
         <div class="caja-boton"><a class="botonn" target="_blank" href="">Grupo de correo</a></div>
-        <div class="caja-boton"><a class="botonn" target="_blank" href="">Celulares</a></div>
+        <div class="caja-boton"><a class="botonn" target="_blank" href="http://ti.tpitic.com.mx/Infraestructura/informe/index.php?666U2lzdGVtYXM=897">Celulares</a></div>
         <div class="caja-boton"><a class="botonn" target="_blank" href="">Cambiar Clave</a></div>
         <div class="caja-boton"><a class="botonn" target="_blank" href="handheld/">Hand Held</a></div>
         <div class="caja-boton"><a class="botonn" target="_blank" href="">Impresoras</a></div>
