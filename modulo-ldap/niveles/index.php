@@ -409,7 +409,7 @@ if (isset($_SESSION['user'])) {
 
 
     <footer>
-        <p class="copyright">© 2022 - Desarrollo y Mantenimiento: Andres Salazar (gsalazar) - Versión del sitio 1.0</p>
+        <p class="copyright">© 2022 - Desarrollo y Mantenimiento: Andres Salazar (gsalazar) - Versión del sitio 1.5</p>
     </footer>
 </body>
 
