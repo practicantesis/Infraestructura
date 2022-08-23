@@ -153,14 +153,14 @@ if (isset($_SESSION['user'])) {
     </script>
 
     <?php
-   
+
     ?>
 
-    
+
     <?php
 
-// PROCESO PARA AGREGAR DATOS
-     if (isset($_POST['ingresar'])) {
+    // PROCESO PARA AGREGAR DATOS
+    if (isset($_POST['ingresar'])) {
 
         $nivel = $_POST["bnivel"];
         $usuario = $_POST["busuario"];
@@ -176,27 +176,27 @@ if (isset($_SESSION['user'])) {
             $r = ldap_bind($ds, "cn=$nivel,ou=Niveles,ou=groups,dc=transportespitic,dc=com", "sistemaspitic");
 
             // Preparar los datos
-            $contenido="uid=$usuario,ou=People,dc=transportespitic,dc=com";
+            $contenido = "uid=$usuario,ou=People,dc=transportespitic,dc=com";
             $info['member'] = $contenido;
 
             $filter = "(cn=$nivel)";
             $srch = ldap_search($ds, "ou=Niveles,ou=groups,dc=transportespitic,dc=com", $filter);
             $count = ldap_count_entries($ds, $srch);
-          
+
             $infos = ldap_get_entries($ds, $srch);
             //$arr = GetDevUsersFromLDAPCells("array", $info[$i]['usuariotelefono'][0], $con);
             for ($i = 0; $i < $infos["count"]; $i++) {
                 $contar = $infos[$i]['member']['count'];
             }
             echo "total contadas: $contar , $nivel , $usuario , $contenido";
-            
 
-            
+
+
 
 
             // Agregar datos al directorio
             if ($count >= 1) {
-                ldap_mod_add($ds,"cn=$nivel,ou=Niveles,ou=groups,dc=transportespitic,dc=com", $info);
+                ldap_mod_add($ds, "cn=$nivel,ou=Niveles,ou=groups,dc=transportespitic,dc=com", $info);
                 ldap_close($ds);
             } else {
                 echo "<script>alert('Usuario ya existe');</script>";
@@ -268,9 +268,9 @@ if (isset($_SESSION['user'])) {
 
 
 
-<div id="divagregar" class="divagregar">
+    <div id="divagregar" class="divagregar">
 
-</div>
+    </div>
 
 
     <article class="consultas">
@@ -288,6 +288,11 @@ if (isset($_SESSION['user'])) {
                         <option value="Nivel3">Nivel 3</option>
                         <option value="Nivel5">Nivel 5</option>
                         <option value="Nivel9">Nivel 9</option>
+                        <option value="PANivel1">PA Nivel 1</option>
+                        <option value="PANivel2">PA Nivel 2</option>
+                        <option value="PANivel3">PA Nivel 3</option>
+                        <option value="PANivel5">PA Nivel 5</option>
+                        <option value="PANivel9">PA Nivel 9</option>
                     </select>
                     <input type="submit" name='niveles' value="Mostrar">
                 </form>
@@ -309,21 +314,21 @@ if (isset($_SESSION['user'])) {
         <div class="agregar">
             <div>
                 <form id="formagregar" method="POST">
-                <a class="boton-b"  onclick="mostrar()" type="button" href="#sup" id="agregar">Agregar</a>
+                    <a class="boton-b" onclick="mostrar()" type="button" href="#sup" id="agregar">Agregar</a>
                 </form>
             </div>
             <script>
                 $("#agregar").click(function() {
-				$.ajax({
-					url: "agregar.php",
-					type: "POST",
-					data:$("#formagregar").serialize(),
-					success: function(res){
-                        $("#divagregar").html(res);
-                       
-					}
-					});
-				});
+                    $.ajax({
+                        url: "agregar.php",
+                        type: "POST",
+                        data: $("#formagregar").serialize(),
+                        success: function(res) {
+                            $("#divagregar").html(res);
+
+                        }
+                    });
+                });
             </script>
         </div>
         <div class="mensaje-php">
@@ -350,27 +355,48 @@ if (isset($_SESSION['user'])) {
         if ($con && isset($_POST['niveles'])) {
             echo '<table id="datos" class="table table-hover">';
             echo '<thead class="encabezado2"><th>Usuario</th></tr></thead>';
-            $filter2 = "member=uid=kpartida,ou=People,dc=transportespitic,dc=com";
-            $filter = "member=*";
+            // $filter2 = "member=uid=kpartida,ou=People,dc=transportespitic,dc=com";
+            // $filter = "member=*";
             //$filter = "(duusernname=*)";duoficina
+            $combo = $_POST["nivel"];
+            if ($combo == "Nivel1" or $combo == "Nivel2" or $combo == "Nivel3" or $combo == "Nivel5" or $combo == "Nivel9") {
+                $srch = ldap_search($con, "ou=Niveles,ou=groups,dc=transportespitic,dc=com", "(cn=" . $_POST['nivel'] . ")");
+                $contar = ldap_count_entries($con, $srch);
+                $info = ldap_get_entries($con, $srch);
+                //$arr = GetDevUsersFromLDAPCells("array", $info[$i]['usuariotelefono'][0], $con);
+                echo '<tbody class="tabladato r">';
+                for ($i = 0; $i < $info["count"]; $i++) {
 
-            $srch = ldap_search($con, "ou=Niveles,ou=groups,dc=transportespitic,dc=com", "(cn=" . $_POST['nivel'] . ")");
-            $contar = ldap_count_entries($con, $srch);
-            $info = ldap_get_entries($con, $srch);
-            //$arr = GetDevUsersFromLDAPCells("array", $info[$i]['usuariotelefono'][0], $con);
-            echo '<tbody class="tabladato r">';
-            for ($i = 0; $i < $info["count"]; $i++) {
+                    $count = $info[$i]['member']['count'];
+                    //$lu = $info[$i]['usuariotelefono'][0];
 
-                $count = $info[$i]['member']['count'];
-                //$lu = $info[$i]['usuariotelefono'][0];
+                    for ($x = 0; $x < $count; $x++) {
+                        //echo "The number is: $x <br>";
+                        echo '<tr>';
+                        echo '<td>' . $info[$i]['member'][$x] . '</td>';
+                        echo '</tr>';
+                    }
+                }
+            } else {
+                $srch = ldap_search($con, "ou=PaloAltoPerms,ou=groups,dc=transportespitic,dc=com", "(cn=" . $_POST['nivel'] . ")");
+                $contar = ldap_count_entries($con, $srch);
+                $info = ldap_get_entries($con, $srch);
+                //$arr = GetDevUsersFromLDAPCells("array", $info[$i]['usuariotelefono'][0], $con);
+                echo '<tbody class="tabladato r">';
+                for ($i = 0; $i < $info["count"]; $i++) {
 
-                for ($x = 0; $x < $count; $x++) {
-                    //echo "The number is: $x <br>";
-                    echo '<tr>';
-                    echo '<td>' . $info[$i]['member'][$x] . '</td>';
-                    echo '</tr>';
+                    $count = $info[$i]['member']['count'];
+                    //$lu = $info[$i]['usuariotelefono'][0];
+
+                    for ($x = 0; $x < $count; $x++) {
+                        //echo "The number is: $x <br>";
+                        echo '<tr>';
+                        echo '<td>' . $info[$i]['member'][$x] . '</td>';
+                        echo '</tr>';
+                    }
                 }
             }
+
             echo '</tbody></table>';
             echo '<script>window.history.replaceState(null, null, window.location.href);</script>';
             ldap_close($con);
