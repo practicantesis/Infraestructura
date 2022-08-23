@@ -351,10 +351,10 @@ if (isset($_SESSION['user'])) {
         $con = $objConLDAP->conectarLDAP();
 
 
-
+        echo '<table id="datos" class="table table-hover">';
+        echo '<thead class="encabezado2"><th>Usuario</th></tr></thead>';
         if ($con && isset($_POST['niveles'])) {
-            echo '<table id="datos" class="table table-hover">';
-            echo '<thead class="encabezado2"><th>Usuario</th></tr></thead>';
+
             // $filter2 = "member=uid=kpartida,ou=People,dc=transportespitic,dc=com";
             // $filter = "member=*";
             //$filter = "(duusernname=*)";duoficina
