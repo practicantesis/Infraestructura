@@ -288,11 +288,11 @@ if (isset($_SESSION['user'])) {
                         <option value="Nivel3">Nivel 3</option>
                         <option value="Nivel5">Nivel 5</option>
                         <option value="Nivel9">Nivel 9</option>
-                        <option value="PANivel1">PA Nivel 1</option>
-                        <option value="PANivel2">PA Nivel 2</option>
-                        <option value="PANivel3">PA Nivel 3</option>
-                        <option value="PANivel5">PA Nivel 5</option>
-                        <option value="PANivel9">PA Nivel 9</option>
+                        <option value="PA_Nivel1">PA Nivel 1</option>
+                        <option value="PA_Nivel2">PA Nivel 2</option>
+                        <option value="PA_Nivel3">PA Nivel 3</option>
+                        <option value="PA_Nivel5">PA Nivel 5</option>
+                        <option value="PA_Nivel9">PA Nivel 9</option>
                     </select>
                     <input type="submit" name='niveles' value="Mostrar">
                 </form>
