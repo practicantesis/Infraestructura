@@ -397,10 +397,11 @@ if (isset($_SESSION['user'])) {
                 }
             }
 
-            echo '</tbody></table>';
+            echo '</tbody>';
             echo '<script>window.history.replaceState(null, null, window.location.href);</script>';
             ldap_close($con);
         }
+        echo '</table>';
         //    echo $info["count"];
         //   echo $count;
         ?>
