@@ -26,10 +26,10 @@
     text-decoration: none;
     box-shadow: 0 1px 6px 0 rgb(0 29 124 / 30%), 0 1px 2px 0 rgb(0 0 0 / 40%);
     transition: all 0.2s;
-    padding-left: 3.5em;
-    padding-right: 3.5em;
-    padding-top: 2.5em;
-    padding-bottom: 2.5em;
+    padding-left: 2 em;
+    padding-right: 2 em;
+    padding-top: 2 em;
+    padding-bottom: 2 em;
     cursor: pointer;
     color: black;
     align-items: center;
