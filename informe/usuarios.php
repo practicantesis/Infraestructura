@@ -132,50 +132,52 @@
 
 		</div>
 		<div id="obsiones_officina" class="form-group oficina">
-		
-<br>
-				<label>Oficina:</label>
 
-				<select id="officinas" name="oficinas" onchange="busquedaPorOfficina()">
-					<option value="">Todas</option>
-					<option value="TRA">Transportes</option>
-					<option value="MT1">Monterrey 1</option>
-					<option value="MER">Merida</option>
-					<option value="CUL">Culiacan</option>
-					<option value="MCH">Mochis</option>
-					<option value="NOG">Nogales</option>
-					<option value="CCN">Cancun</option>
-					<option value="MAZ">Mazatlan</option>
-					<option value="MXL">Mexicali</option>
-					<option value="PUE">Puebla</option>
-					<option value="QUE">Queretaro</option>
-					<option value="TEP">Tepic</option>
-					<option value="LGT">Leon</option>
-					<option value="IZT">Iztapalapa</option>
-					<option value="ZAP">Zapopan</option>
-					<option value="CHI">Chihuahua</option>
-					<option value="STA">Santa ana</option>
-					<option value="TOL">Toluca</option>
-					<option value="TOR">Torreon</option>
-					<option value="JUA">Juarez</option>
-					<option value="TPZ">Tepozotlan</option>
-					<option value="GDL">Guadalajara</option>
-					<option value="HLO">Hermosillo</option>
-					<option value="MEX">Mexico</option>
-					<option value="VIL">Villahermosa</option>
-					<option value="TIJ">Tijuana</option>
-					<option value="COB">Ciudad obregon</option>
-					<option value="MTY">Monterrey</option>
-					<option value="CH">Capital Humano</option>
-					<option value="SIS">Sistemas</option>
-					<option value="FA">Finanzas</option>
-					<option value="DC">Direccion comercial</option>
-					<option value="DG">Direccion General</option>
-					<option value="DO">Direccion de operaciones</option>
-					<option value="PMQ">Mars Queretaro</option>
-					<option value="PMP">Mars Poncitlan</option>
-				</select>
-		
+			<br>
+			<label>Oficina:</label>
+
+			<select id="officinas" name="oficinas" onchange="busquedaPorOfficina()">
+				<option value="">Todas</option>
+				<option value="TRA">Transportes</option>
+				<option value="MT1">Monterrey 1</option>
+				<option value="MER">Merida</option>
+				<option value="CUL">Culiacan</option>
+				<option value="MCH">Mochis</option>
+				<option value="NOG">Nogales</option>
+				<option value="CCN">Cancun</option>
+				<option value="MAZ">Mazatlan</option>
+				<option value="MXL">Mexicali</option>
+				<option value="PUE">Puebla</option>
+				<option value="ECP">Ecatepec</option>
+				<option value="QUE">Queretaro</option>
+				<option value="TEP">Tepic</option>
+				<option value="LGT">Leon</option>
+				<option value="IZT">Iztapalapa</option>
+				<option value="ZAP">Zapopan</option>
+				<option value="CHI">Chihuahua</option>
+				<option value="STA">Santa ana</option>
+				<option value="TOL">Toluca</option>
+				<option value="TOR">Torreon</option>
+				<option value="JUA">Juarez</option>
+				<option value="TPZ">Tepozotlan</option>
+				<option value="GDL">Guadalajara</option>
+				<option value="HLO">Hermosillo</option>
+				<option value="MEX">Mexico</option>
+				<option value="VIL">Villahermosa</option>
+				<option value="TIJ">Tijuana</option>
+				<option value="TJZ">Tlajomulco</option>
+				<option value="COB">Ciudad obregon</option>
+				<option value="MTY">Monterrey</option>
+				<option value="CH">Capital Humano</option>
+				<option value="SIS">Sistemas</option>
+				<option value="FA">Finanzas</option>
+				<option value="DC">Direccion comercial</option>
+				<option value="DG">Direccion General</option>
+				<option value="DO">Direccion de operaciones</option>
+				<option value="PMQ">Mars Queretaro</option>
+				<option value="PMP">Mars Poncitlan</option>
+			</select>
+
 
 		</div>
 		<label for="">Buscador: <input id="searchTerm" onkeyup="doSearch()" type="text" name="buscador"></label>
@@ -184,21 +186,21 @@
 	</div>
 	<div class="menu-grid">
 		<div class="enlaces-grid">
-		<a class="link" href="index.php?666U2lzdGVtYXM=897">Inicio</a>
+			<a class="link" href="index.php?666U2lzdGVtYXM=897">Inicio</a>
 			<div><a class='link' href='bajas2.php'>Bajas</a></div>
 			<div><a class='link' href='celular.php'>Celulares</a></div>
 		</div>
 		<div class="actualizar-grid">
-		<a class='link' href=''>actualizar</a>
+			<a class='link' href=''>actualizar</a>
 		</div>
-		
+
 	</div>
 
 	<div class="ventana" id="directorio" style="display: none; height: 490px; overflow: scroll;">
 		<div id="cerrar">
 			<a href="javascript:cerrardirectorio()"><img src="img/cancel.png" alt="cerrar"></a>
 		</div>
-		
+
 
 	</div>
 	<center>
@@ -209,14 +211,14 @@
 		$con = $objConLDAP->conectarLDAP();
 		if ($con) {
 			//$filter = "(duusernname=*)";duoficina
-			
-		
+
+
 			$filter = "(duusernname=*)";
-			
+
 			$srch = ldap_search($con, "ou=DeviceUsers,dc=transportespitic,dc=com", $filter);
 			$count = ldap_count_entries($con, $srch);
 			$info = ldap_get_entries($con, $srch);
-		 	$arr = GetDevUsersFromLDAPCells("array", $info[$i]['duusernname'][0], $con);
+			$arr = GetDevUsersFromLDAPCells("array", $info[$i]['duusernname'][0], $con);
 			//print_r($arr);
 
 
@@ -224,11 +226,11 @@
 			echo '<thead class="encabezado2"><tr><th>Nombre</th><th>Numero de empleado</th><th>Oficina</th><th>Usuario</th></tr></thead>';
 
 			for ($i = 0; $i < $count; $i++) {
-					
+
 				$lu = $info[$i]['duusernname'][0];
-// Condicion if para quitar aquellos registros con dispositivos de baja y que no se muestren en la tabla
-				
-echo '<tbody class="tabladato"><tr><td>' . $info[$i]['dunombre'][0] . '</td>';
+				// Condicion if para quitar aquellos registros con dispositivos de baja y que no se muestren en la tabla
+
+				echo '<tbody class="tabladato"><tr><td>' . $info[$i]['dunombre'][0] . '</td>';
 				echo '<td>' . $info[$i]['dunumeroempleado'][0] . '</td>';
 				echo '<td>' . $info[$i]['duoficina'][0] . '</td>';
 				echo '<td>' . $info[$i]['duusernname'][0] . '</td>';

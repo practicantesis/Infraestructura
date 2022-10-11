@@ -210,6 +210,7 @@ MTY";
 					<option value="MAZ">Mazatlan</option>
 					<option value="MXL">Mexicali</option>
 					<option value="PUE">Puebla</option>
+					<option value="ECP">Ecatepec</option>
 					<option value="QUE">Queretaro</option>
 					<option value="TEP">Tepic</option>
 					<option value="LGT">Leon</option>
@@ -226,6 +227,7 @@ MTY";
 					<option value="MEX">Mexico</option>
 					<option value="VIL">Villahermosa</option>
 					<option value="TIJ">Tijuana</option>
+					<option value="TJZ">Tlajomulco</option>
 					<option value="COB">Ciudad obregon</option>
 					<option value="MTY">Monterrey</option>
 					<option value="CH">Capital Humano</option>
