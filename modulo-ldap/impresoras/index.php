@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/estilos2.css">
-    <link rel="shortcut icon" href="../img/handheld.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/printer.png" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -19,7 +19,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
     </style>
-    <title>Hand Held</title>
+    <title>Impresoras</title>
     <?php
     include('conexion.php');
     include('funciones.php');
@@ -27,17 +27,22 @@
 </head>
 
 <?php
+//Codigo para debugear codigo
+/*
+error_reporting( E_ALL);
+ini_set("display_errors",1);*/
+
+
 session_start();
 if (isset($_SESSION['user'])) {
 } else {
     header("Location: login.php");
 }
+
+
 ?>
 
-
 <body>
-
-
     <header id="sup">
         <div class="logo-empresa">
             <img src="../img/logo_adobe.png" alt="">
@@ -47,9 +52,9 @@ if (isset($_SESSION['user'])) {
 
 
             <div class="titulo-nombre">
-                <h1 class="dm">Equipos Hand Held</h1>
+                <h1 class="dm">Impresoras</h1>
             </div>
-            <div class="titulo-imagen"> <img class="pitic" src="../img/handheld.png" alt=""></div>
+            <div class="titulo-imagen"> <img class="pitic" src="../img/printer.png" alt=""></div>
         </div>
 
         <div class="sup">
@@ -64,7 +69,6 @@ if (isset($_SESSION['user'])) {
 
     </header>
 
-
     <script>
         function doSearch() {
             const tableReg = document.getElementById('datos');
@@ -73,7 +77,7 @@ if (isset($_SESSION['user'])) {
 
             // Recorremos todas las filas con contenido de la tabla
             for (let i = 1; i < tableReg.rows.length; i++) {
-                // Si el td tiene la clase "noSearch" no se busca en su cntenido
+                // Si el td tiene la clase "noSearch" no se busca en su contenido
                 if (tableReg.rows[i].classList.contains("noSearch")) {
                     continue;
                 }
@@ -103,16 +107,15 @@ if (isset($_SESSION['user'])) {
         }
     </script>
 
-
     <script type="text/javascript">
-        //la funcion de busqueda ase una busqueda en la tabla y regresa los resultados
+        //la funcion de busqueda hace una busqueda en la tabla y regresa los resultados
         function busquedaPorOfficina() {
 
             var select = document.getElementById('officinas');
             var optionSelect = select.options[select.selectedIndex]; //obtenemos las opciones que hay dentro del select
 
             var tabla = document.getElementById('datos'); //Obtenemos la tabla
-            var Pbusqueda = optionSelect.value; //obtenemos el value que esta en las obciones de la tabla
+            var Pbusqueda = optionSelect.value; //obtenemos el value que esta en las opciones de la tabla
             //Se ase un recorrido a la tabla
             for (var i = 1; i < tabla.rows.length; i++) {
                 var cellsOfRow = tabla.rows[i].getElementsByTagName('td') //obtiene todos los objetos'td' de la tabla y los guarda en un array
@@ -124,7 +127,7 @@ if (isset($_SESSION['user'])) {
                     if (cellsOfRow[j].innerHTML === Pbusqueda) {
                         found = true;
 
-                    } //si la opcion esta vacia en la busqueda found es true para que muestre todo el recorrdio
+                    } //si la opcion esta vacia en la busqueda found es true para que muestre todo el recorrido
                     else if (Pbusqueda == "") {
                         found = true;
                     }
@@ -139,8 +142,6 @@ if (isset($_SESSION['user'])) {
         }
         //	busqueda();
 
-
-
         function cerrar() {
             div = document.getElementById('edit');
             div.style.display = 'none';
@@ -153,7 +154,6 @@ if (isset($_SESSION['user'])) {
     </script>
 
     <?php
-
     /*
     $brand = $_POST['bmarca'];
     $ip = $_POST['bip'];
@@ -167,31 +167,31 @@ if (isset($_SESSION['user'])) {
 
     </div>
     <?php
-    //PROCESO PARA EDITAR UN DATOS
+    //PROCESO PARA EDITAR UN DATO
     if (isset($_POST['editar'])) {
 
         if (empty($_POST["bip"])) {
-            $lanip = "NO";
+            $deviceip = "NO";
         } else {
-            $lanip = $_POST["bip"];
+            $deviceip = $_POST["bip"];
         }
         if (empty($_POST["bmac"])) {
-            $lanmac = "NO";
+            $devicemac = "NO";
         } else {
-            $lanmac = $_POST["bmac"];
+            $devicemac = $_POST["bmac"];
         }
         if (empty($_POST["bmarca"])) {
-            $wip = "NO";
+            $devicebrand = "NO";
         } else {
-            $wip = $_POST["bmarca"];
+            $devicebrand = $_POST["bmarca"];
         }
         if (empty($_POST["bserial"])) {
-            $wmac = "NO";
+            $deviceserial = "NO";
         } else {
-            $wmac = $_POST["bserial"];
+            $deviceserial = $_POST["bserial"];
         }
         $tag = $_POST["btag"];
-        $office = $_POST["boffice"];
+        $office = $_POST["boficina"];
 
         $objConLDAP = new Conexion();
         $ds = $objConLDAP->conectarLDAP();
@@ -203,35 +203,24 @@ if (isset($_SESSION['user'])) {
             $r = ldap_bind($ds, "cn=feria,dc=transportespitic,dc=com", "sistemaspitic");
 
             // Preparar los datos
-            $info['lanip'][0] = $lanip;
-            $info['lanmac'][0] = $lanmac;
-            $info['wifiip'][0] = $wip;
-            $info['wifimac'][0] = $wmac;
-            $info['accesosdered'][0] = $nivel;
-            $info['uid'][0] = $usuario;
-            $info['oficina'][0] = $oficina;
+            $info['DeviceIP'][0] = $deviceip;
+            $info['DeviceMac'][0] = $devicemac;
+            $info['DeviceBrand'][0] = $devicebrand;
+            $info['DeviceSerial'][0] = $deviceserial;
+            // $info['accesosdered'][0] = $nivel;
+            $info['DeviceTAG'][0] = $tag;
+            $info['DeviceOffice'][0] = $office;
 
             // Agregar datos al directorio
 
-            $r = ldap_modify($ds, "uid=$usuario,ou=People,dc=transportespitic,dc=com", $info);
-            echo "<script>alert('Modificaste exitosamente al usuario: $usuario  =)');window.history.replaceState(null, null, window.location.href);</script>"; //mensaje y elimina historial para que no se recargue el post
+            $r = ldap_modify($ds, "devicetag=$tag,ou=Impresoras,ou=Devices,dc=transportespitic,dc=com", $info);
+            echo "<script>alert('Modificaste exitosamente al usuario: $tag  =)');window.history.replaceState(null, null, window.location.href);</script>"; //mensaje y elimina historial para que no se recargue el post
 
             ldap_close($ds);
         }
     }
     // window.history.back();
-
-
-
-
-
-
     ?>
-
-
-
-
-
 
     <article class="consultas">
         <div class="combobox">
@@ -316,11 +305,11 @@ if (isset($_SESSION['user'])) {
 
         if ($con) {
             echo '<table id="datos" class="table table-hover">';
-            echo '<thead class="encabezado2"><th>TAG</th><th>Marca</th><th>Oficina</th><th>Serial</th><th>IP</th><th>MAC</th><th>Editar</th><th>Eliminar</th></tr></thead>';
+            echo '<thead class="encabezado2"><th>TAG</th><th>Marca</th><th>Oficina</th><th>Serial</th><th>IP</th><th>MAC</th><th>Editar</th></tr></thead>';
             $filter = "(devicetag=*)";
             //$filter = "(duusernname=*)";duoficina
 
-            $srch = ldap_search($con, "ou=Handhelds,ou=Devices,dc=transportespitic,dc=com", $filter);
+            $srch = ldap_search($con, "ou=Impresoras,ou=Devices,dc=transportespitic,dc=com", $filter);
             $count = ldap_count_entries($con, $srch);
             $info = ldap_get_entries($con, $srch);
             //$arr = GetDevUsersFromLDAPCells("array", $info[$i]['usuariotelefono'][0], $con);
@@ -336,6 +325,7 @@ if (isset($_SESSION['user'])) {
                 echo '<td>' . $info[$i]['devicemac'][0] . '</td>';
                 //  if(preg_match('/\d\d\d.*/',$info[$i]['lanip'][0])&&
                 //  $info[$i]['lanmac'][0] ){
+
                 echo '<td>
 				<form id="formula' . $i . '"  method="POST">
 				<input type="hidden" id="ext" name="brand" value="' . $info[$i]['devicebrand'][0] . '">
@@ -360,46 +350,19 @@ if (isset($_SESSION['user'])) {
 				});
 				</script>
 				</td>';
-                echo '<td>
-                <form method="post" action="index.php">
-                <input type="hidden" name="tags" value="' . $info[$i]['devicetag'][0] . '">
-                <input class="eliminar" type="submit" name="eliminar" value="Eliminar">
-                </form>
-                </td>';
-                echo '</tr>';
+                // echo '<td>
+                // <form method="post" action="index.php">
+                // <input type="hidden" name="tags" value="' . $info[$i]['devicetag'][0] . '">
+
+                // </form>
+                // </td>';
+                // echo '</tr>';
+
             }
 
             echo '</tbody></table>';
             ldap_close($con);
         }
-
-        if (isset($_POST['eliminar'])) {
-            $usuario = $_POST['busuario'];
-            $extension = $_POST['bextension'];
-            $oficina = $_POST['boficina'];
-
-            $objConLDAP = new Conexion();
-            $ds = $objConLDAP->conectarLDAP();
-            //$ds = ldap_connect();  // Asumiendo que el servidor de LDAP está en el mismo host
-
-            if ($ds) {
-                // Asociar con el dn apropiado para dar acceso de actualización
-                ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
-                $r = ldap_bind($ds, "cn=feria,dc=transportespitic,dc=com", "sistemaspitic");
-
-                // Preparar los datos
-                $info['extensiontelefono'] = $extension;
-                $info['oficinatelefono'] = $oficina;
-                $user = $info['usuariotelefono'] = $usuario;
-                $info['objectClass'][0] = "telefonosparams";
-
-                // Agregar datos al directorio
-
-                $r = ldap_delete($ds, "extensiontelefono=$extension,ou=Telefonos,ou=groups,dc=transportespitic,dc=com", $info);
-                ldap_close($ds);
-            }
-        }
-
 
 
         ?>

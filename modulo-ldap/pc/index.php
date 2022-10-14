@@ -52,7 +52,7 @@ if (isset($_SESSION['user'])) {
             <div class="titulo-imagen"> <img class="pitic" src="../img/ip.png" alt=""></div>
         </div>
 
-        <div class="sup" >
+        <div class="sup">
             <div class="sup-mensaje">
                 <p>Bienvenido:<?php echo "<b>" . $_SESSION['user'] . "</b>"  ?></p>
             </div>
@@ -199,7 +199,7 @@ if (isset($_SESSION['user'])) {
             // Asociar con el dn apropiado para dar acceso de actualización
             ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
             $r = ldap_bind($ds, "cn=feria,dc=transportespitic,dc=com", "sistemaspitic");
-        
+
             // Preparar los datos
             $info['lanip'][0] = $lanip;
             $info['lanmac'][0] = $lanmac;
@@ -233,7 +233,7 @@ if (isset($_SESSION['user'])) {
 
             <div class="select">
                 <select id="officinas" name="oficinas" onchange="busquedaPorOfficina()">
-                <option value="">Todos</option>
+                    <option value="">Todos</option>
                     <option value="TRA">Transportes</option>
                     <option value="VHL">Volvo Hermosillo</option>
                     <option value="TDI">Tecnologia Diesel</option>
@@ -248,6 +248,7 @@ if (isset($_SESSION['user'])) {
                     <option value="CUL">Culiacan</option>
                     <option value="MCH">Mochis</option>
                     <option value="NOG">Nogales</option>
+                    <option value="ECP">Ecatepec</option>
                     <option value="CCN">Cancun</option>
                     <option value="MAZ">Mazatlan</option>
                     <option value="MXL">Mexicali</option>
@@ -261,6 +262,7 @@ if (isset($_SESSION['user'])) {
                     <option value="STA">Santa ana</option>
                     <option value="TOL">Toluca</option>
                     <option value="TOR">Torreon</option>
+                    <option value="TJZ">Tlajomulco</option>
                     <option value="JUA">Juarez</option>
                     <option value="TPZ">Tepozotlan</option>
                     <option value="GDL">Guadalajara</option>
@@ -324,7 +326,7 @@ if (isset($_SESSION['user'])) {
                 echo '<td>' . $info[$i]['oficina'][0] . '</td>';
                 //  if(preg_match('/\d\d\d.*/',$info[$i]['lanip'][0])&&
                 //  $info[$i]['lanmac'][0] ){
-                if (empty($info[$i]['lanip'][0]) || empty($info[$i]['lanmac'][0]) || $info[$i]['lanip'][0] == 'NO' || $info[$i]['lanmac'][0] == 'NO' || $info[$i]['accesosdered'][0]=='9') {
+                if (empty($info[$i]['lanip'][0]) || empty($info[$i]['lanmac'][0]) || $info[$i]['lanip'][0] == 'NO' || $info[$i]['lanmac'][0] == 'NO' || $info[$i]['accesosdered'][0] == '9') {
                     echo '<td class="text-center">' . '<img src="../css/redcircle.png" >' . '</td>';
                 } else {
                     echo '<td class="text-center" >' . '<img src="../css/bluecircle.png" >' . '</td>';
