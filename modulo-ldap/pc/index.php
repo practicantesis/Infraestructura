@@ -71,7 +71,7 @@ if (isset($_SESSION['user'])) {
             const searchText = document.getElementById('searchTerm').value.toLowerCase();
             let total = 0;
 
-            // Recorremos todas las filas con contenido de la tabla
+            // Recorremos todas las filas con contenido de la tabla xdxdxd
             for (let i = 1; i < tableReg.rows.length; i++) {
                 // Si el td tiene la clase "noSearch" no se busca en su cntenido
                 if (tableReg.rows[i].classList.contains("noSearch")) {
