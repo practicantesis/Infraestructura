@@ -15,12 +15,14 @@ if(!empty($_POST["keyword"])) {
       //$ldaptree='';
       if ($matches[2][0] == 'Pornom') {
             //$ldapfilter="(cn=".$matches[1][0]."*)";
-            $ldapfilter="(|(cn=".$matches[1][0]."*)(description=".$matches[1][0]."*))";
+           // $ldapfilter="(|(cn=".$matches[1][0]."*)(description=".$matches[1][0]."*))";
+            $ldapfilter="(|(cn=*)(description=".$matches[1][0]."*))";
             $ldaptree    = "ou=Samba,ou=groups,dc=transportespitic,dc=com";
             //$ldaptree    = "ou=groups,dc=transportespitic,dc=com";
       }
       if ($matches[2][0] == 'Poruse') {
-            $ldapfilter="(uid=".$matches[1][0]."*)";
+           // $ldapfilter="(uid=".$matches[1][0]."*)";
+            $ldapfilter="(uid=*)";
             $ldaptree    = "ou=People,dc=transportespitic,dc=com";
       }
       //$ldapfilter="(cn=".$_POST["keyword"]."*)";
