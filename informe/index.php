@@ -8,6 +8,7 @@
 	<title>Moviles</title>
 	<link rel="shortcut icon" href="img/moviles.png">
 	<link rel="stylesheet" href="estilo.css">
+	<link rel="stylesheet" href="estilos/index.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -116,7 +117,7 @@
 			}
 		}
 	}
-//	busqueda();
+	//	busqueda();
 </script>
 
 <body>
@@ -195,57 +196,67 @@ MTY";
 			<?php
 			if ($ofi == "Sistemas") {
 			?>
+				<div class="filtros">
+					<div class="input-filtros">
+						<div><label>Oficina:</label></div>
+						<div><select class='input-oficina' id="officinas" name="oficinas" onchange="busquedaPorOfficina()">
+								<option value="">Todas</option>
+								<option value="TRA">Transportes</option>
+								<option value="MT1">Monterrey 1</option>
+								<option value="MER">Merida</option>
+								<option value="CUL">Culiacan</option>
+								<option value="MCH">Mochis</option>
+								<option value="NOG">Nogales</option>
+								<option value="CCN">Cancun</option>
+								<option value="MAZ">Mazatlan</option>
+								<option value="MXL">Mexicali</option>
+								<option value="PUE">Puebla</option>
+								<option value="ECP">Ecatepec</option>
+								<option value="QUE">Queretaro</option>
+								<option value="TEP">Tepic</option>
+								<option value="LGT">Leon</option>
+								<option value="IZT">Iztapalapa</option>
+								<option value="ZAP">Zapopan</option>
+								<option value="CHI">Chihuahua</option>
+								<option value="STA">Santa ana</option>
+								<option value="TOL">Toluca</option>
+								<option value="TOR">Torreon</option>
+								<option value="JUA">Juarez</option>
+								<option value="TPZ">Tepozotlan</option>
+								<option value="GDL">Guadalajara</option>
+								<option value="HLO">Hermosillo</option>
+								<option value="MEX">Mexico</option>
+								<option value="VIL">Villahermosa</option>
+								<option value="TIJ">Tijuana</option>
+								<option value="TJZ">Tlajomulco</option>
+								<option value="COB">Ciudad obregon</option>
+								<option value="MTY">Monterrey</option>
+								<option value="CH">Capital Humano</option>
+								<option value="SIS">Sistemas</option>
+								<option value="FA">Finanzas</option>
+								<option value="DC">Direccion comercial</option>
+								<option value="DG">Direccion General</option>
+								<option value="DO">Direccion de operaciones</option>
+								<option value="PMQ">Mars Queretaro</option>
+								<option value="PMP">Mars Poncitlan</option>
+							</select>
 
-				<label>Oficina:</label>
+						<?php
+					}
+						?>
+						</div>
+					</div>
 
-				<select id="officinas" name="oficinas" onchange="busquedaPorOfficina()">
-					<option value="">Todas</option>
-					<option value="TRA">Transportes</option>
-					<option value="MT1">Monterrey 1</option>
-					<option value="MER">Merida</option>
-					<option value="CUL">Culiacan</option>
-					<option value="MCH">Mochis</option>
-					<option value="NOG">Nogales</option>
-					<option value="CCN">Cancun</option>
-					<option value="MAZ">Mazatlan</option>
-					<option value="MXL">Mexicali</option>
-					<option value="PUE">Puebla</option>
-					<option value="ECP">Ecatepec</option>
-					<option value="QUE">Queretaro</option>
-					<option value="TEP">Tepic</option>
-					<option value="LGT">Leon</option>
-					<option value="IZT">Iztapalapa</option>
-					<option value="ZAP">Zapopan</option>
-					<option value="CHI">Chihuahua</option>
-					<option value="STA">Santa ana</option>
-					<option value="TOL">Toluca</option>
-					<option value="TOR">Torreon</option>
-					<option value="JUA">Juarez</option>
-					<option value="TPZ">Tepozotlan</option>
-					<option value="GDL">Guadalajara</option>
-					<option value="HLO">Hermosillo</option>
-					<option value="MEX">Mexico</option>
-					<option value="VIL">Villahermosa</option>
-					<option value="TIJ">Tijuana</option>
-					<option value="TJZ">Tlajomulco</option>
-					<option value="COB">Ciudad obregon</option>
-					<option value="MTY">Monterrey</option>
-					<option value="CH">Capital Humano</option>
-					<option value="SIS">Sistemas</option>
-					<option value="FA">Finanzas</option>
-					<option value="DC">Direccion comercial</option>
-					<option value="DG">Direccion General</option>
-					<option value="DO">Direccion de operaciones</option>
-					<option value="PMQ">Mars Queretaro</option>
-					<option value="PMP">Mars Poncitlan</option>
-				</select>
 
-			<?php
-			}
-			?>
+
+					<div class="input-filtros">
+						<div class="label-filtros"><label for="">Buscador: </label></div>
+						<div><input class='input-buscador' id="searchTerm" onkeyup="doSearch()" type="text" name="buscador"></div>
+					</div>
+				</div>
 
 		</div>
-		<label for="">Buscador: <input id="searchTerm" onkeyup="doSearch()" type="text" name="buscador"></label>
+
 
 	</div>
 
@@ -392,8 +403,8 @@ MTY";
 	</div>
 	<center>
 		<?php
-	//	require_once('conexion.php');
-	//	require_once('../php/funciones.php');
+		//	require_once('conexion.php');
+		//	require_once('../php/funciones.php');
 		include('conexion.php');
 		include('../php/funciones.php');
 		$objConLDAP = new Conexion();
@@ -439,14 +450,14 @@ MTY";
 					echo '<td>' . $info[$i]['duusernname'][0] . '</td>';
 					echo '<td>' . $arr[$lu]['num'] . '</td>';
 					echo '<td>' . $arr[$lu]['tag'] . '</td>';
-					
+
 
 
 
 					echo '<td>
 				<form id="formula' . $i . '"  method="POST">
 				<input type="hidden" id=' . $i . ' name="dato" value=' . $val = $info[$i]['duusernname'][0] . '>
-				<button type="button" id="mandar' . $i . '" class="boton">Ver</button>
+				<button type="button" id="mandar' . $i . '" class="boton"><img src="img/buscar.png"></button>
 				</form>
 				<script>
 			$("#mandar' . $i . '").click(function() {

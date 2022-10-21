@@ -1,0 +1,81 @@
+* {
+    padding: 0;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: "readex";
+    src: url("../font/readex/ReadexPro-Regular.ttf");
+}
+
+@font-face {
+    font-family: "hk-regular";
+    src: url("../font/hk/HKGrotesk-Medium.ttf");
+}
+
+thead {
+    font-family: "readex";
+    font-size: 16px;
+}
+
+.input-oficina {
+    width: 210px;
+    height: 35px;
+    box-shadow: 0 1px 6px 0 rgb(0 29 124 / 30%), 0 1px 2px 0 rgb(0 0 0 / 40%);
+    border: 0;
+    text-decoration: none;
+    padding: 5px;
+    border-radius: 6px;
+    outline: none;
+    transition: 0.1s;
+}
+
+.input-oficina:hover {
+    transform: scale(1.05);
+}
+
+.input-buscador {
+    width: 210px;
+    height: 35px;
+    box-shadow: 0 1px 6px 0 rgb(0 29 124 / 30%), 0 1px 2px 0 rgb(0 0 0 / 40%);
+    border: 0;
+    text-decoration: none;
+    padding: 5px;
+    border-radius: 6px;
+    outline: none;
+    transition: 0.1s;
+}
+
+.input-buscador:hover {
+    transform: scale(1.05);
+}
+
+.filtros {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    justify-content: center;
+    grid-column-gap: 1em;
+}
+
+.input-filtros {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    justify-content: center;
+    grid-column-gap: 1em;
+}
+
+label {
+    margin-bottom: 0 !important;
+}
+
+/*
+.icono{
+    background-image: url(img/buscar.png);
+    background-position: center;
+    background-repeat: no-repeat;
+}*/
