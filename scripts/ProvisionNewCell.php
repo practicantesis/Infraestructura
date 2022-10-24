@@ -27,14 +27,14 @@ $tags=array_keys($celdap);
 
 //EnviaTelegram("hi","jferia");
 
-echo "---------------------------------------------------  \n";
-echo "OBTENIENDO DISPOSITIVOS EN LDAP CON IMEI POR ASIGNAR \n";
-echo "---------------------------------------------------  \n";
+echo "----------------------------------------  \n";
+echo "DISPOSITIVOS EN LDAP CON IMEI POR ASIGNAR \n";
+echo "----------------------------------------  \n";
 $debs="DISPOSITIVOS EN LDAP CON IMEI POR ASIGNAR\n";
 foreach ($tags as &$value) {
     $note="";
     if ($celdap[$value]['deviceassignedto'] == "PORDEFINIR") {
-        $note = " (IGNORADO POR ESTE PROCESO)";
+        $note = " (IGNORADO)";
     }
 	if (strlen($celdap[$value]['devicetag']) == 9 ) {
 		echo $celdap[$value]['devicetag']." -> ".$celdap[$value]['deviceassignedto'].$note."\n";
@@ -49,9 +49,9 @@ foreach ($tags as &$value) {
 }
 //echo "xx".$debs;
 
-echo "-------------------------------------------------------------------------  \n";
-echo "OBTENIENDO DISPOSITIVOS DESDE AIRWATCH Y ANALIZANDO LOS QUE ESTAN CREADOS \n";
-echo "-------------------------------------------------------------------------  \n";
+echo "-------------------------------------------------------  \n";
+echo "DISPOSITIVOS DESDE AW Y ANALIZANDO LOS QUE ESTAN CREADOS \n";
+echo "-------------------------------------------------------  \n";
 
 $processed="DUNNO";
 foreach ($awdevsa['Devices'] as &$valuex) {
@@ -59,7 +59,8 @@ foreach ($awdevsa['Devices'] as &$valuex) {
     $skipthis="DUNNO";
 	//echo $valuex['DeviceFriendlyName']."\n";
 	//if (in_array($valuex['DeviceFriendlyName'], $a)) {
-    if ( (in_array($valuex['DeviceFriendlyName'], $a)) and ($b[$valuex['DeviceFriendlyName']] != "PORDEFINIR") ) {    
+    if ( (in_array($valuex['DeviceFriendlyName'], $a)) and ($b[$valuex['DeviceFriendlyName']] != "PORDEFINIR") and ($b[$valuex['DeviceFriendlyName']] != "BAJA") ) {    
+    	//and ($b[$valuex['DeviceFriendlyName']] != "SINASIGNAR")
 		$tg = $valuex['DeviceFriendlyName'];
 		echo "Validando parametos locales para ".$valuex['DeviceFriendlyName']."\n";
 		echo "Validando usuario ".$b[$valuex['DeviceFriendlyName']]."\n";
@@ -89,9 +90,14 @@ foreach ($awdevsa['Devices'] as &$valuex) {
             exit;
         } 
         if ($tagz['count'] > 1) {
-            $tagzname=GetDeviceTagInfoFromAssignedUserLDAP($b[$valuex['DeviceFriendlyName']],"tags");
-            echo  "Hay mas de un device asignado al usuario ".$b[$valuex['DeviceFriendlyName']].": ".$tagzname."\n";
-            $debs.="\n ERROR!!! Hay mas de un device asignado al usuario ".$b[$valuex['DeviceFriendlyName']].": ".$tagzname." \n";
+        	if ($b[$valuex['DeviceFriendlyName']] != "BAJA") {
+            	$tagzname=GetDeviceTagInfoFromAssignedUserLDAP($b[$valuex['DeviceFriendlyName']],"tags");
+            	echo  ": Hay mas de un device asignado al usuario ".$b[$valuex['DeviceFriendlyName']].": ".$tagzname."\n";
+            	$debs.="\n ERROR!!! Hay mas de un device asignado al usuario ".$b[$valuex['DeviceFriendlyName']].": ".$tagzname." \n";
+            } else {
+            	echo  "PIDIENDO ALTA DE TELEFONO CON USUARIO DADO DE BAJA\n";
+            	$debs.="\n ERR: PIDIENDO ALTA DE TELEFONO CON USUARIO DADO DE BAJA PARA ".$tagzname."\n";
+            }
             $skipthis="YES";
             //TelegramATelefonia($debs);
             //exit;

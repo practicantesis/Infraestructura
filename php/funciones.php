@@ -1,6 +1,12 @@
 <?php
 
 
+function GetBranchesWihoutPA() {
+    $arr = array("CUL", "TOL", "MAZ", "PUE", "ZAP", "MTY", "VCL","MXL","COB","LGT","IZT","QUE","NOG","STA","TIJ","TEP","MT1","CHI","MCH","TPZ","PWM","VIL","MER","MNZ");
+    return $arr;
+
+}
+
 function GetOficinaValidAliases() {
     //global $conn;
     $conn=ConectaSQL('firewall');
@@ -22,12 +28,15 @@ function GetOficinaValidAliases() {
 
 function EnviaTelegram($response,$who) {
     $ui=GetUserInfoFromLDAP($who,"array");
-    print_r($ui);
-    $chatId=$ui[0][telegram][0];
+    //print_r($ui);
+    echo $chatId=$ui[0][telegram][0];
+    //$chatId="5194912467";
+    $len = strlen($response);
+    //echo " new   $chatId -- $len "; 
     $token = '2018772774:AAEIoNJsUaQdSVCrVJP97E8DoLUFBAy85zk';
     $website = 'https://api.telegram.org/bot'.$token;
     $url = $website.'/sendMessage?chat_id='.$chatId.'&parse_mode=HTML&text='.urlencode($response);
-    file_get_contents($url);
+    $xx=file_get_contents($url);
 }
 
 
@@ -198,7 +207,7 @@ function getRegSiglaFromRegional($reg) {
 
 
 function QueryToAirwatchAPI($tipo,$val) {
-    $basic_auth = base64_encode("jferiago:TP1nghm0R1hM0zaUqfXx");
+    $basic_auth = base64_encode("jferiago:TP1nghm0R1hM0zaUqfur");
     //$basic_auth='amZlcmlhOkxldHR5b3J0ZWdh';
     $ch = curl_init();
     $api_key='Zbh2S+e0ejNOibdtwlFDFssflXSeCniu2oh1/7lVg5A=';
@@ -240,7 +249,7 @@ function QueryToAirwatchAPI($tipo,$val) {
     $infos = curl_getinfo($ch);
 
 
-
+//echo "UNAUTH!!!!!!!!!!!!!!!!!!!!!!!!!!".$infos['http_code'];
 if ($infos['http_code'] == 401) {
     //echo "UNAUTH!!!!!!!!!!!!!!!!!!!!!!!!!!";
     return "UNAUTH";
@@ -391,7 +400,7 @@ function GetUsersFromLDAP($base,$how) {
     $err='';
     $data='';
     $out='';
-    if ($how == "array") {
+    if (($how == "array") or ($how == "perms")) {
         $out=array();
     }
     $ldapconn=ConectaLDAP();
@@ -399,7 +408,11 @@ function GetUsersFromLDAP($base,$how) {
     //ini_set('display_errors', 'On');
     set_time_limit(30);
     $array1= array();
-    $result = ldap_search($ldapconn,$LDAPUserBase, "(uid=*)");
+    if ($how == "perms") {
+        $result = ldap_search($ldapconn,$LDAPUserBase, "(accesosdered=*)");
+    } else {
+        $result = ldap_search($ldapconn,$LDAPUserBase, "(uid=*)");    
+    }
     $err=ldap_error($ldapconn);
     $ldata = ldap_get_entries($ldapconn, $result);
     //echo $ldata["count"];
@@ -410,7 +423,7 @@ function GetUsersFromLDAP($base,$how) {
         if ($how == "htmltable") {
             $out .= "<tr><td>".$ldata[$i]['uid'][0]."</td></tr>";    
         }
-        if ($how == "array") {
+        if (($how == "array") or ($how == "perms")) {
             array_push($out,$ldata[$i]['uid'][0]);
         }
         if ($how == "exists") {
@@ -556,7 +569,52 @@ function GetUserInfoFromLDAP($user,$how) {
     if ($how == "array") {
         $out = $ldata;    
     }
+    //print_r($out);
 
+    return $out;
+}
+
+function GetUserInfoFromLDAPConn($user,$how,$conn) {
+    include 'configuraciones.class.php';
+    $err='';
+    $data='';
+    $out='';
+    if ($how == "array") {
+        $out=array();
+    }
+    $ldapconn=$conn;
+    //error_reporting(E_ALL);
+    //ini_set('display_errors', 'On');
+    set_time_limit(30);
+    $array1= array();
+    $result = ldap_search($ldapconn,$LDAPUserBase, "(uid=$user)");
+    $err=ldap_error($ldapconn);
+    $ldata = ldap_get_entries($ldapconn, $result);
+    //echo $ldata["count"];
+    //print_r($ldata);
+    for ($i=0; $i<$ldata["count"]; $i++) {
+        //array_push($array1,$ldata[$i][$what][0]);
+        //echo "<pre>";
+        //print_r($ldata);
+        if ($how == "htmltable") {
+            $out .= "<tr><td>".$ldata[$i]['uid'][0]."</td></tr>";    
+        }
+        if ($how == "GetUserInfoFromLDAP") {
+            $out['uid']=$ldata[$i]['uid'][0];
+            $out['cn']=$ldata[$i]['cn'][0];
+            $out['oficina']=$ldata[$i]['oficina'][0];
+        }
+        //echo "</pre>";
+        //return false;
+    }
+    //print_r($out);
+    if ($how == "exists") {
+        $out = $ldata["count"];    
+    }
+    if ($how == "array") {
+        $out = $ldata;    
+    }
+    //print_r($out);
 
     return $out;
 }
@@ -600,6 +658,45 @@ function GetGroupsForUser($user,$how) {
     return $out;
 }
 
+function GetPAGroupsForUser($user,$how,$conn) {
+    include 'configuraciones.class.php';
+    $err='';
+    $data='';
+    $out='';
+    if ($how == "array") {
+        $out=array();
+    }
+    $ldapconn=$conn; //ConectaLDAP();
+    //error_reporting(E_ALL);
+    //ini_set('display_errors', 'On');
+    set_time_limit(30);
+    $array1= array();
+    $result = ldap_search($ldapconn,"ou=PaloAltoPerms,ou=groups,dc=transportespitic,dc=com", "(member=uid=".$user.",ou=People,dc=transportespitic,dc=com)");
+    //$result = ldap_search($ldapconn,$LDAPGroupBase, "(member=uid=".$user.",ou=People,dc=transportespitic,dc=com)");
+    //"ou=TPiticGoogleAliases,ou=groups,dc=transportespitic,dc=com"
+    $err=ldap_error($ldapconn);
+    $ldata = ldap_get_entries($ldapconn, $result);
+    //echo $ldata["count"];
+    for ($i=0; $i<$ldata["count"]; $i++) {
+        //array_push($array1,$ldata[$i][$what][0]);
+        //echo "<pre>";
+        //print_r($ldata);
+        //echo "</pre>";
+        if ($how == "htmltable") {
+            $out .= "<tr><td>".$ldata[$i]['dn']."</td></tr>";    
+        }
+        if ($how == "array") {
+            array_push($out,$ldata[$i]['dn']);
+        }
+        
+        
+        //return false;
+    }
+    //echo $out;
+    return $out;
+}
+
+
 
 function GetGroupMembers($user,$how,$what) {
     include 'configuraciones.class.php';
@@ -614,8 +711,15 @@ function GetGroupMembers($user,$how,$what) {
     //ini_set('display_errors', 'On');
     set_time_limit(30);
     $array1= array();
+    $ou="TPiticGoogleAliases";
+    if ($what == "PAgroupname") {
+        $ou="PaloAltoPerms";
+    }
+    if ($what == "PAgroupmembers") {
+        $ou="PaloAltoPerms";
+    }
     
-    $result = ldap_search($ldapconn,"ou=TPiticGoogleAliases,ou=groups,dc=transportespitic,dc=com", "(cn=".$user.")");
+    $result = ldap_search($ldapconn,"ou=".$ou.",ou=groups,dc=transportespitic,dc=com", "(cn=".$user.")");
     //$result = ldap_search($ldapconn,$LDAPGroupBase, "(cn=".$user.")");
     //echo $user;
     $err=ldap_error($ldapconn);
@@ -631,7 +735,14 @@ function GetGroupMembers($user,$how,$what) {
             //print_r($valor);
 
         }
-
+        if ($what == "PAgroupname") {
+            if ($how == "htmltable") {
+                $out .= "<tr><td>".$ldata[$i]['dn']."</td></tr>";    
+            }
+            if ($how == "array") {
+                array_push($out,$ldata[$i]['dn']);
+            }
+        }
         if ($what == "groupname") {
             if ($how == "htmltable") {
                 $out .= "<tr><td>".$ldata[$i]['dn']."</td></tr>";    
@@ -641,6 +752,20 @@ function GetGroupMembers($user,$how,$what) {
             }
         }
         if ($what == "groupmembers") {
+            if ($how == "htmltable") {
+                $out .= "<tr><td>".$ldata[$i]['dn']."</td></tr>";    
+            }
+            if ($how == "array") {
+                $count=$ldata[$i]['member']['count'];
+                for ($x = 0; $x < $count; $x++) {
+                    //echo "The number is: $x <br>";
+                    array_push($out,$ldata[$i]['member'][$x]);
+                }
+               
+                
+            }
+        }
+        if ($what == "PAgroupmembers") {
             if ($how == "htmltable") {
                 $out .= "<tr><td>".$ldata[$i]['dn']."</td></tr>";    
             }
@@ -1151,6 +1276,7 @@ function UserForm($ldata) {
         $userpassword = $ldata[0]["userpassword"][0];
         $dn=$ldata[0]["dn"];
         $cntaliascuentagoogle=$ldata[0]["aliascuentagoogle"]["count"];
+        
         $aliasesg='';
         $aliasesh='';
         for ($i=0; $i < $cntaliascuentagoogle; $i++) { 
@@ -1168,6 +1294,22 @@ function UserForm($ldata) {
 
 
         }
+        if (preg_match('/\d/', $cntaliascuentagoogle, $match) == 1) {
+        
+        } else {
+            //echo "yyyyyyyyyyyyyyyyyyyyy".$cntaliascuentagoogle."xxxxxxxxxxxxxxxxxxxxxxxx";    
+            $aliasesg.='<option value="SINALIAS">SINALIAS</option>';
+            $aliasesh.='        <tr>
+                        <td>SIN ALIAS</td>
+                        <td>
+                            <a class="add" title="Add" data-toggle="tooltip" onclick="AddAlias()"><i class="material-icons">&#xE03B;</i></a>
+                            <!--<a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>-->
+                            </a>
+                        </td>
+                    </tr>';
+
+        }    
+
         $rouser="readonly";
         $validate='<button type="button" class="btn btn-primary mb-2" onclick="ValidateLDAPass()">Validar</button><input type="hidden" id="passwd" value="'.$userpassword.'">';
         $validate .='<button type="button" class="btn btn-primary mb-2" onclick="ResetLDAPass()">Resetear</button>';
@@ -2940,12 +3082,12 @@ function GetCellsFromLDAP($como) {
             if (isset($ldata[$i]['deviceimei'][0])) {
                 $outb[$llave]['deviceimei']=$ldata[$i]['deviceimei'][0];
             } else {
-                $outb[$llave]['deviceimei'] = "SINASIGNAR";
+                $outb[$llave]['deviceimei'] = "PORDEFINIR";
             }
             if (isset($ldata[$i]['deviceassignedto'][0])) {
                 $outb[$llave]['deviceassignedto']=$ldata[$i]['deviceassignedto'][0];
             } else {
-                $outb[$llave]['deviceassignedto'] = "SINASIGNAR";
+                $outb[$llave]['deviceassignedto'] = "PORDEFINIR";
             }
             $outb[$llave]['devicetag']=$ldata[$i]['devicetag'][0];
             $outb[$llave]['deviceimei']=$ldata[$i]['deviceimei'][0];

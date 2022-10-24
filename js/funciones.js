@@ -1379,8 +1379,9 @@ function SaveNewUser() {
         dataType: "json",
         async: false,
         success: function(data) {
-            if (data[0].success == "YES") {
+            if (data[0].success == "Success") {
                 alert('Usuario Guardado');
+                ShowLDAP('AddLDAPUsers');
             } else {
                 alert(data[0].success);
             }

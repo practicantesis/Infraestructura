@@ -22,7 +22,7 @@ for ($i=0; $i<$ldata["count"]; $i++) {
 	if ($ldata[$i]['deviceassignedto'][0] == "BAJA") {
 		$btnda="";
 	} else {
-		if ($ldata[$i]['deviceassignedto'][0] == "SINASIGNAR") {
+		if ($ldata[$i]['deviceassignedto'][0] == "PORDEFINIR") {
 			$btnda="<input size='8' type='TEXT' id='".$ldata[$i]['devicetag'][0]."-TXTUsr'><button id='".$ldata[$i]['devicetag'][0]."-BtnUnassign' type='button' class='btn mb-1 btn-primary btn-xs' onclick=".'"'."AssignCellDevice('".$ldata[$i]['devicetag'][0]."','".$ldata[$i]['deviceassignedto'][0]."');".'"'.">Asignar</button>";			
 		} else {
 			$btnda="<br><button id='".$ldata[$i]['devicetag'][0]."-BtnUnassign' type='button' class='btn mb-1 btn-primary btn-xs' onclick=".'"'."UnassignCellDevice('".$ldata[$i]['devicetag'][0]."','".$ldata[$i]['deviceassignedto'][0]."');".'"'.">Desasignar</button>";			

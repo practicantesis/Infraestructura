@@ -7,7 +7,7 @@ session_start();
 $conn=ConectaSQL('firewall');
 if ($_POST["action"] == "unassign") {
 	logDevChange($_SESSION["user"],"DESASIGNACION",$_POST["tag"],"Se desasigna telefono desde tabla de telefonos INFRAESTRUCTURA",$conn);
-	$success=UpdateLDAPVAl("DeviceTAG=".$_POST["tag"].",ou=Celulares,ou=Devices,dc=transportespitic,dc=com","SINASIGNAR","deviceassignedto");
+	$success=UpdateLDAPVAl("DeviceTAG=".$_POST["tag"].",ou=Celulares,ou=Devices,dc=transportespitic,dc=com","PORDEFINIR","deviceassignedto");
 }
 
 if ($_POST["action"] == "assign") {
