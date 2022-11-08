@@ -282,7 +282,8 @@ if ($infos['http_code'] == 401) {
 function SaveMamboUser($datos) {
     //print_r($datos);
     $conn=ConectaSQL('globaldb');
-    $nom = $datos['cn'].' '.$datos['givenName'];
+   // $nom = $datos['cn'].' '.$datos['givenName']; esto provoca que se ponga el nombre completo 2 veces
+    $nom = $datos['cn'];
     $sql="SELECT COUNT(*) AS entradas FROM only_users WHERE username = '".$datos["uid"]."'";
     //$passAleatorio='tpitic';
     $passAleatorio=$datos["userPassword"];

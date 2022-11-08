@@ -761,7 +761,7 @@ var html = '<b>' + $('<div>').text(value.city).html() + '</b>, ' + $('<div>').te
                 <a href="modulo-ldap/" target="_blank" >Modulo LDAP</a>
                 </div>
                 <div class="header-left mambo">
-                <a href="http://192.168.120.116/modulo-oracle/" target="_blank" >Modulo Oracle</a>
+                <a href="http://192.168.120.116/modulo-oracle/" target="_blank" >Modulo SQL</a>
                 </div>
                 <!--Menu de enlaces-->
                 <div class="header-right">
