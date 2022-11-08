@@ -180,6 +180,7 @@ function ShowLDAP(what) {
             }
         });
     }
+
     if (what == "AddLDAPUsers") {
         $.ajax({
             type: "POST",
@@ -193,7 +194,7 @@ function ShowLDAP(what) {
         });
     }
     if (what == "NukeDev") {
-        var html ='<div class="col-lg-12"><div class="card"><div class="card-body"><div class="form-validation"><input type="text" id="srchp" class="form-control" ><br><input type="checkbox" id="confirm" name="confirm" disabled>Realizar cambios<br><button type="button" class="btn btn-primary mb-2" onclick="SrchParam()">Buscar</button><div id="DevQResult"></div></div></div></div>';
+        var html ='<div class="col-lg-12"><div class="card"><div class="card-body"><div class="form-validation"><input type="text" id="srchp" class="form-control" ><br><input type="checkbox" id="confirm" name="confirm" disabled>Realizar cambios<br><input type="checkbox" id="nukedevuser" name="nukedevuser" disabled>Eliminar Devuser<br><button type="button" class="btn btn-primary mb-2" onclick="SrchParam()">Buscar</button><div id="DevQResult"></div></div></div></div>';
         $('#NewLDAPUser').html(html);
     }
     if (what == "AddLDAPDevUsers") {
@@ -208,6 +209,19 @@ function ShowLDAP(what) {
             }
         });
     }
+    if (what == "AddLDAPDevUsersAPI") {
+        $.ajax({
+            type: "POST",
+            url: 'php/NewDevUserAPI.php',
+            dataType: "json",
+            success: function(data) {
+                if (data[0].success == "YES") {
+                    $('#NewLDAPDevUser').html(data[0].data);
+                }
+            }
+        });
+    }
+
 }
 
 function Limpia() {
@@ -217,6 +231,7 @@ function Limpia() {
         $("#LDAPUser").hide();
         $("#LDAPDevUser").hide();
         $("#AddLDAPCell").hide();
+        $("#AddLDAPCellTRA").hide();        
         $("#LDAPAlias").hide();
         $('#VPNTable').html('');
         $('#BOTTDIV').html('');
@@ -1148,6 +1163,38 @@ function AddAlias() {
        });
 }
 
+
+
+function searchuserapirhtp(tipo,valor,chkexist) {
+    var va=document.getElementById('val-'+valor).value;
+    //alert (tipo+valor+chkexist+va);
+    $.ajax({
+            type: "POST",
+            url: 'php/SearchApiRHTP.php',
+            data: { valor: va },
+            dataType: "json",
+            success: function(data) {
+                //alert(data.info[0]['apepaterno']);
+                $('#val-dunombre').removeAttr('readonly');
+                //document.getElementById("txt").value
+                $('#val-dunombre').val(data.info[0]['apepaterno']+' '+data.info[0]['apematerno']+' '+data.info[0]['nombre']);
+                
+/*val-dunombre
+                if (data[0].success == "NO") {
+                alert('INCORRECTO');
+            }
+                if (data[0].success == "YES") {
+                    alert('CORRECTO');
+                } else {
+                    alert('Succ! '+data[0].success);
+                }
+*/                
+
+           }
+       });
+
+}    
+
 function validarinput(tipo,valor,chkexist) {
     var va=document.getElementById('val-'+valor).value;
     if (tipo == 'palabra') {
@@ -1398,7 +1445,7 @@ function SaveNewCell() {
         dataType: "json",
         async: false,
         success: function(data) {
-            if (data[0].success == "YES") {
+            if (data[0].success == "Success") {
                 alert('Usuario Guardado');
                 $("#val-oficina").val("SELECCIONE");
                 $("#val-newtag").val("");

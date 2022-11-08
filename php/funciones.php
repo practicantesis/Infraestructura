@@ -2054,13 +2054,107 @@ function NewDevUserForm() {
 
 }
 
+function NewDevUserFormAPI() {
+    $rouser="";
+    $cu="NU";
+    $CmbOfi="";
+    $abs=GetOfficeAbrevs('x');
+    foreach ($abs as $value) {
+        $CmbOfi .= '<OPTION VALUE="'.$value.'">'.$value.'</OPTION>';
+    }
+    $forma='<div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-validation">
+                        <form class="form-valide" name="newdevuser" id="newdevuser" action="#" method="post">
+                            <!-- CARD -->
+                            <div class="card"><div class="card-body"><h4 class="card-title">Informacion del Usuario</h4>
+                            <!-- Primer Reglon -->
+                            <div class="form-group row">';
+                                $cu='duusernname';
+                                $forma .='
+                                <div class="col">
+                                    <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">Username: </label></div>
+                                    <div class="col-lg-6">
+                                        <div class="form-row" id="elinput-'.$cu.'">
+                                            <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="Nombre de usuario" onchange="validarinput('."'palabra','$cu'".','."'SI'".')" '.$rouser.' readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="row"><label class="col-lg-4 col-form-label" for="val-dunombre">Nombre Completo:</label></div>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" id="val-dunombre" name="val-dunombre" placeholder="Autogenerado" value="'.$dunombre.'" readonly>
+                                    </div>
+                                </div>
+                            </div>
 
-//
+
+                            <!-- Segundo Reglon Oficina y No Empleado -->
+                            <div class="form-group row">';
+                                $cu='dunumeroempleado';
+                                $forma .='
+                                <div class="col">
+                                    <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">XX Numero de Empleado: </label><div id="edit-'.$cu.'"><a href="#" onclick="UValnn('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
+                                    <div class="col-lg-6">
+                                        <div class="form-row" id="elinput-'.$cu.'">
+                                            <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="'.$cu.'"  '.$ldata[0][$cu][0].' onchange="searchuserapirhtp('."'numero','$cu'".','."'SI'".')" '.$rouser.'>
+                                        </div>
+                                    </div>
+                                </div>
+                                ';
+                                $cu='duoficina';
+                                $forma .='
+                                <div class="col">
+                                    <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'"><p class="text-danger">Oficina: </p></label><div id="edit-'.$cu.'"><a href="#" onclick="UValn('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
+                                    <div class="col-lg-6">
+                                        <div class="form-row" id="elinput-'.$cu.'">
+                                            
+
+
+                                            <select style="width:5" class="form-control" name="val-'.$cu.'" id="val-'.$cu.'" >
+                                                <option value="SELECCIONE">SELECCIONE</option>'.$CmbOfi.'
+
+                                            </select>
+
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                                
+                            </form>
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Acciones</h4>
+                                        <div class="basic-form">
+                                            <div class="form-group">
+                                                <div class="form-check mb-3 ">
+                                                    <label class="form-check-label">
+                                                        <button type="button" id="BtnSaveNewDevUser" class="btn btn-primary mb-2" onclick="SaveNewDevUser()">Agregar</button>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    ';     
+    //echo $forma;                       
+    return $forma;                            
+
+}
+
 
 function NewCellForm() {
-
-    //2-Crear telefono en ldap con la ofi del usuario y el consecutivoque le toca el valor de imei sera PORASIGNAR, si existe en api ponerle valor de imei, serie, y el usuario, si no existe el usuario validar que existe en deviceusers, tambien verificar que no tenga otro celular asignado, capturar el numero de telefono, y el device dept
-
     $rocell="";
     $cu="NU";
     $cn="NU";

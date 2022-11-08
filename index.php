@@ -954,10 +954,17 @@ var html = '<b>' + $('<div>').text(value.city).html() + '</b>, ' + $('<div>').te
                 <i class="icon-user-follow menu-icon"></i><span class="nav-text">Agregar DevUser </span>
                 </a></li>
 
+                <li><a href="#" onclick="ShowLDAP('AddLDAPDevUsersAPI')">
+                <i class="icon-user-follow menu-icon"></i><span class="nav-text">(BETA) Agregar DevUser </span>
+                </a></li>
+
                 <li><a href="#" onclick="ShowLDAP('AddLDAPCell')">
                 <i class="icon-user-follow menu-icon"></i><span class="nav-text">Agregar Celular </span>
                 </a></li>
 
+                <li><a href="#" onclick="ShowLDAP('AddLDAPCellTRA')">
+                <i class="icon-user-follow menu-icon"></i><span class="nav-text">Agregar Celular TRA </span>
+                </a></li>
 
                 <li><a href="#" onclick="ShowLDAP('LDAPDevUsers')">
                 <i class="icon-people menu-icon"></i><span class="nav-text">Device Users</span>
