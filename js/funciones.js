@@ -1178,6 +1178,7 @@ function searchuserapirhtp(tipo,valor,chkexist) {
                 $('#val-dunombre').removeAttr('readonly');
                 //document.getElementById("txt").value
                 $('#val-dunombre').val(data.info[0]['apepaterno']+' '+data.info[0]['apematerno']+' '+data.info[0]['nombre']);
+                $('#val-duoficina').val(data.info[0]['oficina']);
                 
 /*val-dunombre
                 if (data[0].success == "NO") {

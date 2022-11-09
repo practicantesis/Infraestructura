@@ -207,7 +207,7 @@ function getRegSiglaFromRegional($reg) {
 
 
 function QueryToAirwatchAPI($tipo,$val) {
-    $basic_auth = base64_encode("jferiago:TP1nghm0R1hM0zaUqfur");
+    $basic_auth = base64_encode("jferiago:TP1nghm0R1hM0zaUqfurck);
     //$basic_auth='amZlcmlhOkxldHR5b3J0ZWdh';
     $ch = curl_init();
     $api_key='Zbh2S+e0ejNOibdtwlFDFssflXSeCniu2oh1/7lVg5A=';
@@ -2111,13 +2111,12 @@ function NewDevUserFormAPI() {
                                     <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'"><p class="text-danger">Oficina: </p></label><div id="edit-'.$cu.'"><a href="#" onclick="UValn('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
                                     <div class="col-lg-6">
                                         <div class="form-row" id="elinput-'.$cu.'">
-                                            
-
-
+                                            <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="'.$cu.'"  '.$ldata[0][$cu][0].' onchange="searchuserapirhtp('."'numero','$cu'".','."'SI'".')" '.$rouser.'>
+<!--                                            
                                             <select style="width:5" class="form-control" name="val-'.$cu.'" id="val-'.$cu.'" >
                                                 <option value="SELECCIONE">SELECCIONE</option>'.$CmbOfi.'
-
                                             </select>
+-->                                            
 
 
 
