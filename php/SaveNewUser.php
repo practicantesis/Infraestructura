@@ -156,7 +156,7 @@ if ($forma['samba'] == "SELECCIONE") {
 // licenciagoogle
 if ($forma['licenciagoogle'] == "SELECCIONE") {
   $ERROR="ERROR: SELECCIONE LICENCIA GOOGLE";
-}else{
+}else if($forma['licenciagoogle']=="BASIC" || $forma['licenciagoogle']=="LITE" || $forma['licenciagoogle']=="BUSSINESS"){
   $entry['aliascuentagoogle'][0] = $forma['uid']."@transportespitic.com.mx";
   $entry['aliascuentagoogle'][1] = $forma['uid']."@transportespitic.com";
   $entry['aliascuentagoogle'][2] = $forma['uid']."@transportespitic.mx";
