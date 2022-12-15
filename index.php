@@ -746,13 +746,7 @@ var html = '<b>' + $('<div>').text(value.city).html() + '</b>, ' + $('<div>').te
                 <a href="https://www.tpitic.com.mx/reportes_mambo.php" target="_blank">Reportes mambo</a>
                 </div>
                 <div class="header-left mambo">
-                <a href="http://extensiones.tpitic.com.mx/" target="_blank" >Extensiones</a>
-                </div>
-                <div class="header-left mambo">
-                <a href="http://192.168.120.119/cobradores/" target="_blank" >Cobradores</a>
-                </div>
-                <div class="header-left mambo">
-                <a href="http://192.168.120.119/seguros/" target="_blank" >Seguros</a>
+                <a href="http://172.16.3.8/extensiones/" target="_blank" >Extensiones</a>
                 </div>
                 <div class="header-left mambo">
                 <a href="http://ti.tpitic.com.mx/Infraestructura/informe/index.php?666U2lzdGVtYXM=897" target="_blank" >Moviles</a>
@@ -761,7 +755,7 @@ var html = '<b>' + $('<div>').text(value.city).html() + '</b>, ' + $('<div>').te
                 <a href="modulo-ldap/" target="_blank" >Modulo LDAP</a>
                 </div>
                 <div class="header-left mambo">
-                <a href="http://192.168.120.116/modulo-oracle/" target="_blank" >Modulo SQL</a>
+                <a href="http://172.16.3.8/modulosql/index.php" target="_blank" >Modulo SQL</a>
                 </div>
                 <!--Menu de enlaces-->
                 <div class="header-right">
