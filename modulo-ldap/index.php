@@ -67,7 +67,7 @@ if (isset($_SESSION['user'])) {
 
     </header>
     <div class="contenedor-botones">
-        <div class="caja-boton"><a class="botonn" target="_blank" href="../../extensiones/administrador/">Extensiones</a></div>
+        <div class="caja-boton"><a class="botonn" target="_blank" href="http://172.16.3.8/extensiones">Extensiones</a></div>
         <div class="caja-boton"><a class="botonn" target="_blank" href="../../extensiones/empleados/administrador/">Usuarios</a></div>
         <div class="caja-boton"><a class="botonn" target="_blank" href="pc/">Red</a></div>
         <div class="caja-boton"><a class="botonn" target="_blank" href="niveles/">Niveles de red</a></div>
