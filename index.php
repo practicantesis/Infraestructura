@@ -751,12 +751,6 @@ var html = '<b>' + $('<div>').text(value.city).html() + '</b>, ' + $('<div>').te
                 <div class="header-left mambo">
                 <a href="http://ti.tpitic.com.mx/Infraestructura/informe/index.php?666U2lzdGVtYXM=897" target="_blank" >Moviles</a>
                 </div>
-                <div class="header-left mambo">
-                <a href="http://172.16.3.8/modulo-ldap/" target="_blank" >Modulo LDAP</a>
-                </div>
-                <div class="header-left mambo">
-                <a href="http://172.16.3.8/modulosql/" target="_blank" >Modulo SQL</a>
-                </div>
                 <!--Menu de enlaces-->
                 <div class="header-right">
                     <ul class="clearfix">
@@ -925,6 +919,14 @@ var html = '<b>' + $('<div>').text(value.city).html() + '</b>, ' + $('<div>').te
         <div class="nk-sidebar">
             <div class="nk-nav-scroll">
                 <ul class="metismenu" id="menu">
+
+                <li class="nav-label">MODULOS</li>
+                <li><a href="http://172.16.3.8/modulo-ldap/" target="_blank" >
+				 <i class="icon-grid menu-icon"></i><span class="nav-text">Modulo LDAP </span>
+				</a></li>
+                <li><a href="http://172.16.3.8/modulo-sql/" target="_blank" >
+				 <i class="icon-grid menu-icon"></i><span class="nav-text">Modulo SQL </span>
+				</a></li>
 
             <li class="nav-label">LDAP</li>
                 <li><a href="#" onclick="ShowLDAPG('LDAPGroup')">
