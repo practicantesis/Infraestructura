@@ -915,7 +915,7 @@ return false;
 
                     <li class="nav-label">MODULOS</li>
 
-                    <li><a href="#" target="https://www.tpitic.com.mx/reportes_mambo.php">
+                    <li><a href="https://www.tpitic.com.mx/reportes_mambo.php" target="_blank">
                             <i class="icon-people menu-icon"></i><span class="nav-text">Mambo</span>
                         </a></li>
 
