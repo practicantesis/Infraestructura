@@ -141,6 +141,7 @@ return false;
     <link rel="stylesheet" href="./plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
     <!-- Custom Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/estilos.css">
     <!--<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>-->
 
 
@@ -181,6 +182,7 @@ return false;
 
     <script src="bootstrap-4.3.1/js/bootstrap.min.js"> </script>
     <link rel="stylesheet" href="bootstrap-4.3.1//css/bootstrap.min.css">
+
 
     <!-- Font Awesome -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -739,15 +741,8 @@ return false;
                     </div>
                 </div>
                 <!--Menu de enlaces-->
-                <div class="header-left mambo">
-                    <a href="https://www.tpitic.com.mx/reportes_mambo.php" target="_blank">Reportes mambo</a>
-                </div>
-                <div class="header-left mambo">
-                    <a href="http://172.16.3.8/extensiones/" target="_blank">Extensiones</a>
-                </div>
-                <div class="header-left mambo">
-                    <a href="http://ti.tpitic.com.mx/Infraestructura/informe/index.php?666U2lzdGVtYXM=897" target="_blank">Moviles</a>
-                </div>
+             
+
                 <!--Menu de enlaces-->
                 <div class="header-right">
                     <ul class="clearfix">
@@ -920,11 +915,15 @@ return false;
 
                     <li class="nav-label">MODULOS</li>
 
+                    <li><a href="#" target="https://www.tpitic.com.mx/reportes_mambo.php">
+                            <i class="icon-people menu-icon"></i><span class="nav-text">Mambo</span>
+                        </a></li>
+
                     <li>
-                        <a>
+                        <a class="moduloldap">
                             <form action="http://172.16.3.8/modulo-ldap/log_captura.php" method="POST" target="_blank">
                                 <input type="hidden" name="infra" value="<?php echo $_SESSION['user']; ?>">
-                                <i class="icon-grid menu-icon"></i><span class="nav-text"><input type="submit" name="ldap" value="Modulo LDAP"> </span>
+                                <i class="icon-grid menu-icon"></i><span class="nav-text"><input type="submit" name="ldap" value="Modulo LDAP" class="modulo"> </span>
                             </form>
                         </a>
 
@@ -933,7 +932,7 @@ return false;
                         <a>
                             <form action="http://172.16.3.8/modulo-sql/log_captura.php" method="POST" target="_blank">
                                 <input type="hidden" name="infra" value="<?php echo $_SESSION['user']; ?>">
-                                <i class="icon-grid menu-icon"></i><span class="nav-text"><input type="submit" name="sql" value="Modulo SQL"> </span>
+                                <i class="icon-grid menu-icon"></i><span class="nav-text"><input type="submit" name="sql" value="Modulo SQL" class="modulo"> </span>
                             </form>
                         </a>
 
@@ -953,6 +952,11 @@ return false;
                         </a></li>
 
                     <li class="nav-label">DEVICES</li>
+
+                    <li><a href="http://ti.tpitic.com.mx/Infraestructura/informe/index.php?666U2lzdGVtYXM=897">
+                            <i class="icon-user-follow menu-icon"></i><span class="nav-text">Moviles</span>
+                        </a></li>
+
                     <li><a href="#" onclick="ShowCells('x')">
                             <i class="icon-user-follow menu-icon"></i><span class="nav-text">Celulares</span>
                         </a></li>
