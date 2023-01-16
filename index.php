@@ -921,7 +921,7 @@ return false;
 
                     <li>
                         <a class="moduloldap">
-                            <form action="http://172.16.3.8/modulo-ldap/log_captura.php" method="POST" target="_blank">
+                            <form action="http://infr2.tpitic.com.mx/modulo-ldap/" method="POST" target="_blank">
                                 <input type="hidden" name="infra" value="<?php echo $_SESSION['user']; ?>">
                                 <i class="icon-grid menu-icon"></i><span class="nav-text"><input type="submit" name="ldap" value="Modulo LDAP" class="modulo"> </span>
                             </form>
@@ -930,7 +930,7 @@ return false;
                     </li>
                     <li>
                         <a>
-                            <form action="http://172.16.3.8/modulo-sql/log_captura.php" method="POST" target="_blank">
+                            <form action="http://infr2.tpitic.com.mx/modulo-sql/" method="POST" target="_blank">
                                 <input type="hidden" name="infra" value="<?php echo $_SESSION['user']; ?>">
                                 <i class="icon-grid menu-icon"></i><span class="nav-text"><input type="submit" name="sql" value="Modulo SQL" class="modulo"> </span>
                             </form>
