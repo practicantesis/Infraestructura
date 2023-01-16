@@ -953,7 +953,7 @@ return false;
 
                     <li class="nav-label">DEVICES</li>
 
-                    <li><a href="http://ti.tpitic.com.mx/Infraestructura/informe/index.php?666U2lzdGVtYXM=897">
+                    <li><a href="http://ti.tpitic.com.mx/Infraestructura/informe/index.php?666U2lzdGVtYXM=897" target="_blank">
                             <i class="icon-user-follow menu-icon"></i><span class="nav-text">Moviles</span>
                         </a></li>
 
