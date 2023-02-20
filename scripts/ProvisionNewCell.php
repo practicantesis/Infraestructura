@@ -3,6 +3,17 @@
 require('/var/www/html/INFRAESTRUCTURA-DESARROLLO/jferia/Infraestructura/php/funciones.php');
 
 $celdap=GetCellsFromLDAP("poractivar");
+
+$tags=array_keys($celdap);
+
+$total=sizeof($tags);
+
+if ($total == 0) {
+        print "nada que procesar\n\n";
+        return false;
+}
+
+
 $awdevs=QueryToAirwatchAPI("ALLDEVS","ALLDEVS");
 $awdevsa=json_decode($awdevs, true);
 $con=ConectaLDAP();
@@ -21,8 +32,6 @@ EnviaTelegram($debs,"gsalazar");
 
 $a=array();
 $b=array();
-
-$tags=array_keys($celdap);
 
 
 //EnviaTelegram("hi","jferia");
@@ -139,12 +148,12 @@ if ($processed != "DUNNO") {
 }
 
 
-
-EnviaTelegram($debs,"jferia");  
-EnviaTelegram($debs,"acota");  
-EnviaTelegram($debs,"eresendiz");  
-EnviaTelegram($debs,"gsalazar");  
-EnviaTelegram($debs,"mruiz");
+TelegramATelefonia($debs);
+#EnviaTelegram($debs,"jferia");  
+#EnviaTelegram($debs,"acota");  
+#EnviaTelegram($debs,"eresendiz");  
+#EnviaTelegram($debs,"gsalazar");  
+#EnviaTelegram($debs,"fvargas");
 
 /*
 print_r($awdevsa);

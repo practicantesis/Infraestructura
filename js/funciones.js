@@ -194,7 +194,11 @@ function ShowLDAP(what) {
         });
     }
     if (what == "NukeDev") {
-        var html ='<div class="col-lg-12"><div class="card"><div class="card-body"><div class="form-validation"><input type="text" id="srchp" class="form-control" ><br><input type="checkbox" id="confirm" name="confirm" disabled>Realizar cambios<br><input type="checkbox" id="nukedevuser" name="nukedevuser" disabled>Eliminar Devuser<br><button type="button" class="btn btn-primary mb-2" onclick="SrchParam()">Buscar</button><div id="DevQResult"></div></div></div></div>';
+        var html ='<div class="col-lg-12"><div class="card"><div class="card-body"><div class="form-validation"><input type="text" id="srchp" class="form-control" ><br><input type="checkbox" id="confirm" name="confirm" disabled>Realizar cambios<br><!--<input type="checkbox" id="nukedevice" name="nukedevice" disabled>Eliminar Telefono<br>--><input type="checkbox" id="nukedevuser" name="nukedevuser" disabled>Eliminar Usuario <div style="display: inline" id="devusername"></div> (Device users)<br><button type="button" class="btn btn-primary mb-2" onclick="SrchParam()">Buscar</button><div id="DevQResult"></div></div></div></div>';
+        //var html ='<div class="col-lg-12"><div class="card"><div class="card-body"><div class="form-validation"><input type="text" id="srchp" class="form-control" ><br><div class="col-lg-12"><div class="card"><div class="card-body"><div class="form-validation"><div style="display: inline" id="nukedevdiv"></div><br><div style="display: inline" id="nukeuserdiv"></div><br><button type="button" class="btn btn-primary mb-2" onclick="SrchParam()">Buscar</button><div id="DevQResult"></div></div></div></div>';
+        //<input type="text" id="srchp" class="form-control" ><br><input type="checkbox" id="confirm" name="confirm" disabled>Realizar cambios<br>
+        //<input type="checkbox" id="nukedevice" name="nukedevice" disabled>Eliminar Telefono 
+        //<input type="checkbox" id="nukedevuser" name="nukedevuser" disabled>Eliminar Usuario <div style="display: inline" id="devusername"></div> (Devices)<br>
         $('#NewLDAPUser').html(html);
     }
     if (what == "AddLDAPDevUsers") {
@@ -304,6 +308,69 @@ function SaveDevCellNumber(tag) {
         }
     });
 }
+
+function SelFalla(tag) {
+    var e = document.getElementById("baja-"+tag);
+    var valor = e.options[e.selectedIndex].value;
+    var dn = "DeviceTAG="+tag+",ou=Celulares,ou=Devices,dc=transportespitic,dc=com"
+    alert (valor);
+    alert (dn);
+    $.ajax({
+            type: "POST",
+            url: 'php/UpdateLDAPvalue.php',
+            data: { dn: dn, value: "devicerazonbaja", nvalue: valor },
+            dataType: "json",
+            success: function(data) {
+                $("#loaderDiv").hide();
+                if (data[0].success == "NO") {
+                alert('INCORRECTO');
+            }
+                if (data[0].success == "YES") {
+                    alert('CORRECTO');
+                } else {
+                    alert(data[0].success);
+                }
+           }
+    });
+
+
+}    
+
+function ChangeDevCellNumberForm(tag) {
+    //alert(tag);
+    elid='inputnumber'+tag;
+    elotro='#divcell'+tag;
+    //alert(elid);
+    //var html = '<br><input type="text" id="'+elid+'"><br>';
+var html = '<br><input type="text" id="'+elid+'"><br><button id="'+tag+'-BtnDevNumberAdd" type="button" class="btn mb-1 btn-primary btn-xs" onclick="ChangeDevCellNumber(\''+tag+'\')">Save</button>  ';
+    //   ChangeDevCellNumber('"+tag+"');".'"'.">Save</button>";
+    alert(html);
+    $(elotro).html(html); 
+}
+
+function ChangeDevCellNumber(tag) {
+    var xxx = 'inputnumber'+tag;
+    var val = document.getElementById(xxx).value;
+    alert(val);
+    $.ajax({
+        type: "POST",
+        url: 'php/ChangeCellNumber.php',
+        data: { tag: tag, val: val  },
+        dataType: "json",
+        success: function(data) {
+            if (data[0].success == "NO") {
+                alert(data[0].data);
+            }
+            if (data[0].success == "YES") {
+                alert(data[0].data);
+                id='#divcell'+tag;
+                $(id).html(val); 
+            }
+        }
+    });
+}
+
+
 
 function SmbGrpMemberAction (valor,dn,accion) {
     var user = document.getElementById("newsmbgrpuser").value;
@@ -472,16 +539,24 @@ function SrchParam() {
     if ($("#confirm").is(':checked')) {
         action = 'CHANGE';
     }
+    var nukedevuser = 'NO';
+    if ($("#nukedevuser").is(':checked')) {
+        nukedevuser = 'YES';
+    }
+    
     //alert(action);
     $.ajax({
         type: "POST",
-        data: { param: param, action: action },
+        data: { param: param, action: action, nukedevuser: nukedevuser },
         url: 'php/ProcessDevSrch.php',
         dataType: "json",
         success: function(data) {
             if (data[0].success == "YES") {
                 $('#BOTTDIV').html(data[0].mes);
+                $('#devusername').html(data[0].devuser);
                 $('#confirm').removeAttr("disabled");
+                $('#nukedevuser').removeAttr("disabled");
+                $('#nukedevice').removeAttr("disabled");
             }
             if (data[0].success == "NO") {
                 alert(data[0].mes);
@@ -556,6 +631,49 @@ function selectUserGrp(user) {
     });
     return false;
 }
+
+
+function DeleteDeviceUser() {
+    var duusername = document.getElementById("val-duusernname").value;
+    //alert(duusername);
+    $.ajax({
+        type: "POST",
+        url: 'php/DeleteDeviceUser.php',
+        data: { duusername: duusername },
+        dataType: "json",
+        success: function(data) {
+            if (data[0].success == "YES") {
+                //$('#NewLDAPUser').html(data[0].data);
+                $('#testos').html(data[0].msg);
+                //$('#testos').html('x');
+                //alert(data[0].msg);
+                //$('#celltable').dataTable( { "lengthMenu": [[150, -1], [150, "All"]]  } );
+            }
+        }
+    });
+}
+
+function ConfirmDUNuke(user,tag) {
+    //alert(user+tag);
+    $.ajax({
+        type: "POST",
+        url: 'php/DoDeleteDeviceUser.php',
+        data: { user: user, tag: tag },
+        dataType: "json",
+        success: function(data) {
+            if (data[0].success == "YES") {
+                //$('#NewLDAPUser').html(data[0].data);
+                $('#MEDDIV').html("CAMBIO REALIZADO");
+                //$('#testos').html('x');
+                //alert(data[0].msg);
+                //$('#celltable').dataTable( { "lengthMenu": [[150, -1], [150, "All"]]  } );
+            }
+        }
+    });
+
+}
+
+
 
 function selectDevUser(user) {
     $("#LDAPDevUser").hide();
@@ -1174,11 +1292,30 @@ function searchuserapirhtp(tipo,valor,chkexist) {
             data: { valor: va },
             dataType: "json",
             success: function(data) {
+                if (data[0]['activo'] == 'NO') {
+                    alert('Usuario '+va+' ('+data[0]['fullnom']+') No esta activo en BD RH');
+                    $('#BtnSaveNewDevUser').attr('disabled','disabled');
+                    $('#val-dunumeroempleado').val('');
+                    
+                } else {
+                    $('#val-dunombre').removeAttr('readonly');
+                    $('#BtnSaveNewDevUser').removeAttr('disabled');
+                    $('#val-dunombre').val(data[0]['fullnom']);
+                    $('#val-dunombre').attr('readonly');
+                    $('#val-duoficina').val(data[0]['ofi']);
+                    $('#menza').html(data[0]['aviso']);
+                    $('#val-duusernname').removeAttr('readonly');
+                    $('#val-duusernname').val(data[0]['username']);
+                    $('#val-duusernname').attr('readonly');
+                    
+                    
+                    
+                }
                 //alert(data.info[0]['apepaterno']);
-                $('#val-dunombre').removeAttr('readonly');
+                ///////$('#val-dunombre').removeAttr('readonly');
                 //document.getElementById("txt").value
-                $('#val-dunombre').val(data.info[0]['apepaterno']+' '+data.info[0]['apematerno']+' '+data.info[0]['nombre']);
-                $('#val-duoficina').val(data.info[0]['oficina']);
+                ///////$('#val-dunombre').val(data.info[0]['apepaterno']+' '+data.info[0]['apematerno']+' '+data.info[0]['nombre']);
+                ///////$('#val-duoficina').val(data.info[0]['oficina']);
                 
 /*val-dunombre
                 if (data[0].success == "NO") {
@@ -1528,10 +1665,10 @@ function GetComment() {
         success: function(data) {
             //alert(data[0].success);
             if (data[0].success == "YES") {
-                $('#NewLDAPUser').html(data[0].data);
+                ////$('#NewLDAPUser').html(data[0].data);
                 //$('#celltable').dataTable();
-                $('#celltable').dataTable( { "lengthMenu": [[150, -1], [150, "All"]]  } );
-                //alert(data[0].data);
+                ////$('#celltable').dataTable( { "lengthMenu": [[150, -1], [150, "All"]]  } );
+                alert(data[0].data);
             }
         }
     });

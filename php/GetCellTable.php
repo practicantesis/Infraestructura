@@ -13,7 +13,7 @@ $fnt2="<font face='Trebuchet MS, Arial, Helvetica' size='2'>";
 
 
 $html  = "<table class='table table-striped table-bordered table-responsive' id='celltable'><thead>";
-$html .= "<tr><th>Tag</th><th>Assignedto</th><th>Brand</th><th>Dept</th><th>Imei</th><th>lastenroll</th><th>lastseen</th><th>mac</th><th>office</th><th>Serial</th><th>Numero de Telefono</th><!--<th>ofi en user</th><th>no emp en user</th><th>nombre en deviceuser</th>--><th>OCS Information</th><th>NOTES</th></tr></thead><tbody>";
+$html .= "<tr><th>Tag</th><th>Assignedto</th><th>Brand</th><th>Dept</th><th>Imei</th><th>lastenroll</th><th>lastseen</th><th>mac</th><th>office</th><th>Serial</th><th>Numero de Telefono</th><!--<th>ofi en user</th><th>no emp en user</th><th>nombre en deviceuser</th>--><th>OCS Information</th><th>NOTES</th><th style='white-space:nowrap;'>RAZON DE BAJA</th></tr></thead><tbody>";
 
 for ($i=0; $i<$ldata["count"]; $i++) {
 	if ($ldata[$i]['deviceassignedto'][0] != "BAJA") {
@@ -46,18 +46,35 @@ for ($i=0; $i<$ldata["count"]; $i++) {
 	$html .= "<td>$fnt1".$ldata[$i]['deviceserial'][0]."</td>";
 	if (strlen($ldata[$i]['devicenumber'][0]) > 1) {
 		$namber=$ldata[$i]['devicenumber'][0];
+		$namber.="<br><div style='display: inline' id='num-".$ldata[$i]['devicetag'][0]."'><a href='#' onclick=".'"'."ChangeDevCellNumberForm('".$ldata[$i]['devicetag'][0]."');".'"'.">CAMBIAR</a></div>";
 	} else {
-		$namber="<input type='text' id='inputnumber".$ldata[$i]['devicetag'][0]."'><button id='".$ldata[$i]['devicetag'][0]."-BtnDevNumberAdd' type='button' class='btn mb-1 btn-primary btn-xs' onclick=".'"'."SaveDevCellNumber('".$ldata[$i]['devicetag'][0]."');".'"'.">Save</button>";
+		$namber.="<br><input type='text' id='inputnumber".$ldata[$i]['devicetag'][0]."'><button id='".$ldata[$i]['devicetag'][0]."-BtnDevNumberAdd' type='button' class='btn mb-1 btn-primary btn-xs' onclick=".'"'."SaveDevCellNumber('".$ldata[$i]['devicetag'][0]."');".'"'.">Save</button>";
 	}
 	$html .= "<td>$fnt1 <div id='divcell".$ldata[$i]['devicetag'][0]."'>".$namber."<div></td>";
 	///////////////////////////echo $n=GetDevUserFromLDAP($ldata[$i]['deviceassignedto'][0],$con);	
 	//$ocstag=GetOCSTAG($ldata[$i]['deviceserial'][0],$conx);
-	//$html .= "<td>$fnt1*** ".$ocstag."</td>";      
+	//$html .= "<td>$fnt1*** ".$ocstag."</td>";
+	$selectedfalla="";
+	if ($ldata[$i]['devicerazonbaja'][0] == "FALLA") {
+		$selectedfalla="SELECTED";
+	}
+	$selectedROTURA="";
+	if ($ldata[$i]['devicerazonbaja'][0] == "ROTURA") {
+		$selectedROTURA="SELECTED";
+	}
+	$selectedOBSOLETO="";
+	if ($ldata[$i]['devicerazonbaja'][0] == "OBSOLETO") {
+		$selectedOBSOLETO="SELECTED";
+	}
+
+	
 	$html .= "<!--<td></td><td></td><td></td>--><td></td>";      
-	$html .= "<td><a href='#' onclick='GetComment()'>COMMA</a></td>";    	
+	$html .= "<td><a href='#' onclick='GetComment()'>COMMENTS</a></td>";    	
+	$html .= '<td><select style="width:5" class="form-control" name="baja-'.$ldata[$i]['devicetag'][0].'" id="baja-'.$ldata[$i]['devicetag'][0].'" onchange="SelFalla('."'".$ldata[$i]['devicetag'][0]."'".')"><option value="SELECCIONE">SELECCIONE</option><option value="ROTURA" '.$selectedROTURA.' >ROTURA</option><option value="FALLA" '.$selectedfalla.' >FALLA</option><option value="OBSOLETO" '.$selectedOBSOLETO.'>OBSOLETO</option></select>  </td>';    		
 	//echo $ocstag;      
     $html .= "</tr>";
 	// if baja
+
 	}
     
     

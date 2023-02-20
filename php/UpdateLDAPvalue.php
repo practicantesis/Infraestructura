@@ -196,10 +196,14 @@ if ($_POST['value'] == "wifimac") {
 }
 
 
-
-
 if ($_POST['value'] == "mail") {
 	$success="Valor NO editable!";
+}
+
+
+
+if ($_POST['value'] == "devicerazonbaja") {
+	$valid="YES";
 }
 
 
@@ -250,7 +254,7 @@ if ($_POST['value'] == "SAMBA") {
 	$valid='NO';	
 }
 
-
+//echo "nombre ".$_POST['value'];
 
 if ($valid=="YES") {
 	if ($_POST['value'] == "aliascuentagoogle") {

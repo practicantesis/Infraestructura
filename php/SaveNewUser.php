@@ -107,6 +107,7 @@ if ($forma['lanmac'] == "Definido con valor OCS") {
 }
 if ($forma['lanmac'] == "NO APLICA") {
 	$entry['lanmac'] = "NO";
+	$entry['lanip'] = "NO";
 }	
 // WIFIMAC
 if ($forma['wifimac'] == "Definido con valor OCS") {

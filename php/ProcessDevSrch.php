@@ -2,9 +2,30 @@
 //$_POST["keyword"]='am';
 //https://stackoverflow.com/questions/32197105/autocomplete-textbox-from-active-directory-usind-ldap-users-in-php
 
+
+
 require('funciones.php');
 
+
+
+if (($_POST["action"] == "DUNNO") and ($_POST["nukedevuser"] == "YES")) {
+      //print_r($_POST);
+      $jsonSearchResults[] =  array(
+          'success' => 'NO',
+          'mes' => "Para borrar el Devuser Desde Aqui debe ser junto con el telefono, si desea borrar solo el devuser use el apartado Device Users",
+      );
+      echo json_encode ($jsonSearchResults);
+      
+      return false;
+}
+
 //print_r($_POST);
+//return false;
+
+
+
+// Realizar cambios hacia ottras cosas, por ejemplo, borrar tags duplicados
+
 
 $FOUND="DUNNO";
 $conn=ConectaSQL('ocsweb');
@@ -43,11 +64,12 @@ if (preg_match("/^[a-zA-Z]+$/i",$_POST["param"],$matches)) {
                   $mes .='<div class="alert alert-danger" role="alert">';
                   $mes.=" EL DEV USER NO TIENE DISPOSITIVO ASIGNADO EN LDAP";
                   $mes.='</div>';
-                  if ($_POST["action"] == "CHANGE") {
+                  //if ($_POST["action"] == "CHANGE") {
+                  if ($_POST["nukedevuser"] == "YES") {      
                         //$DeleteDUPOCSTag="YES";
                         DeleteLDAPUser("duusernname=".$_POST["param"].",ou=DeviceUsers,dc=transportespitic,dc=com");
                   } else {
-                        $propuesta .= "Borrar el Devuser ".$_POST["param"]." --> ("."duusernname=".$_POST["param"].",ou=DeviceUsers,dc=transportespitic,dc=com".")<br>";
+                        $propuesta .= "Si palomea Eliminar Usuario se Borrara el Devuser ".$_POST["param"]." --> ("."duusernname=".$_POST["param"].",ou=DeviceUsers,dc=transportespitic,dc=com".")<br>";
                   }                                 
 
                   
@@ -115,6 +137,7 @@ if (preg_match("/^(C[E|P][L|H])(\w\w\w)\d+$/i",$_POST["param"],$matches)) {
                         $mes .='<div class="alert alert-success" role="alert">';
                         $mes.=" DEVICE EXISTENTE EN LDAP PERETENECE A OFICINA ".$di[0]['deviceoffice'][0]." <br>IMEI LDAP: ".$di[0]['deviceimei'][0]." <br>SERIAL LDAP: ".$di[0]['deviceserial'][0] ;
                         $mes.='</div>';
+                        $borrable="SI";
 
                   //if ($dadodebaja != "YES") {
                         if ($_POST["action"] == "CHANGE") {
@@ -337,6 +360,12 @@ if (! preg_match("/^BAJA_CEL_(\w\w\w)$/i",$ocsof,$matchesc)) {
                   }
                   logDevChange($_SESSION['user'],"DELETECELL",$_POST["param"],$propuesta,$conn);
                   $propuesta .= $TAGCHG.$outapi.$updateuserldap.$updateofices;
+
+                  if (($_POST["action"] == "CHANGE") and ($_POST["nukedevuser"] == "YES")) {
+                        $dele=DeleteLDAPUser("duusernname=".$di[0]['deviceassignedto'][0].",ou=DeviceUsers,dc=transportespitic,dc=com");
+                  }                        
+
+
             }                 
       }
       //print_r($di);
@@ -363,6 +392,8 @@ $mes .='<li>'.$propuesta;
 $jsonSearchResults[] =  array(
     'success' => 'YES',
     'mes' => $mes,
+    'borrable' => $borrable,
+    'devuser' => $di[0]['deviceassignedto'][0],
     'ofi' => $ofi,
 );
 echo json_encode ($jsonSearchResults);

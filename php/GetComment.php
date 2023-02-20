@@ -1,7 +1,13 @@
 <?php
 
-$curl = curl_init();
+include('configuraciones.class.php');
+require('funciones.php');
 
+
+
+
+/*
+$curl = curl_init();
 curl_setopt_array($curl, array(
   CURLOPT_URL => 'https://as257.awmdm.com/api/mdm/devices/notes?searchby=SerialNumber&id=MXRNU19720108085',
   CURLOPT_RETURNTRANSFER => true,
@@ -17,9 +23,24 @@ curl_setopt_array($curl, array(
     'Authorization: Basic amZlcmlhOkxldHR5b3J0ZWdhMTIz'
   ),
 ));
-
 $response = curl_exec($curl);
 
 curl_close($curl);
-echo $response;
+
+*/
+
+$airwatchPorSerie=QueryToAirwatchAPI('NOTES','xx');
+
+$jsonSearchResults[] =  array(
+    'success' => 'YES',
+    'data' => $airwatchPorSerie
+);
+
+//echo $forma;
+
+echo json_encode ($jsonSearchResults);
+return false;
+
+
+ //$response;
 ?>

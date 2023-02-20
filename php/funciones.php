@@ -207,7 +207,7 @@ function getRegSiglaFromRegional($reg) {
 
 
 function QueryToAirwatchAPI($tipo,$val) {
-    $basic_auth = base64_encode("jferiago:TP1nghm0R1hM0zaUqfuck");
+    $basic_auth = base64_encode("jferiago:TP1nghm0R1hM0zaUqfuckO");
     //$basic_auth='amZlcmlhOkxldHR5b3J0ZWdh';
     $ch = curl_init();
     $api_key='Zbh2S+e0ejNOibdtwlFDFssflXSeCniu2oh1/7lVg5A=';
@@ -224,6 +224,11 @@ function QueryToAirwatchAPI($tipo,$val) {
     if ($tipo == "DeleteDEVICEperIMEI") {
         $endpoint="/api/mdm/devices/?searchby=ImeiNumber&id=".$val;
     }
+    if ($tipo == "NOTES") {
+        $endpoint="/api/mdm/devices/notes?searchby=SerialNumber&id=320615670110";
+    }
+
+    
     $url = $baseurl.$endpoint;
     $headers = ['aw-tenant-code: '.$api_key,'Authorization: Basic '.$basic_auth,'Accept: application/json'];
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -249,12 +254,12 @@ function QueryToAirwatchAPI($tipo,$val) {
     $infos = curl_getinfo($ch);
 
 
-//echo "UNAUTH!!!!!!!!!!!!!!!!!!!!!!!!!!".$infos['http_code'];
-if ($infos['http_code'] == 401) {
-    //echo "UNAUTH!!!!!!!!!!!!!!!!!!!!!!!!!!";
-    return "UNAUTH";
-    //exit;
-}
+    //echo "UNAUTH!!!!!!!!!!!!!!!!!!!!!!!!!!".$infos['http_code'];
+    if ($infos['http_code'] == 401) {
+        //echo "UNAUTH!!!!!!!!!!!!!!!!!!!!!!!!!!";
+        return "UNAUTH";
+        //exit;
+    }
 
 
     //If http_code is not 200, then there's an error
@@ -491,15 +496,12 @@ function GetDevUsersFromLDAPCells($how,$ofi,$conn) {
 
 
 
-
+// Desde # de Empleado
 function GetNoEmpInfoFromLDAP($user,$how) {
     include 'configuraciones.class.php';
     $err='';
     $data='';
     $out='';
-    if ($how == "array") {
-        $out=array();
-    }
     $ldapconn=ConectaLDAP();
     //error_reporting(E_ALL);
     //ini_set('display_errors', 'On');
@@ -510,6 +512,9 @@ function GetNoEmpInfoFromLDAP($user,$how) {
     $ldata = ldap_get_entries($ldapconn, $result);
     //echo $ldata["count"];
     //print_r($ldata);
+    if ($how == "array") {
+        $out=array();
+    }
     for ($i=0; $i<$ldata["count"]; $i++) {
         //array_push($array1,$ldata[$i][$what][0]);
         //echo "<pre>";
@@ -525,8 +530,15 @@ function GetNoEmpInfoFromLDAP($user,$how) {
         
         //echo "</pre>";
         //return false;
+
+        //echo "xxxxx".$err;
     }
     //print_r($out);
+    if ($ldata["count"] == "0") {
+        unset($out);
+        $out = "NO";
+    }
+
     return $out;
 }
 
@@ -559,6 +571,8 @@ function GetUserInfoFromLDAP($user,$how) {
             $out['uid']=$ldata[$i]['uid'][0];
             $out['cn']=$ldata[$i]['cn'][0];
             $out['oficina']=$ldata[$i]['oficina'][0];
+            //$out['noempleado']=$ldata[$i]['noempleado'][0];
+            
         }
         //echo "</pre>";
         //return false;
@@ -1020,7 +1034,8 @@ function GetDeviceTagInfoFromAssignedUserLDAP($user,$tipo) {
 function TelegramATelefonia($debs) {
     EnviaTelegram($debs,"eresendiz");
     EnviaTelegram($debs,"jferia");  
-    EnviaTelegram($debs,"acota");  
+    EnviaTelegram($debs,"acota"); 
+    EnviaTelegram($debs,"fvargas"); 
     EnviaTelegram($debs,"gsalazar");  
 }
 
@@ -1209,7 +1224,23 @@ function DevUserForm($ldata) {
                                         </div>
                                     </div>
                                 </div>
+
+
+
+
                             </div>                                
+
+
+
+
+                                        <div class="form-group">
+                                            <div class="form-check mb-3 ">
+                                                <label class="form-check-label">
+                                                    <button type="button" id="BtnSaveNewUser" class="btn btn-primary mb-2" onclick="DeleteDeviceUser()">Eliminar</button><div id="testos">
+                                                </label>
+                                            </div>
+                                        </div>
+
 
                                         
 
@@ -1766,6 +1797,7 @@ function CheckSMBServiceForUser($dn) {
 
 
 function UpdateLDAPVAl($dn,$value,$vname) {
+    //echo "vname es $vname";
     $ldapBind=ConectaLDAP();
     $values[$vname][0] = array();
     $values[$vname][0]=$value;
@@ -2126,6 +2158,18 @@ function NewDevUserFormAPI() {
                                 </div>
                             </div>                                
                             </form>
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Info</h4>
+                                        <div class="card-content">
+                                            <div id="menza">
+                                                <div class="alert alert-dark">Sin avisos</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
