@@ -25,13 +25,50 @@
 <script>
 	function doSearch() {
 		const tableReg = document.getElementById('datos');
+		const searchText = document.getElementById('officinas').value.toLowerCase();
+		let total = 0;
+
+		// Recorremos todas las filas con contenido de la tabla
+		for (let i = 1; i < tableReg.rows.length; i++) {
+			// Si el td tiene la clase "noSearch" no se busca en su cntenido
+			if (tableReg.rows[i].classList.contains("officinas")) {
+				continue;
+			}
+
+			let found = false;
+			const cellsOfRow = tableReg.rows[i].getElementsByTagName('td');
+			// Recorremos todas las celdas
+			for (let j = 0; j < cellsOfRow.length && !found; j++) {
+				const compareWith = cellsOfRow[j].innerHTML.toLowerCase();
+				// Buscamos el texto en el contenido de la celda
+				if (searchText.length == 0 || compareWith.indexOf(searchText) > -1) {
+					found = true;
+					total++;
+				}
+			}
+			if (found) {
+				tableReg.rows[i].style.display = '';
+			} else {
+				// si no ha encontrado ninguna coincidencia, esconde la
+				// fila de la tabla
+				tableReg.rows[i].style.display = 'none';
+			}
+		}
+
+		// mostramos las coincidencias
+
+	}
+
+
+	function doSearch2() {
+		const tableReg = document.getElementById('datos');
 		const searchText = document.getElementById('searchTerm').value.toLowerCase();
 		let total = 0;
 
 		// Recorremos todas las filas con contenido de la tabla
 		for (let i = 1; i < tableReg.rows.length; i++) {
 			// Si el td tiene la clase "noSearch" no se busca en su cntenido
-			if (tableReg.rows[i].classList.contains("noSearch")) {
+			if (tableReg.rows[i].classList.contains("searchTerm")) {
 				continue;
 			}
 
@@ -128,7 +165,7 @@
 	<div class="titulo">
 		<div class="cabecera">
 			<img class="pitic" src="img/pitic.png" alt="">
-			<h1 class="dm">Dispositivos moviles <img class="movil" src="img/moviles.png" alt="celular"></h1>
+			<h1 class="dm">Dispositivos Moviles <img class="movil" src="img/moviles.png" alt="celular"></h1>
 
 		</div>
 		<br>
@@ -137,19 +174,41 @@
 
 			<label>Oficina:</label>
 
-			<select id="officinas" name="oficinas" onchange="busquedaPorOfficina()">
+			<select id="officinas" name="oficinas" onchange="doSearch()">
 				<option value="">Todas</option>
 				<option value="BAJA_CEL_TRA">TRANSPORTE</option>
-				<option value="BAJA_CEL_SUR">SUR</option>
-				<option value="BAJA_CEL_NOR">NORTE</option>
-				<option value="BAJA_CEL_OCT">OCCIDENTE</option>
-				<option value="BAJA_CEL_NST">NOROESTE</option>
-				<option value="BAJA_CEL_CNT">CENTRO</option>
+				<option value="CELMER">MERIDA</option>
+				<option value="CELCCN">CANCUN</option>
+				<option value="CELVIL">VILLA HERMOSA</option>
+				<option value="CELCHI">CHIHUAHUA</option>
+				<option value="CELJUA">JUAREZ</option>
+				<option value="CELMTY">MONTERREY</option>
+				<option value="CELMT1">MONTERREY1</option>
+				<option value="CELCUL">CULIACAN</option>
+				<option value="CELGDL">GUADALAJARA</option>
+				<option value="CELLGT">LEON</option>
+				<option value="CELMAZ">MAZATLAN</option>
+				<option value="CELTEP">TEPIC</option>
+				<option value="CELZAP">ZAPOPAN</option>
+				<option value="CELMCH">MOCHIS</option>
+				<option value="CELHLO">HERMOSILLO</option>
+				<option value="CELMXL">MEXICALI</option>
+				<option value="CELOBR">OBREGON</option>
+				<option value="CELSTA">SANTA ANA</option>
+				<option value="CELTIJ">TIJUANA</option>
+				<option value="CELNOG">NOGALES</option>
+				<option value="CPHSIS">SISTEMAS</option>
+				<option value="CELIZT">IZTAPALAPA</option>
+				<option value="CELMEX">MEXICO</option>
+				<option value="CELPUE">PUEBLA</option>
+				<option value="CELQUE">QUERETARO</option>
+				<option value="CELTOL">TOLUCA</option>
+				<option value="CELTPZ">TEPOZOTLAN</option>
 			</select>
 
 
 		</div>
-		<label for="">Buscador: <input id="searchTerm" onkeyup="doSearch()" type="text" name="buscador"></label>
+		<label for="">Buscador: <input id="searchTerm" onkeyup="doSearch2()" type="text" name="buscador"></label>
 
 
 	</div>
