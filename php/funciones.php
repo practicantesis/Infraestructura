@@ -994,6 +994,27 @@ function GetDeviceUserInfoFromLDAP($user) {
     return $ldata;
 }
 
+function GetDeviceUserInfoFromLDAPbyNoEmp($ne) {
+    $err='';
+    $data='';
+    set_time_limit(30);
+    $ldapserver = 'ldap.tpitic.com.mx';
+    $ldapuser   = 'cn=feria,dc=transportespitic,dc=com';  
+    $ldappass   = 'sistemaspitic';
+    $ldaptree   = "ou=DeviceUsers,dc=transportespitic,dc=com";
+    $ldapconn = ldap_connect($ldapserver) or die("Could not connect to LDAP server.");
+    $ldata="NO";
+    $array1= array();
+    if($ldapconn) {
+        $ldapbind = ldap_bind($ldapconn, $ldapuser, $ldappass) or die ("Error trying to bind: ".ldap_error($ldapconn));
+        if ($ldapbind) {
+            $result = ldap_search($ldapconn,$ldaptree, "(dunumeroempleado=$ne)") or die ("Error in search query: ".ldap_error($ldapconn));
+            $ldata = ldap_get_entries($ldapconn, $result);
+        }
+    }
+    return $ldata;
+}
+
 // Tipos count y tags
 function GetDeviceTagInfoFromAssignedUserLDAP($user,$tipo) {
     $err='';
@@ -1695,9 +1716,33 @@ function UserForm($ldata) {
 
                                 </div>
                                 ';
-                                $cu='noone';
+                                $cu='Devices';
+                                $duprops=GetDeviceUserInfoFromLDAPbyNoEmp($ldata[0]["noempleado"][0]);
+                                if ($duprops['count'] == 0) {
+                                    $dupropsv = "NO";
+                                    $datag = "N/A";
+                                } else {
+                                    $dupropsv = $duprops[0]["duusernname"][0];
+                                    $devinfo=GetDeviceInfoFromLDAP("ou=Celulares,ou=Devices,dc=transportespitic,dc=com","deviceassignedto",$dupropsv);
+                                    if ($devinfo['count'] == 0) {
+                                        $datag = "NO";
+                                    } else {
+                                        $datag = str_replace(",ou=Celulares,ou=Devices,dc=transportespitic,dc=com", '', $devinfo[0]["dn"]) ;
+                                        //$datag = "<small>".$devinfo[0]["dn"]."<small>";
+                                    }                                    
+                                }
+                                //$dupropsv = $duprops["count"];
+                                //$dupropsv="<pre>";
+                                //$dupropsv .= print_r($duprops,TRUE);
+                                //$dupropsv.="</pre>";
+                                //$dupropsv="<pre>";
+                                //$dupropsv .= print_r($devinfo,TRUE);
+                                //$dupropsv.="</pre>";
                                 $forma .='
                                 <div class="col">
+                                    <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">Devices: </label></div>
+                                    No. Empleado  '.$ldata[0]["noempleado"][0].' Cuenta con Devuser:  '.$dupropsv.'<br>
+                                    Devuser cuenta con dispositivo: '.$datag.'<br>
                                     <!--<div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">XXXX: </label><div id="edit-'.$cu.'"><a href="#" onclick="UVal('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
                                     <div class="col-lg-6">
                                         <div class="form-row" id="elinput-'.$cu.'">
