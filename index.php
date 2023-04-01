@@ -762,7 +762,7 @@ return false;
                                                 <div class="notification-content">
                                                     <div class="notification-heading">Saiful Islam</div>
                                                     <div class="notification-timestamp">08 Hours ago</div>
-                                                    <div class="notification-text">Hi Teddy, Just wanted to let you ...</div>
+                                                    <div class="notification-text">Hola tedy, Just wanted to let you ...</div>
                                                 </div>
                                             </a>
                                         </li>
