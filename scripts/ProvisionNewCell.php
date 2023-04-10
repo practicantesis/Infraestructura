@@ -66,11 +66,13 @@ $processed="DUNNO";
 foreach ($awdevsa['Devices'] as &$valuex) {
 	$tag="DUNNO";
     $skipthis="DUNNO";
-	//echo $valuex['DeviceFriendlyName']."\n";
+	//echo $valuex['DeviceFriendlyName']." ---- \n";
+	//echo "//////// ".$b[$valuex['DeviceFriendlyName']];
 	//if (in_array($valuex['DeviceFriendlyName'], $a)) {
     if ( (in_array($valuex['DeviceFriendlyName'], $a)) and ($b[$valuex['DeviceFriendlyName']] != "PORDEFINIR") and ($b[$valuex['DeviceFriendlyName']] != "BAJA") ) {    
     	//and ($b[$valuex['DeviceFriendlyName']] != "SINASIGNAR")
 		$tg = $valuex['DeviceFriendlyName'];
+echo "777777777777777777777777777".$b[$valuex['DeviceFriendlyName']];
 		echo "Validando parametos locales para ".$valuex['DeviceFriendlyName']."\n";
 		echo "Validando usuario ".$b[$valuex['DeviceFriendlyName']]."\n";
 		$user=GetDeviceUserInfoFromLDAP($b[$valuex['DeviceFriendlyName']]);
@@ -117,6 +119,7 @@ foreach ($awdevsa['Devices'] as &$valuex) {
             $sn=$valuex['SerialNumber'];
     		echo $dn="DeviceTAG=".$tg.",ou=Celulares,ou=Devices,dc=transportespitic,dc=com";
     		$brand=GetBrandFromModel($valuex[ModelId][Name]);
+echo "6666666666666666666666666666".$valuex[ModelId][Name];
     		$entry = array();
     		$entry['devicebrand']=$brand;
     		$entry['deviceimei']=$valuex['Imei'];
@@ -147,6 +150,9 @@ if ($processed != "DUNNO") {
     $debs .=  $processed;
 }
 
+
+//echo "quitar el exit";
+//exit;
 
 TelegramATelefonia($debs);
 #EnviaTelegram($debs,"jferia");  
@@ -365,6 +371,11 @@ foreach ($imeis as &$value) {
         echo "<pre>";
         //print_r($telia);
 		$brand=GetBrandFromModel($telia[ModelId][Name]);
+		if ($brand == "ERROR") {
+			echo "ERROR ON BRAND GET";
+			exit;	
+		}
+
 		$entry = array();
 		$entry['devicebrand']=$brand;
 		$entry['deviceimei']=$telia['Imei'];
@@ -398,6 +409,8 @@ $entry['deviceimei']=$forma['val-devicimei'];
 
 
 $brand=GetBrandFromModel($telia[ModelId][Name]);
+
+
 $entry['devicebrand']=$brand;
 $entry['devicelastenrolledon']=$telia['LastEnrolledOn'];
 $entry['devicelastseen']=$telia['LastSeen'];

@@ -1,16 +1,20 @@
 <?php
 require('funciones.php');
 
-$dn="DeviceTAG=".$_POST['tag'].",ou=Celulares,ou=Devices,dc=transportespitic,dc=com";
+if ($_POST['tag'] != "NO") {
+    $dn="DeviceTAG=".$_POST['tag'].",ou=Celulares,ou=Devices,dc=transportespitic,dc=com";    
+    $tup=UpdateLDAPVAl($dn,"PORDEFINIR","deviceassignedto");
+    if ($tup != "YES") {
+        echo $tup;
+    }
+}
+
 
 //print_r($_POST);
 //echo $dn;
-$tup=UpdateLDAPVAl($dn,"PORDEFINIR","deviceassignedto");
+
 //return false;
 
-if ($tup != "YES") {
-	echo $tup;
-}
 
 
 //$tup=UpdateLDAPVAl("DeviceTAG=".$_POST['tag'].",ou=Celulares,ou=Devices,dc=transportespitic,dc=com","PORDEFINIR","DeviceAssignedTo");

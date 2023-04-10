@@ -54,7 +54,14 @@ echo "</pre>";
 */
 
 
+if (!preg_match('/[^a-z$]/', $forma['duusernname'])) 
+{
+   $ERROR="solo letras!";
+  // string contains only english letters & digits
+}
 
+
+$forma['duusernname'] = strtolower($forma['duusernname']);
 
 
 if (strlen($forma['duusernname']) < 1) {

@@ -41,12 +41,16 @@ function EnviaTelegram($response,$who) {
 
 
 function GetBrandFromModel($model) {
+	$brand="ERROR";
     switch ($model) {
     case (preg_match('/HUAWEI/', $model) ? true : false) :
         $brand="Huawei";
         break;
     case (preg_match('/ZTE/', $model) ? true : false) :
         $brand="ZTE";
+        break;
+    case (preg_match('/samsung/', $model) ? true : false) :
+        $brand="Samsung";
         break;
 
     case 1:
@@ -207,7 +211,7 @@ function getRegSiglaFromRegional($reg) {
 
 
 function QueryToAirwatchAPI($tipo,$val) {
-    $basic_auth = base64_encode("jferiago:TP1nghm0R1hM0zaUqfuckO");
+    $basic_auth = base64_encode("jferiago:TP1nghm0R1hM0zaUqfackO");
     //$basic_auth='amZlcmlhOkxldHR5b3J0ZWdh';
     $ch = curl_init();
     $api_key='Zbh2S+e0ejNOibdtwlFDFssflXSeCniu2oh1/7lVg5A=';
@@ -3030,19 +3034,16 @@ function UpdateOCSOffice($hwid,$newoffice,$conn) {
     $result = $conn->query($sql);
 /*
 MySQL [ocsweb]> select * from config where TVALUE like '%BAJA_CEL_%';
-+--------------------------+--------+--------------+----------+
 | NAME                     | IVALUE | TVALUE       | COMMENTS |
-+--------------------------+--------+--------------+----------+
 | ACCOUNT_VALUE_OFICINA_49 |     49 | BAJA_CEL_NOR | NULL     |
 | ACCOUNT_VALUE_OFICINA_50 |     50 | BAJA_CEL_NST | NULL     |
 | ACCOUNT_VALUE_OFICINA_51 |     51 | BAJA_CEL_OCT | NULL     |
 | ACCOUNT_VALUE_OFICINA_52 |     52 | BAJA_CEL_SUR | NULL     |
 | ACCOUNT_VALUE_OFICINA_53 |     53 | BAJA_CEL_CNT | NULL     |
 | ACCOUNT_VALUE_OFICINA_61 |     61 | BAJA_CEL_TRA | NULL     |
-+--------------------------+--------+--------------+----------+
-+-------------+--------------+----------+----------+
+
+
 | HARDWARE_ID | TAG          | fields_3 | fields_4 |
-+-------------+--------------+----------+----------+
 |          28 | NOTAG        | 57       |          |
 insert into config values ('ACCOUNT_VALUE_OFICINA_61','61','BAJA_CEL_TRA',NULL);
 update 
