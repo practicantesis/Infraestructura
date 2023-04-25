@@ -1477,8 +1477,10 @@ function validarinput(tipo,valor,chkexist) {
                     if (data[0].success == "YES") {
                         if (data[0].valor == "NO") {
                             alert('TAG OCS NO ENCONTRADO');
+                            $('#OCSNOTE').html('TAG OCS NO ENCONTRADO');
                         } else {
                             alert('TAG OCS PARA '+va+' ENCONTRADO: '+data[0].valor);
+                            $('#OCSNOTE').html('OCS: '+data[0].valor);
                         }
                         $('#lanmacsel').html(data[0].lanmac);
                         $('#wifimacsel').html(data[0].wifimac);

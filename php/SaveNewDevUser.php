@@ -40,11 +40,6 @@ $ERROR="NO";
 //return false;
 
 
-$entry['duusernname']=$forma['duusernname'];
-$entry['dunombre']=$forma['dunombre'];
-$entry['dunumeroempleado']=$forma['dunumeroempleado'];
-$entry['duoficina']=$forma['duoficina'];
-$entry['objectClass'][0] = "deviceuser";
 
 
 /*
@@ -54,14 +49,15 @@ echo "</pre>";
 */
 
 
-if (!preg_match('/[^a-z$]/', $forma['duusernname'])) 
-{
-   $ERROR="solo letras!";
+$forma['duusernname'] = strtolower($forma['duusernname']);
+$forma['duusernname'] = trim($forma['duusernname']);
+if (!preg_match('/^[a-z]+$/', $forma['duusernname']))  {
+   $ERROR="En username solo letras, valide que no tenga espacioes o caracteres especiales en el campo de username -".$forma['duusernname']."-";
   // string contains only english letters & digits
 }
 
 
-$forma['duusernname'] = strtolower($forma['duusernname']);
+
 
 
 if (strlen($forma['duusernname']) < 1) {
@@ -77,6 +73,7 @@ if (is_numeric($forma['dunumeroempleado'])) {
 } else {
   $ERROR="CAPTURE NUMERO DE EMPLEADO (SOLO NUMEROS)";
 }
+
 
 
 
@@ -97,6 +94,13 @@ print_r($entry);
 echo "</pre>";
 echo $ERROR;
 */
+
+$entry['duusernname']=$forma['duusernname'];
+$entry['dunombre']=$forma['dunombre'];
+$entry['dunumeroempleado']=$forma['dunumeroempleado'];
+$entry['duoficina']=$forma['duoficina'];
+$entry['objectClass'][0] = "deviceuser";
+
 
 if ($ERROR == "NO") {
 	$mod = ldap_add($con, $dn , $entry);

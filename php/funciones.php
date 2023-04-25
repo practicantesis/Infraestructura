@@ -2644,7 +2644,7 @@ function NewUserForm() {
                                 $cu='lanmac';
                                 $forma .='
                                 <div class="col">
-                                    <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'"><p class="text-danger">MAC Address LAN: </p></label><div id="edit-'.$cu.'"><a href="#/"" onclick="UValn('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
+                                    <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'"><p class="text-danger">MAC Address LAN: <small><div id="OCSNOTE">x</div></small></p></label><div id="edit-'.$cu.'"><a href="#/"" onclick="UValn('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
                                     <div class="col-lg-6">
                                         <div class="form-row" id="elinput-'.$cu.'">
                                             <!--<input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="'.$cu.'" onchange="validarinput('."'mac','$cu'".','."'SI'".')" '.$rouser.'><br>--><input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="'.$cu.'"  onchange="validarinput('."'mac','$cu'".','."'SI'".')" readonly><div id="lanmacsel">Waiting for info</div><div id="selnetdiv"></div>
