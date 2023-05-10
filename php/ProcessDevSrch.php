@@ -3,10 +3,7 @@
 //https://stackoverflow.com/questions/32197105/autocomplete-textbox-from-active-directory-usind-ldap-users-in-php
 
 
-
 require('funciones.php');
-
-
 
 if (($_POST["action"] == "DUNNO") and ($_POST["nukedevuser"] == "YES")) {
       //print_r($_POST);
@@ -21,11 +18,7 @@ if (($_POST["action"] == "DUNNO") and ($_POST["nukedevuser"] == "YES")) {
 
 //print_r($_POST);
 //return false;
-
-
-
 // Realizar cambios hacia ottras cosas, por ejemplo, borrar tags duplicados
-
 
 $FOUND="DUNNO";
 $conn=ConectaSQL('ocsweb');
@@ -71,8 +64,6 @@ if (preg_match("/^[a-zA-Z]+$/i",$_POST["param"],$matches)) {
                   } else {
                         $propuesta .= "Si palomea Eliminar Usuario se Borrara el Devuser ".$_POST["param"]." --> ("."duusernname=".$_POST["param"].",ou=DeviceUsers,dc=transportespitic,dc=com".")<br>";
                   }                                 
-
-                  
             }
       }            
 }      
@@ -92,6 +83,21 @@ if (preg_match("/^(C[E|P][L|H])(\w\w\w)\d+$/i",$_POST["param"],$matches)) {
       $dupocs=CheckOCSDupTAG($_POST["param"],$conn);
 
 
+      // EVITAR BORRAR DEVUSER SI EXISTE EN PEOPLE EL USERNAME
+      if (($_POST["action"] == "CHANGE") and ($_POST["nukedevuser"] == "YES")) {
+            $existinppl = CheckExistentValueLDAP("ou=People,dc=transportespitic,dc=com","uid",$di[0]['deviceassignedto'][0]);
+            //NO quiere decir que el usuario si existe en People
+            if ($existinppl == "NO") {
+                  $jsonSearchResults[] =  array(
+                        'success' => 'NO',
+                        'mes' => "USUARIO EXISTENTE EN PEOPLE"
+                  );
+                  echo json_encode ($jsonSearchResults);
+                  return false;
+            }
+      }
+      //      
+
       if (is_array($dupocs)) {
             //print_r($dupocs);
             foreach ($dupocs as &$value) {
@@ -102,8 +108,6 @@ if (preg_match("/^(C[E|P][L|H])(\w\w\w)\d+$/i",$_POST["param"],$matches)) {
             $mes.='<div class="alert alert-danger" role="alert">';
             $mes.=" TAG DUPLICADO EN OCS : ".$hids;
             $mes.='</div>';
-
-
             if ($_POST["action"] == "CHANGE") {
                   $DeleteDUPOCSTag="YES";
             } else {
@@ -138,15 +142,13 @@ if (preg_match("/^(C[E|P][L|H])(\w\w\w)\d+$/i",$_POST["param"],$matches)) {
                         $mes.=" DEVICE EXISTENTE EN LDAP PERETENECE A OFICINA ".$di[0]['deviceoffice'][0]." <br>IMEI LDAP: ".$di[0]['deviceimei'][0]." <br>SERIAL LDAP: ".$di[0]['deviceserial'][0] ;
                         $mes.='</div>';
                         $borrable="SI";
-
-                  //if ($dadodebaja != "YES") {
+                        //if ($dadodebaja != "YES") {
                         if ($_POST["action"] == "CHANGE") {
                               $ChangeDeviceOffice="YES";
                         } else {
                               $propuesta .= "Cambiar el DeviceOffice en LDAP del dispositivo con TAG ".$_POST["param"]." de ".$di[0]['deviceoffice'][0]." a BAJA_CEL_".$regsig."<br>";
                         }
                   }  { $propuesta .= "-=-<br>"; }                        
-
                   // CHECK ASSIGNED USER
                   $ato=GetDeviceUserInfoFromLDAP($di[0]['deviceassignedto'][0]);
                   //print_r($ato);
@@ -184,6 +186,7 @@ if (preg_match("/^(C[E|P][L|H])(\w\w\w)\d+$/i",$_POST["param"],$matches)) {
                   $snl=strlen($di[0]['deviceserial'][0]);
                   if ($snl != 0) {
                         $airwatchPorSerie=QueryToAirwatchAPI('DEVICE',$di[0]['deviceserial'][0]);
+                        //print $airwatchPorSerie;
                         if ($airwatchPorSerie == "UNAUTH") {
                               $jsonSearchResults[] =  array(
                                   'success' => 'NO',
@@ -334,8 +337,6 @@ if (! preg_match("/^BAJA_CEL_(\w\w\w)$/i",$ocsof,$matchesc)) {
                               $FOUND="OCSWRONMGIMEI";
                         }
                   }
-
-
                   if ($ChangeOCSTAG=="YES") {
                         $propuesta .= "CAMBIANDO OFICINA DEL HWID - ".$ocshw." OCS A: BAJA_CEL_".$regsig."<br>";
                         $TAGCHG=UpdateOCSOffice($ocshw,"BAJA_CEL_".$regsig,$conn);
@@ -362,7 +363,13 @@ if (! preg_match("/^BAJA_CEL_(\w\w\w)$/i",$ocsof,$matchesc)) {
                   $propuesta .= $TAGCHG.$outapi.$updateuserldap.$updateofices;
 
                   if (($_POST["action"] == "CHANGE") and ($_POST["nukedevuser"] == "YES")) {
-                        $dele=DeleteLDAPUser("duusernname=".$di[0]['deviceassignedto'][0].",ou=DeviceUsers,dc=transportespitic,dc=com");
+                        $existinppl = CheckExistentValueLDAP("ou=People,dc=transportespitic,dc=com","uid",$di[0]['deviceassignedto'][0]);
+                        if ($existinppl == "YES") {
+                              $dele=DeleteLDAPUser("duusernname=".$di[0]['deviceassignedto'][0].",ou=DeviceUsers,dc=transportespitic,dc=com");      
+                        } else {
+                              $mes .='<br>ATENCION!!!! EL DUUSERNAME '.$di[0]['deviceassignedto'][0].' TAMBIEN EXISTE EN PEOPLE<br>';
+                        }
+                        
                   }                        
 
 

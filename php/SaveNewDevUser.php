@@ -3,7 +3,7 @@
 //echo "<pre>";
 //print_r($_POST);
 //echo "</pre>";
-
+//return false;
 
 require('funciones.php');
 include('configuraciones.class.php');

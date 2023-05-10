@@ -1,5 +1,60 @@
 <?php
 
+function QueryRHdb($valor) {
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => 'https://www.transportespitic.com.mx/light/empleados/info',
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => '',
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => 'POST',
+      CURLOPT_POSTFIELDS =>'{
+        "clave_busca":"'.$valor.'",
+        "clave_usuario":"1839"
+    }',
+      CURLOPT_HTTPHEADER => array(
+        'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc3VhcmlvIjoicGl0aWMiLCJpYXQiOjE2NjczMzQ4ODEsImV4cCI6MTY2OTkyNjg4MX0',
+        'Content-Type: application/json'
+      ),
+    ));
+    $response = curl_exec($curl);
+    curl_close($curl);
+    //print_r($response);
+    $data = json_decode($response, TRUE);
+    if ($data['success'] == 1) {
+        //print_r($data);
+        $apep=strtolower($data['info'][0]['apepaterno']);
+        $apep=ucwords($apep);
+        $apem=strtolower($data['info'][0]['apematerno']);
+        $apem=ucwords($apem);
+        $nom=strtolower($data['info'][0]['nombre']);
+        $nom=ucwords($nom);
+        $ofi=strtolower($data['info'][0]['oficina']);
+        $ofi=ucwords($ofi);
+
+        $activo="NO";
+        if (strlen($data['info'][0]['fechabaja']) == 0) {
+          $activo="SI";
+          $feb="NA";
+        } else {
+            $feb = $data['info'][0]['fechabaja'];
+        }
+        $out=array();
+        $out["pat"]=$apep;
+        $out["mat"]=$apem;
+        $out["nom"]=$nom;
+        $out["feb"]=$feb;
+        $out["ofi"]=$ofi;
+        $out["activo"]=$activo;
+    } else {
+        $out="NO_RESPONSE";
+    }
+    return $out;
+}
+
 
 function GetBranchesWihoutPA() {
     $arr = array("CUL", "TOL", "MAZ", "PUE", "ZAP", "MTY", "VCL","MXL","COB","LGT","IZT","QUE","NOG","STA","TIJ","TEP","MT1","CHI","MCH","TPZ","PWM","VIL","MER","MNZ");
@@ -28,9 +83,10 @@ function GetOficinaValidAliases() {
 
 function EnviaTelegram($response,$who) {
     $ui=GetUserInfoFromLDAP($who,"array");
-    //print_r($ui);
-    echo $chatId=$ui[0][telegram][0];
-    //$chatId="5194912467";
+    echo "ui vale $ui";
+//    print_r($ui);
+    $chatId=$ui[0][telegram][0];
+    //$chatId="1835595419";
     $len = strlen($response);
     //echo " new   $chatId -- $len "; 
     $token = '2018772774:AAEIoNJsUaQdSVCrVJP97E8DoLUFBAy85zk';
@@ -211,7 +267,8 @@ function getRegSiglaFromRegional($reg) {
 
 
 function QueryToAirwatchAPI($tipo,$val) {
-    $basic_auth = base64_encode("jferiago:TP1nghm0R1hM0zaUqfackO");
+
+    $basic_auth = base64_encode("infra:TP1nghm0R1hM0zaRqfockO");
     //$basic_auth='amZlcmlhOkxldHR5b3J0ZWdh';
     $ch = curl_init();
     $api_key='Zbh2S+e0ejNOibdtwlFDFssflXSeCniu2oh1/7lVg5A=';
@@ -256,7 +313,7 @@ function QueryToAirwatchAPI($tipo,$val) {
 
     $ch_result = curl_exec($ch);
     $infos = curl_getinfo($ch);
-
+    //print_r($infos);
 
     //echo "UNAUTH!!!!!!!!!!!!!!!!!!!!!!!!!!".$infos['http_code'];
     if ($infos['http_code'] == 401) {
@@ -546,7 +603,7 @@ function GetNoEmpInfoFromLDAP($user,$how) {
     return $out;
 }
 
-function GetUserInfoFromLDAP($user,$how) {
+function GetUserInfoFromLDAPConnq($user,$how) {
     include 'configuraciones.class.php';
     $err='';
     $data='';
@@ -556,6 +613,7 @@ function GetUserInfoFromLDAP($user,$how) {
     }
     $ldapconn=ConectaLDAP();
     //error_reporting(E_ALL);
+    //echo "aqui";
     //ini_set('display_errors', 'On');
     set_time_limit(30);
     $array1= array();
@@ -592,6 +650,55 @@ function GetUserInfoFromLDAP($user,$how) {
 
     return $out;
 }
+
+function GetUserInfoFromLDAP($user,$how) {
+    include 'configuraciones.class.php';
+    $err='';
+    $data='';
+    $out='';
+    if ($how == "array") {
+        $out=array();
+    }
+    $ldapconn=ConectaLDAP();
+    //error_reporting(E_ALL);
+    //echo "aqui";
+    //ini_set('display_errors', 'On');
+    set_time_limit(30);
+    $array1= array();
+    $result = ldap_search($ldapconn,$LDAPUserBase, "(uid=$user)");
+    $err=ldap_error($ldapconn);
+    $ldata = ldap_get_entries($ldapconn, $result);
+    //echo $ldata["count"];
+    //print_r($ldata);
+    for ($i=0; $i<$ldata["count"]; $i++) {
+        //array_push($array1,$ldata[$i][$what][0]);
+        //echo "<pre>";
+        //print_r($ldata);
+        if ($how == "htmltable") {
+            $out .= "<tr><td>".$ldata[$i]['uid'][0]."</td></tr>";    
+        }
+        if ($how == "GetUserInfoFromLDAP") {
+            $out['uid']=$ldata[$i]['uid'][0];
+            $out['cn']=$ldata[$i]['cn'][0];
+            $out['oficina']=$ldata[$i]['oficina'][0];
+            //$out['noempleado']=$ldata[$i]['noempleado'][0];
+            
+        }
+        //echo "</pre>";
+        //return false;
+    }
+    //print_r($out);
+    if ($how == "exists") {
+        $out = $ldata["count"];    
+    }
+    if ($how == "array") {
+        $out = $ldata;    
+    }
+    //print_r($out);
+
+    return $out;
+}
+
 
 function GetUserInfoFromLDAPConn($user,$how,$conn) {
     include 'configuraciones.class.php';
@@ -1194,6 +1301,14 @@ function GetOfficeFromOCSHWID($hwid,$conn) {
 
 function DevUserForm($ldata) {
     //echo print_r($ldata);
+    $DEV=GetDeviceInfoFromLDAP("ou=Celulares,ou=Devices,dc=transportespitic,dc=com","deviceassignedto",$ldata[0]["duusernname"][0]);
+    if ($DEV['count'] == 1) {
+        //print_r($DEV);
+        $tag=$DEV[0][devicetag][0];
+    } else {
+        $tag="No tiene o tiene mas de uno asignado";
+    }
+    
     $forma='<div class="row justify-content-center">
                 <div class="col-lg-12">
                     <div class="card">
@@ -1255,6 +1370,14 @@ function DevUserForm($ldata) {
 
                             </div>                                
 
+
+                                        <div class="form-group">
+                                            <div class="form-check mb-3 ">
+                                                <label class="form-check-label">
+                                                    TAG ASIGNADO: '.$tag.'
+                                                </label>
+                                            </div>
+                                        </div>
 
 
 
@@ -2831,6 +2954,9 @@ function CheckExistentValueLDAP($base,$what,$val) {
     if ($what == "devicetag") {
         $LDAPUserBase="ou=Devices,dc=transportespitic,dc=com";
     }
+    if ($what == "uid") {
+        $LDAPUserBase="ou=People,dc=transportespitic,dc=com";
+    }
 
     $ldapconn=ConectaLDAP();
     ini_set('display_errors', 'On');
@@ -3032,24 +3158,6 @@ function UpdateOCSOffice($hwid,$newoffice,$conn) {
     $iv=GetOCSOfficeIVALUE($newoffice);
     $sql = "UPDATE accountinfo set fields_3='".$iv."' where HARDWARE_ID ='".$hwid."'";
     $result = $conn->query($sql);
-/*
-MySQL [ocsweb]> select * from config where TVALUE like '%BAJA_CEL_%';
-| NAME                     | IVALUE | TVALUE       | COMMENTS |
-| ACCOUNT_VALUE_OFICINA_49 |     49 | BAJA_CEL_NOR | NULL     |
-| ACCOUNT_VALUE_OFICINA_50 |     50 | BAJA_CEL_NST | NULL     |
-| ACCOUNT_VALUE_OFICINA_51 |     51 | BAJA_CEL_OCT | NULL     |
-| ACCOUNT_VALUE_OFICINA_52 |     52 | BAJA_CEL_SUR | NULL     |
-| ACCOUNT_VALUE_OFICINA_53 |     53 | BAJA_CEL_CNT | NULL     |
-| ACCOUNT_VALUE_OFICINA_61 |     61 | BAJA_CEL_TRA | NULL     |
-
-
-| HARDWARE_ID | TAG          | fields_3 | fields_4 |
-|          28 | NOTAG        | 57       |          |
-insert into config values ('ACCOUNT_VALUE_OFICINA_61','61','BAJA_CEL_TRA',NULL);
-update 
-
-*/
-
 }
 
 function GetOCSIVALUEOffice($num) {

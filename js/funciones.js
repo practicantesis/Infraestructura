@@ -1292,6 +1292,23 @@ function searchuserapirhtp(tipo,valor,chkexist) {
             data: { valor: va },
             dataType: "json",
             success: function(data) {
+                if (data[0]['success'] == 'DUP') {
+                    alert('Usuario '+va+' Ye existe en Device users');
+                    $('#BtnSaveNewDevUser').attr('disabled','disabled');
+                    $('#menza').html(data[0]['aviso']);
+                    $('#val-dunumeroempleado').val('');
+                    return false;
+                    
+                }                
+
+                if (data[0]['activo'] == 'NOTFOUND') {
+                    alert('Usuario '+va+' No existe en BD RH');
+                    $('#BtnSaveNewDevUser').attr('disabled','disabled');
+                    $('#val-dunumeroempleado').val('');
+                    $('#menza').html(data[0]['aviso']);
+                    return false;
+                    
+                }                
                 if (data[0]['activo'] == 'NO') {
                     alert('Usuario '+va+' ('+data[0]['fullnom']+') No esta activo en BD RH');
                     $('#BtnSaveNewDevUser').attr('disabled','disabled');
@@ -1302,7 +1319,8 @@ function searchuserapirhtp(tipo,valor,chkexist) {
                     $('#BtnSaveNewDevUser').removeAttr('disabled');
                     $('#val-dunombre').val(data[0]['fullnom']);
                     $('#val-dunombre').attr('readonly');
-                    $('#val-duoficina').val(data[0]['ofi']);
+                    //$('#val-duoficina').val(data[0]['ofi']);
+                    $('#elinput-duoficina').html(data[0]['combo']);
                     $('#menza').html(data[0]['aviso']);
                     $('#val-duusernname').removeAttr('readonly');
                     $('#val-duusernname').val(data[0]['username']);
@@ -1603,6 +1621,15 @@ function SaveNewCell() {
 }
 
 function SaveNewDevUser() {
+    var e = document.getElementById("val-duoficina");
+    if (e) {
+        var ofi = e.options[e.selectedIndex].value;
+    }
+    if (ofi == "SELECCIONE") {
+        alert("SELECCIONE UNA OFICINA!!!!");
+        return false;
+    }
+    //return false;
     var data = $("#newdevuser").serializeArray();
     $.ajax({
         type: "POST",
