@@ -268,7 +268,7 @@ function getRegSiglaFromRegional($reg) {
 
 function QueryToAirwatchAPI($tipo,$val) {
 
-    $basic_auth = base64_encode("infra:TP1nghm0R1hM0zaRqfockO");
+    $basic_auth = base64_encode("infra:TP1nghm0R1hM0zaRqfUckO");
     //$basic_auth='amZlcmlhOkxldHR5b3J0ZWdh';
     $ch = curl_init();
     $api_key='Zbh2S+e0ejNOibdtwlFDFssflXSeCniu2oh1/7lVg5A=';

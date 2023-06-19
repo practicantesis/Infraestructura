@@ -293,14 +293,13 @@ if (preg_match("/^(C[E|P][L|H])(\w\w\w)\d+$/i",$_POST["param"],$matches)) {
                         $mes.='</div>';
                         $FOUND="OCSNOSERIE";
 
-if (! preg_match("/^BAJA_CEL_(\w\w\w)$/i",$ocsof,$matchesc)) {                        
-                        if ($_POST["action"] == "CHANGE") {
+						if (! preg_match("/^BAJA_CEL_(\w\w\w)$/i",$ocsof,$matchesc)) {                        
+                        	if ($_POST["action"] == "CHANGE") {
                               $ChangeOCSTAG="YES";
-                        } else {
+                        	} else {
                               $propuesta .= "Cambiar la oficina del HWID ".$ocshw." de OCS a BAJA_CEL_".$regsig."<br>";
-                        }
-} else { $propuesta .= "- -<br>"; }                        
-
+                        	}
+						} else { $propuesta .= "- -<br>"; }                        
                   }
                   // OCS OMEI
                   //echo $ocsimei=GetOCSImeiFromTag($_POST["param"],$conn);
