@@ -78,12 +78,12 @@ if (is_numeric($forma['dunumeroempleado'])) {
 
 
 $existnem=CheckExistentValueLDAP("ou=DeviceUsers,dc=transportespitic,dc=com","duusernname",$forma['duusernname']);
-if ($existnem == "NO") {
+if ($existnem == "YES") {
  $ERROR="USER YA EXISTE EN DEVICEUSERS"; 
 }
 
 $existlus=CheckExistentValueLDAP("ou=DeviceUsers,dc=transportespitic,dc=com","dunumeroempleadoOriginal",$forma['dunumeroempleado']);
-if ($existnem == "NO") {
+if ($existnem == "YES") {
  $ERROR="NO EMPLEADO YA EXISTE EN DEVICEUSERS"; 
 }
 

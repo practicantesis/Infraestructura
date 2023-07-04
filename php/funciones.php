@@ -2258,7 +2258,7 @@ function NewDevUserForm() {
     return $forma;                            
 
 }
-
+//onchange="validarinput('."'palabra','$cu'".','."'SI'".')" 
 function NewDevUserFormAPI() {
     $rouser="";
     $cu="NU";
@@ -2283,7 +2283,7 @@ function NewDevUserFormAPI() {
                                     <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">Username: </label></div>
                                     <div class="col-lg-6">
                                         <div class="form-row" id="elinput-'.$cu.'">
-                                            <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="Nombre de usuario" onchange="validarinput('."'palabra','$cu'".','."'SI'".')" '.$rouser.' readonly>
+                                            <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="Nombre de usuario" '.$rouser.' readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -2968,7 +2968,7 @@ function CheckExistentValueLDAP($base,$what,$val) {
     //print_r($ldata);
 
     
-    if ($ldata['count'] > 0) {
+    if ($ldata['count'] == 0) {
         return "NO";
     } else {
         return "YES";
