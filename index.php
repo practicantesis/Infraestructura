@@ -790,6 +790,9 @@ return false;
                 <ul class="metismenu" id="menu">
 
                     <li class="nav-label">MODULOS</li>
+                    <li><a href="http://wikisis.tpitic.com.mx/" target="_blank">
+                            <i class="icon-people menu-icon"></i><span class="nav-text">WikiSis</span>
+                        </a></li>
 
                     <li><a href="https://www.tpitic.com.mx/reportes_mambo.php" target="_blank">
                             <i class="icon-people menu-icon"></i><span class="nav-text">Mambo</span>
