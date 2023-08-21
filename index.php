@@ -17,13 +17,7 @@ session_start();
 unset($_SESSION['user']);
 session_destroy();
 return false;
-
-
-
 */
-
-
-
 //header('Access-Control-Allow-Origin: *');
 
 require('php/funciones.php');
@@ -33,8 +27,6 @@ ConectaSQL('firewall');
 //error_reporting(0);
 //global $conn;
 //$objCONF = new Configuraciones;
-
-
 
 session_start();
 if (!isset($_SESSION['user'])) {
@@ -863,6 +855,15 @@ return false;
                     <li><a href="#" onclick="ShowLDAP('NukeDev')">
                             <i class="icon-people menu-icon"></i><span class="nav-text">Eliminar</span>
                         </a></li>
+
+                    <li><a href="#" onclick="ShowLDAP('Velo')">
+                            <i class="icon-people menu-icon"></i><span class="nav-text">Velocloud</span>
+                        </a></li>
+
+                    <li><a href="#" onclick="ShowLDAP('rsyslog')">
+                            <i class="icon-people menu-icon"></i><span class="nav-text">Syslog</span>
+                    </a></li>
+
 
 
 

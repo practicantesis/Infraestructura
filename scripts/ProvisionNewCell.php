@@ -40,6 +40,9 @@ echo "----------------------------------------  \n";
 echo "DISPOSITIVOS EN LDAP CON IMEI POR ASIGNAR \n";
 echo "----------------------------------------  \n";
 $debs="DISPOSITIVOS EN LDAP CON IMEI POR ASIGNAR\n";
+
+
+
 foreach ($tags as &$value) {
     $note="";
     if ($celdap[$value]['deviceassignedto'] == "PORDEFINIR") {
@@ -58,6 +61,10 @@ foreach ($tags as &$value) {
 }
 //echo "xx".$debs;
 
+//print_r($a);
+//print_r($b);
+
+
 echo "-------------------------------------------------------  \n";
 echo "DISPOSITIVOS DESDE AW Y ANALIZANDO LOS QUE ESTAN CREADOS \n";
 echo "-------------------------------------------------------  \n";
@@ -65,18 +72,18 @@ echo "-------------------------------------------------------  \n";
 $processed="DUNNO";
 foreach ($awdevsa['Devices'] as &$valuex) {
 	$tag="DUNNO";
-    $skipthis="DUNNO";
+    	$skipthis="DUNNO";
 	//echo $valuex['DeviceFriendlyName']." ---- \n";
 	//echo "//////// ".$b[$valuex['DeviceFriendlyName']];
 	//if (in_array($valuex['DeviceFriendlyName'], $a)) {
-    if ( (in_array($valuex['DeviceFriendlyName'], $a)) and ($b[$valuex['DeviceFriendlyName']] != "PORDEFINIR") and ($b[$valuex['DeviceFriendlyName']] != "BAJA") ) {    
+    	if ( (in_array($valuex['DeviceFriendlyName'], $a)) and ($b[$valuex['DeviceFriendlyName']] != "PORDEFINIR") and ($b[$valuex['DeviceFriendlyName']] != "BAJA") ) {    
     	//and ($b[$valuex['DeviceFriendlyName']] != "SINASIGNAR")
 		$tg = $valuex['DeviceFriendlyName'];
 echo "777777777777777777777777777".$b[$valuex['DeviceFriendlyName']];
 		echo "Validando parametos locales para ".$valuex['DeviceFriendlyName']."\n";
 		echo "Validando usuario ".$b[$valuex['DeviceFriendlyName']]."\n";
 		$user=GetDeviceUserInfoFromLDAP($b[$valuex['DeviceFriendlyName']]);
-		//print_r($user);
+		print_r($user);
 		if ($user[count] == 1) {
 			echo "OK! EXISTE EL USUARIO DE DEVICE ".$b[$valuex['DeviceFriendlyName']]." UNA SOLA VEZ\n";
 		} else {

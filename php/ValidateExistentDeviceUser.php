@@ -4,7 +4,7 @@ include('configuraciones.class.php');
 print_r($_POST);
 $exdu=CheckExistentValueLDAP("ou=DeviceUsers,dc=transportespitic,dc=com","duusernname",$_POST['value']);
 
-echo "AAA $exdu  ZZZ";
+//echo "AAA $exdu  ZZZ";
 
 $success="NO";
 

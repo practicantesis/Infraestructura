@@ -1,5 +1,36 @@
 <?php
 
+function QueryToVeloAPI($tipo,$val) {
+    $token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlblV1aWQiOiI5NmE4M2YwMS02OWYzLTRhM2UtOTlhMi00MTdiMTYyNmJkMTQiLCJleHAiOjE3MjAxMzY1NTEsInV1aWQiOiI5YTVhOWJhNi01ODEwLTExZWEtYmZhZi0wYTA0Nzg0NTQzYzMiLCJpYXQiOjE2ODkwOTM0ODB9.X79fSY06AwYXNKCSNbvGHLYXYWOvo04jcx1EGR6rSqc';
+
+    $ch = curl_init();
+
+    $url = 'https://vco129-usvi1.velocloud.net/portal/rest/enterprise/getEnterpriseEdges';
+    //$url = 'http://192.168.120.179/smart.txt';
+    //$headers = ['Authorization: Bearer '.$token,'Content-Type:application/json'];
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/json',
+        'Authorization: Token ' . $token
+    ));
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_VERBOSE, 1);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+    $ch_result = curl_exec($ch);
+    $infos = curl_getinfo($ch);
+    $eljson = json_decode ($ch_result, true);
+    
+    //print_r($eljson);
+    //echo "</pre>";
+    curl_close($ch);    
+    return $eljson;
+}
+
+
 function QueryRHdb($valor) {
     $curl = curl_init();
     curl_setopt_array($curl, array(
@@ -265,10 +296,10 @@ function getRegSiglaFromRegional($reg) {
 }    
 
 
-
+//https://resources.workspaceone.com/view/zv5cgwjrcv972rd6fmml/en
 function QueryToAirwatchAPI($tipo,$val) {
 
-    $basic_auth = base64_encode("infra:TP1nghm0R1hM0zaRqfUckO");
+    $basic_auth = base64_encode("infra:TP1nghm0R1hM0zaRqfUck3");
     //$basic_auth='amZlcmlhOkxldHR5b3J0ZWdh';
     $ch = curl_init();
     $api_key='Zbh2S+e0ejNOibdtwlFDFssflXSeCniu2oh1/7lVg5A=';
@@ -2936,6 +2967,8 @@ function NewUserForm() {
 
 //$exdu=CheckExistentValueLDAP("ou=DeviceUsers,dc=transportespitic,dc=com","duusernname",$_POST['value']);
 function CheckExistentValueLDAP($base,$what,$val) {
+    //echo $base."-".$what."-".$val;
+    //return false;
     include 'configuraciones.class.php';
     if ($what == "dunumeroempleado") {
         // Si se esta registrando un device user validar numero de enpleado en ldap de usuarios

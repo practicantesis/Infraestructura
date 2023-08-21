@@ -66,11 +66,19 @@ for ($i=0; $i<$ldata["count"]; $i++) {
 	if ($ldata[$i]['devicerazonbaja'][0] == "OBSOLETO") {
 		$selectedOBSOLETO="SELECTED";
 	}
+	$selectedROBO="";
+	if ($ldata[$i]['devicerazonbaja'][0] == "ROBO") {
+		$selectedROBO="SELECTED";
+	}
+	$selectedEXTRAVIO="";
+	if ($ldata[$i]['devicerazonbaja'][0] == "EXTRAVIO") {
+		$selectedEXTRAVIO="SELECTED";
+	}
 
 	
 	$html .= "<!--<td></td><td></td><td></td>--><td></td>";      
 	$html .= "<td><a href='#' onclick='GetComment()'>COMMENTS</a></td>";    	
-	$html .= '<td><select style="width:5" class="form-control" name="baja-'.$ldata[$i]['devicetag'][0].'" id="baja-'.$ldata[$i]['devicetag'][0].'" onchange="SelFalla('."'".$ldata[$i]['devicetag'][0]."'".')"><option value="SELECCIONE">SELECCIONE</option><option value="ROTURA" '.$selectedROTURA.' >ROTURA</option><option value="FALLA" '.$selectedfalla.' >FALLA</option><option value="OBSOLETO" '.$selectedOBSOLETO.'>OBSOLETO</option></select>  </td>';    		
+	$html .= '<td><select style="width:5" class="form-control" name="baja-'.$ldata[$i]['devicetag'][0].'" id="baja-'.$ldata[$i]['devicetag'][0].'" onchange="SelFalla('."'".$ldata[$i]['devicetag'][0]."'".')"><option value="SELECCIONE">SELECCIONE</option><option value="ROTURA" '.$selectedROTURA.' >ROTURA</option><option value="FALLA" '.$selectedfalla.' >FALLA</option><option value="OBSOLETO" '.$selectedOBSOLETO.'>OBSOLETO</option><option value="ROBO" '.$selectedfalla.' >ROBO</option><option value="EXTRAVIO" '.$selectedfalla.' >EXTRAVIO</option></select>  </td>';    		
 	//echo $ocstag;      
     $html .= "</tr>";
 	// if baja

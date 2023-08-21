@@ -87,7 +87,7 @@ if (preg_match("/^(C[E|P][L|H])(\w\w\w)\d+$/i",$_POST["param"],$matches)) {
       if (($_POST["action"] == "CHANGE") and ($_POST["nukedevuser"] == "YES")) {
             $existinppl = CheckExistentValueLDAP("ou=People,dc=transportespitic,dc=com","uid",$di[0]['deviceassignedto'][0]);
             //NO quiere decir que el usuario si existe en People
-            if ($existinppl == "NO") {
+            if ($existinppl == "YES") {
                   $jsonSearchResults[] =  array(
                         'success' => 'NO',
                         'mes' => "USUARIO EXISTENTE EN PEOPLE"
@@ -363,7 +363,7 @@ if (! preg_match("/^BAJA_CEL_(\w\w\w)$/i",$ocsof,$matchesc)) {
 
                   if (($_POST["action"] == "CHANGE") and ($_POST["nukedevuser"] == "YES")) {
                         $existinppl = CheckExistentValueLDAP("ou=People,dc=transportespitic,dc=com","uid",$di[0]['deviceassignedto'][0]);
-                        if ($existinppl == "YES") {
+                        if ($existinppl == "NO") {
                               $dele=DeleteLDAPUser("duusernname=".$di[0]['deviceassignedto'][0].",ou=DeviceUsers,dc=transportespitic,dc=com");      
                         } else {
                               $mes .='<br>ATENCION!!!! EL DUUSERNAME '.$di[0]['deviceassignedto'][0].' TAMBIEN EXISTE EN PEOPLE<br>';

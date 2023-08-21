@@ -12,7 +12,7 @@ $empinfo=GetNoEmpInfoFromLDAP($_POST['valor'],'array');
 $exu=CheckExistentValueLDAP("ou=DeviceUsers,dc=transportespitic,dc=com","duusernname",$empinfo[uid]);
 
 
-if ($exu == "NO") {
+if ($exu == "YES") {
 	$usi=GetDeviceUserInfoFromLDAP($empinfo[uid]);
 	$existedu = "SI";
 	$existeduNE = $usi[0]['dunumeroempleado'][0];

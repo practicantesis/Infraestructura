@@ -17,6 +17,8 @@ if ($_POST['aw'] == "no") {
 }
 
 
+
+
 foreach ($devs as $value) {
     //if (preg_match("/([A-Z]+)(\d+)/i",$value,$mat)) {
     if (preg_match("/([A-Z][A-Z][A-Z])([A-Z][A-Z][A-Z1])(\d\d\d)$/i",$value,$mat)) {
@@ -47,19 +49,23 @@ foreach ($devs as $value) {
     }
 
 }
+//print_r($numbas);
+//echo max($numbas);
+//echo "<br>";
+
 $elmax=(max($numbas)+1);
-
 //echo "el tipo es ".$tipo;
-
 $tagbody=$tipo.$_POST['ofi'];
-
-
+$elmaxb=str_pad($elmax, 3, '0', STR_PAD_LEFT);
+//echo $tagbody.$elmax;
 // Validar que no exista el tag dado de baja
-$chkval=CheckExistentValueLDAP("ou=Celulares,ou=Devices,dc=transportespitic,dc=com","devicetag",$tagbody.$elmax);
-if ($chkval == "NO") {
+$chkval=CheckExistentValueLDAP("ou=Celulares,ou=Devices,dc=transportespitic,dc=com","devicetag",$tagbody.$elmaxb);
+if ($chkval == "YES") {
+	//echo "BINGO!";
     $elmax=$elmax+1;
-    $chkvalb=CheckExistentValueLDAP("ou=Celulares,ou=Devices,dc=transportespitic,dc=com","devicetag",$tagbody.$elmax);
-    if ($chkvalb == "NO") {
+    $elmaxb=$elmaxb+1;
+    $chkvalb=CheckExistentValueLDAP("ou=Celulares,ou=Devices,dc=transportespitic,dc=com","devicetag",$tagbody.$elmaxb);
+    if ($chkvalb == "YES") {
         $elmax=$elmax+1;
     }
 }

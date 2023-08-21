@@ -4,7 +4,7 @@ include('configuraciones.class.php');
 //print_r($_POST);
 $exdu=CheckExistentValueLDAP("ou=DeviceUsers,dc=transportespitic,dc=com","duusernname",$_POST['value']);
 
-if (($exdu == "YES") and ($_POST['value'] != "PORDEFINIR") ) {
+if (($exdu == "NO") and ($_POST['value'] != "PORDEFINIR") ) {
 	$success="NO";
 	$err="El device user ".$_POST['value']." NO Existe en Device users, registrelo antes de continuar";
 }
@@ -15,7 +15,7 @@ $extel=CheckExistentValueLDAP("ou=Celulares,ou=Devices,dc=transportespitic,dc=co
 //echo "UUU $extel FFF".$_POST['value'];
 
 
-if ( ($extel == "NO") and ($_POST['value'] != "PORDEFINIR") ) {
+if ( ($extel == "YES") and ($_POST['value'] != "PORDEFINIR") ) {
 	$success="NO";
 	$err="El device user ".$_POST['value']." ya tiene telefono, para que quiere otro?";
 

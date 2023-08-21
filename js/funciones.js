@@ -193,6 +193,31 @@ function ShowLDAP(what) {
             }
         });
     }
+    if (what == "Velo") {
+        $.ajax({
+            type: "POST",
+            url: 'php/GetVeloTable.php',
+            dataType: "json",
+            success: function(data) {
+                if (data[0].success == "YES") {
+                    $('#NewLDAPUser').html(data[0].data);
+                }
+            }
+        });
+    }
+    if (what == "rsyslog") {
+        $.ajax({
+            type: "POST",
+            url: 'php/GetSyslog.php',
+            dataType: "json",
+            success: function(data) {
+                if (data[0].success == "YES") {
+                    $('#NewLDAPUser').html(data[0].data);
+                }
+            }
+        });
+    }
+
     if (what == "NukeDev") {
         var html ='<div class="col-lg-12"><div class="card"><div class="card-body"><div class="form-validation"><input type="text" id="srchp" class="form-control" ><br><input type="checkbox" id="confirm" name="confirm" disabled>Realizar cambios<br><!--<input type="checkbox" id="nukedevice" name="nukedevice" disabled>Eliminar Telefono<br>--><input type="checkbox" id="nukedevuser" name="nukedevuser" disabled>Eliminar Usuario <div style="display: inline" id="devusername"></div> (Device users)<br><button type="button" class="btn btn-primary mb-2" onclick="SrchParam()">Buscar</button><div id="DevQResult"></div></div></div></div>';
         //var html ='<div class="col-lg-12"><div class="card"><div class="card-body"><div class="form-validation"><input type="text" id="srchp" class="form-control" ><br><div class="col-lg-12"><div class="card"><div class="card-body"><div class="form-validation"><div style="display: inline" id="nukedevdiv"></div><br><div style="display: inline" id="nukeuserdiv"></div><br><button type="button" class="btn btn-primary mb-2" onclick="SrchParam()">Buscar</button><div id="DevQResult"></div></div></div></div>';
@@ -1387,14 +1412,14 @@ function validarinput(tipo,valor,chkexist) {
             dataType: "json",
             async: false,
             success: function(data) {
-                if (data[0].success == "NO") {
+                if (data[0].success == "YES") {
                     //alert(data[0].err);
                     alert('USUARIO EXISTE EN DEVICE USERS, DESHABILITANDO EL GUARDAR, CORRIJA E INTENTE DE NUEVO');
                     document.getElementById("BtnSaveNewUser").disabled = true;
                 } else {
                     //$('#BtnSaveNewUser').prop('disabled', 'false');
                 }
-                if (data[0].success == "YES") {
+                if (data[0].success == "NO") {
                     //alert('USUARIO NO EXISTE EN DEVICE USERS');
                 }
             }

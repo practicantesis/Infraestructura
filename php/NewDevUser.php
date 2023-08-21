@@ -11,7 +11,7 @@ $jsonSearchResults[] =  array(
 //echo $forma;
 
 echo json_encode ($jsonSearchResults);
-return false;
+return "xxx";
 
 
 ?>

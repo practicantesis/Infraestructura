@@ -3,12 +3,14 @@
 //https://stackoverflow.com/questions/32197105/autocomplete-textbox-from-active-directory-usind-ldap-users-in-php
 if(!empty($_POST["keyword"])) {
       $ldapserver = 'ldap.tpitic.com.mx';
+      //$ldapserver = '172.16.3.20';
       $ldapuser      = 'cn=feria,dc=transportespitic,dc=com';  
       $ldappass     = 'sistemaspitic';
       $ldaptree    = "ou=DeviceUsers,dc=transportespitic,dc=com";
       $ldapconn = ldap_connect($ldapserver) or die("Could not connect to LDAP server.");
       //$ldapfilter="(uid=".$_POST["keyword"]."*)";
       //$ldapfilter="(duusernname=".$_POST["keyword"]."*)";
+
       $ldapfilter="(|(dunombre=".$_POST["keyword"]."*)(duusernname=".$_POST["keyword"]."*))";
 /*
       $ldapfilter="(|(dunombre=".$_POST["keyword"]."*)(dunumeroempleado=".$_POST["keyword"]."*)(duusernname=".$_POST["keyword"]."*)(duoficina=".$_POST["keyword"]."))";
@@ -31,14 +33,6 @@ if(!empty($_POST["keyword"])) {
                         //if (isset($ldata[$i]["uid"][0])) {
                               $return_arr[] =  $ldata[$i]["duusernname"][0];
                               $aut .= '<li> <a href="#" onClick="selectDevUser('."'".$ldata[$i]["duusernname"][0]."'".');" >'.$ldata[$i]["duusernname"][0].' - '.$ldata[$i]["dunumeroempleado"][0].' '.$ldata[$i]["dunombre"][0].' ('.$ldata[$i]["duoficina"][0].') </a></li>';
-                        //} else {
-                        //      $aut .= '<li>xx</li>';
-                        //}
-                        //echo "<pre>";
-                        //print_r($ldata);
-                        //echo $ldata["count"];
-                        //echo  $ldata[$i]["uid"][0];
-                        //echo "</pre>";
                   }
                   if ($i == 0) {
                         echo "No matches found! $ldapfilter ";
