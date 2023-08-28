@@ -1460,7 +1460,7 @@ function validarinput(tipo,valor,chkexist) {
                     },
                     success: function(data) {
                         $("#loaderDiv").hide();
-                        if (data[0].success == "NO") {
+                        if (data[0].success == "YES") {
                             alert(valor+' '+va+' EXISTE');
                             $('#val-uid').html('');
                             exist="YES";
