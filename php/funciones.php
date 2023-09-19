@@ -299,7 +299,7 @@ function getRegSiglaFromRegional($reg) {
 //https://resources.workspaceone.com/view/zv5cgwjrcv972rd6fmml/en
 function QueryToAirwatchAPI($tipo,$val) {
 
-    $basic_auth = base64_encode("infra:TP1nghm0R1hM0zaRqfUck3");
+    $basic_auth = base64_encode("infra:TP1nghm0R1hM0zaRqfAck3");
     //$basic_auth='amZlcmlhOkxldHR5b3J0ZWdh';
     $ch = curl_init();
     $api_key='Zbh2S+e0ejNOibdtwlFDFssflXSeCniu2oh1/7lVg5A=';

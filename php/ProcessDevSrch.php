@@ -3,6 +3,7 @@
 //https://stackoverflow.com/questions/32197105/autocomplete-textbox-from-active-directory-usind-ldap-users-in-php
 
 
+
 require('funciones.php');
 
 if (($_POST["action"] == "DUNNO") and ($_POST["nukedevuser"] == "YES")) {
@@ -68,12 +69,16 @@ if (preg_match("/^[a-zA-Z]+$/i",$_POST["param"],$matches)) {
       }            
 }      
 
+
+
+
 // CEL
 if (preg_match("/^(C[E|P][L|H])(\w\w\w)\d+$/i",$_POST["param"],$matches)) {
       //$mes.='<div>-</div>';
       $regsig = "DUNNO";      
       $mes .='<div class="alert alert-success" role="alert">';
       $mes .=  "TAG Con Formato valido para OFICINA ".$matches[2]. " TIPO:".$matches[1];
+      //echo "TAG Con Formato valido para OFICINA ".$matches[2]. " TIPO:".$matches[1];
       $mes.='</div>';
       $ofi =  $matches[2];
       $tipo =  $matches[1];
@@ -184,7 +189,8 @@ if (preg_match("/^(C[E|P][L|H])(\w\w\w)\d+$/i",$_POST["param"],$matches)) {
 
                   // CHECK serial for TAG ON AIRWATCH
                   $snl=strlen($di[0]['deviceserial'][0]);
-                  if ($snl != 0) {
+                  //if ($snl != 0) {
+                  if (($snl != 0) and $matches[1] != "CPH") {                  
                         $airwatchPorSerie=QueryToAirwatchAPI('DEVICE',$di[0]['deviceserial'][0]);
                         //print $airwatchPorSerie;
                         if ($airwatchPorSerie == "UNAUTH") {
