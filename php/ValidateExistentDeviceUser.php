@@ -1,7 +1,7 @@
 <?php
 require('funciones.php');
 include('configuraciones.class.php');
-print_r($_POST);
+//print_r($_POST);
 $exdu=CheckExistentValueLDAP("ou=DeviceUsers,dc=transportespitic,dc=com","duusernname",$_POST['value']);
 
 //echo "AAA $exdu  ZZZ";
@@ -10,7 +10,7 @@ $success="NO";
 
 if ($exdu == "YES") {
 	$success="YES";
-	$err="El device user ".$_POST['value']." Existe en Device users";
+	$err="Hey!!! El device user ".$_POST['value']." Existe en Device users";
 }
 
 //$extel=CheckExistentValueLDAP("ou=Celulares,ou=Devices,dc=transportespitic,dc=com","deviceassignedto",$_POST['value']);
