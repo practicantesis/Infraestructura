@@ -48,7 +48,12 @@ foreach ($tags as &$value) {
     if ($celdap[$value]['deviceassignedto'] == "PORDEFINIR") {
         $note = " (IGNORADO)";
     }
-	if (strlen($celdap[$value]['devicetag']) == 9 ) {
+	if (strlen($celdap[$value]['devicetag']) == 9 ||
+    (strpos($celdap[$value]['devicetag'], 'dc') !== false ||
+     strpos($celdap[$value]['devicetag'], 'dg') !== false ||
+     strpos($celdap[$value]['devicetag'], 'do') !== false ||
+     strpos($celdap[$value]['devicetag'], 'rh') !== false ||
+     strpos($celdap[$value]['devicetag'], 'td') !== false)) {
 		echo $celdap[$value]['devicetag']." -> ".$celdap[$value]['deviceassignedto'].$note."\n";
         $debs.=$celdap[$value]['devicetag']." -> ".$celdap[$value]['deviceassignedto'].$note."\n";
 		array_push($a,$celdap[$value]['devicetag']);
@@ -59,10 +64,9 @@ foreach ($tags as &$value) {
 	}
 	
 }
-//echo "xx".$debs;
-
-//print_r($a);
-//print_r($b);
+//////echo "xx".$debs;
+////print_r($a);
+///print_r($b);
 
 
 echo "-------------------------------------------------------  \n";
@@ -72,14 +76,15 @@ echo "-------------------------------------------------------  \n";
 $processed="DUNNO";
 foreach ($awdevsa['Devices'] as &$valuex) {
 	$tag="DUNNO";
-    	$skipthis="DUNNO";
+    $skipthis="DUNNO";
 	//echo $valuex['DeviceFriendlyName']." ---- \n";
-	//echo "//////// ".$b[$valuex['DeviceFriendlyName']];
+	//echo "//////// ".$b[$valuex['DeviceFriendlyName']]."\n";
 	//if (in_array($valuex['DeviceFriendlyName'], $a)) {
-    	if ( (in_array($valuex['DeviceFriendlyName'], $a)) and ($b[$valuex['DeviceFriendlyName']] != "PORDEFINIR") and ($b[$valuex['DeviceFriendlyName']] != "BAJA") ) {    
+    if ( (in_array($valuex['DeviceFriendlyName'], $a)) and ($b[$valuex['DeviceFriendlyName']] != "PORDEFINIR") and ($b[$valuex['DeviceFriendlyName']] != "BAJA") ) {    
     	//and ($b[$valuex['DeviceFriendlyName']] != "SINASIGNAR")
+        
 		$tg = $valuex['DeviceFriendlyName'];
-echo "777777777777777777777777777".$b[$valuex['DeviceFriendlyName']];
+        echo "777777777777777777777777777".$b[$valuex['DeviceFriendlyName']];
 		echo "Validando parametos locales para ".$valuex['DeviceFriendlyName']."\n";
 		echo "Validando usuario ".$b[$valuex['DeviceFriendlyName']]."\n";
 		$user=GetDeviceUserInfoFromLDAP($b[$valuex['DeviceFriendlyName']]);
@@ -126,7 +131,7 @@ echo "777777777777777777777777777".$b[$valuex['DeviceFriendlyName']];
             $sn=$valuex['SerialNumber'];
     		echo $dn="DeviceTAG=".$tg.",ou=Celulares,ou=Devices,dc=transportespitic,dc=com";
     		$brand=GetBrandFromModel($valuex[ModelId][Name]);
-echo "6666666666666666666666666666".$valuex[ModelId][Name];
+        echo "6666666666666666666666666666".$valuex[ModelId][Name];
     		$entry = array();
     		$entry['devicebrand']=$brand;
     		$entry['deviceimei']=$valuex['Imei'];
@@ -147,8 +152,8 @@ echo "6666666666666666666666666666".$valuex[ModelId][Name];
                 $processed = "IMPORTED ".$b[$valuex['DeviceFriendlyName']]." FROM AW TO LDAP\n";
             }
         }    
-	} else {
-
+	    } else {
+            
 	}
 }	
 

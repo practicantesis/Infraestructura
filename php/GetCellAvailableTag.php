@@ -64,6 +64,7 @@ if ($chkval == "YES") {
 	//echo "BINGO!";
     $elmax=$elmax+1;
     $elmaxb=$elmaxb+1;
+    $elmaxb=str_pad($elmax, 3, '0', STR_PAD_LEFT);
     $chkvalb=CheckExistentValueLDAP("ou=Celulares,ou=Devices,dc=transportespitic,dc=com","devicetag",$tagbody.$elmaxb);
     if ($chkvalb == "YES") {
         $elmax=$elmax+1;
