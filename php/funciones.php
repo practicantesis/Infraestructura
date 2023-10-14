@@ -3305,6 +3305,9 @@ function ChgPasswdMamboUser($user,$pass) {
     $conn=ConectaSQL('globaldb');
     $sql="UPDATE only_users set password='$pass' WHERE username = '".$user."'";
     $result = $conn->query($sql);
+    $sql2=  "INSERT INTO passwords values ('".$user."','a3a2ae947252f1a4c82d15aaf53ec657','a3a2ae947252f1a4c82d15aaf53ec657','2023-11-21')";
+    //$sql2= "insert into passwords valuesfecha_expiracion='2023-11-21' where user='".$user."'";
+    $result2= $conn->query($sql2);
     if ($result) {
         return "SI";
     } else {
@@ -3312,7 +3315,6 @@ function ChgPasswdMamboUser($user,$pass) {
          return$conn -> error;
     }        
 }
-
 
 function hash_password($password) {
     $salt = substr(str_shuffle(str_repeat('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',4)),0,4);
