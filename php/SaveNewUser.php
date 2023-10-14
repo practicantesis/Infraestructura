@@ -38,7 +38,8 @@ echo "</pre>";
 return false;
 */
 
-$shapass = "{SHA}".base64_encode(sha1($forma['userpassword'], TRUE));
+//$shapass = "{SHA}".base64_encode(sha1($forma['userpassword'], TRUE));
+$shapass = "{SHA}".base64_encode(sha1('tpitic', TRUE));
 $entry['userPassword']=$shapass;
 $entry['uid']=$forma['uid'];
 $entry['cn']=$fullname;
