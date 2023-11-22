@@ -298,9 +298,11 @@ function getRegSiglaFromRegional($reg) {
 
 //https://resources.workspaceone.com/view/zv5cgwjrcv972rd6fmml/en
 function QueryToAirwatchAPI($tipo,$val) {
-
-    $basic_auth = base64_encode("infra:TP1nghm0R1hM0zaRqfAck4U");
+    //$basic_auth = base64_encode("infra:TP1nghm0R1hM0zaRqfAck4U");
+    $basic_auth = base64_encode("infra:TP1nghm0R1hM0zaRqfZck4U");
     //$basic_auth='amZlcmlhOkxldHR5b3J0ZWdh';
+        
+
     $ch = curl_init();
     $api_key='Zbh2S+e0ejNOibdtwlFDFssflXSeCniu2oh1/7lVg5A=';
     $baseurl="https://as257.awmdm.com";
