@@ -1,6 +1,6 @@
 <?php
 
-require('/var/www/html/INFRAESTRUCTURA-DESARROLLO/jferia/Infraestructura/php/funciones.php');
+require('../php/funciones.php');
 
 $celdap=GetCellsFromLDAP("poractivar");
 
@@ -24,7 +24,7 @@ $debs="SIN AUTORIZACION PARA API DE AW";
 EnviaTelegram($debs,"jferia");  
 EnviaTelegram($debs,"acota");  
 EnviaTelegram($debs,"eresendiz");  
-EnviaTelegram($debs,"gsalazar");  
+EnviaTelegram($debs,"abgarcia");  
 }
 
 
@@ -171,7 +171,7 @@ TelegramATelefonia($debs);
 #EnviaTelegram($debs,"acota");  
 #EnviaTelegram($debs,"eresendiz");  
 #EnviaTelegram($debs,"gsalazar");  
-#EnviaTelegram($debs,"fvargas");
+#EnviaTelegram($debs,"abgarcia");
 
 /*
 print_r($awdevsa);
