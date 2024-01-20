@@ -1200,8 +1200,7 @@ function TelegramATelefonia($debs) {
     EnviaTelegram($debs,"eresendiz");
     EnviaTelegram($debs,"jferia");  
     EnviaTelegram($debs,"acota"); 
-    EnviaTelegram($debs,"fvargas"); 
-    EnviaTelegram($debs,"gsalazar");  
+    EnviaTelegram($debs,"abgarcia");  
 }
 
 function ValidatePassword($password, $hash) {
