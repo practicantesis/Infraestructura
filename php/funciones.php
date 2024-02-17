@@ -296,7 +296,7 @@ function getRegSiglaFromRegional($reg) {
 }    
 
 
-        function QueryToAirwatchAPI23($tipo,$val) {
+        function QueryToAirwatchAPI($tipo,$val) {
             // Vendedores 6707
             // Choferes con whatsapp 25901      
             $myfile = fopen("/var/www/html/Infraestructura/.awapi", "r") or die("Unable to open file!");
@@ -371,7 +371,7 @@ function getRegSiglaFromRegional($reg) {
 
 
 //https://resources.workspaceone.com/view/zv5cgwjrcv972rd6fmml/en
-function QueryToAirwatchAPI($tipo,$val) {
+function QueryToAirwatchAPIold($tipo,$val) {
     //$basic_auth = base64_encode("infra:TP1nghm0R1hM0zaRqfAck4U");
     $basic_auth = base64_encode("infra:TP1nghm0R1hM0zaRqfCck4U");
     //$basic_auth='amZlcmlhOkxldHR5b3J0ZWdh';

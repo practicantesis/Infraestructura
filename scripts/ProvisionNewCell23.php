@@ -1,5 +1,7 @@
 <?php
-require('/var/www/html/INFRAESTRUCTURA-DESARROLLO/jferia/Infraestructura/php/funciones.php');
+
+
+require('../php/funciones.php');
 $celdap=GetCellsFromLDAP("poractivar");
 $tags=array_keys($celdap);
 $total=sizeof($tags);

@@ -166,12 +166,12 @@ if ($processed != "DUNNO") {
 //echo "quitar el exit";
 //exit;
 
-TelegramATelefonia($debs);
+//TelegramATelefonia($debs);
 #EnviaTelegram($debs,"jferia");  
 #EnviaTelegram($debs,"acota");  
 #EnviaTelegram($debs,"eresendiz");  
 #EnviaTelegram($debs,"gsalazar");  
-#EnviaTelegram($debs,"abgarcia");
+//EnviaTelegram($debs,"abgarcia");
 
 /*
 print_r($awdevsa);
