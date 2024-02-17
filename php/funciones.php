@@ -296,11 +296,84 @@ function getRegSiglaFromRegional($reg) {
 }    
 
 
+        function QueryToAirwatchAPI23($tipo,$val) {
+            // Vendedores 6707
+            // Choferes con whatsapp 25901      
+            $myfile = fopen("/var/www/html/Infraestructura/.awapi", "r") or die("Unable to open file!");
+            $apipw=fgets($myfile);
+            fclose($myfile);
+            $pass="infra:".$apipw;
+            echo "xxxx".trim($pass)."yyy";
+            $basic_auth = base64_encode(trim($pass));
+            $headers = ['aw-tenant-code: '.$api_key,'Authorization: Basic '.$basic_auth,'Accept: application/json'];
+            $api_key='Zbh2S+e0ejNOibdtwlFDFssflXSeCniu2oh1/7lVg5A=';
+            $ch = curl_init();
+            $baseurl="https://as257.awmdm.com";
+            if ($tipo == "LGID") {
+                $endpoint="/API/mdm/devices/search?lgid=".$val;
+            }
+            if ($tipo == "ALLDEVS") {
+                $endpoint="/API/mdm/devices/search";
+            }
+            if ($tipo == "DEVICE") {
+                $endpoint="/api/mdm/devices/?searchby=Serialnumber&id=".$val;
+            }
+            if ($tipo == "DEVICEperIMEI") {
+                $endpoint="/api/mdm/devices/?searchby=ImeiNumber&id=".$val;
+            }
+            if ($tipo == "DeleteDEVICEperIMEI") {
+                $endpoint="/api/mdm/devices/?searchby=ImeiNumber&id=".$val;
+            }
+            if ($tipo == "NOTES") {
+                $endpoint="/api/mdm/devices/notes?searchby=SerialNumber&id=320615670110";
+            } 
+            $headers = ['aw-tenant-code: '.$api_key,'Authorization: Basic '.$basic_auth,'Accept: application/json'];
+
+            //echo $url = $baseurl.$endpoint;
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            if ($tipo == "DeleteDEVICEperIMEI") {
+                curl_setopt($curl, CURLOPT_DELETE, true);
+            }
+            curl_setopt($ch, CURLOPT_VERBOSE, 1);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            if ($tipo == "DeleteDEVICEperIMEI") {
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+            } else {
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+            }
+            echo $ch;
+            echo $ch_result = curl_exec($ch);
+            echo $infos = curl_getinfo($ch);
+            print_r($infos);
+            //echo "UNAUTH!!!!!!!!!!!!!!!!!!!!!!!!!!".$infos['http_code'];
+            if ($infos['http_code'] == 401) {
+            return "UNAUTH";
+            }
+            //If http_code is not 200, then there's an error
+            if ($infos['http_code'] != 200) {
+                $result['status'] = AIRWATCH_API_RESULT_ERROR;
+                $result['error']  = $infos['http_code'];
+            } else {
+                $result['status'] = AIRWATCH_API_RESULT_OK;
+                $result['data'] = $ch_result;
+            }
+            if ($result['status'] == "AIRWATCH_API_RESULT_ERROR") {
+                return $result['error'];
+            } else {
+                return $result['data'];
+            }
+            curl_close($ch);
+        }
+
+
 //https://resources.workspaceone.com/view/zv5cgwjrcv972rd6fmml/en
 function QueryToAirwatchAPI($tipo,$val) {
     //$basic_auth = base64_encode("infra:TP1nghm0R1hM0zaRqfAck4U");
-    //$basic_auth = base64_encode("infra:TP1nghm0R1hM0zaRqfCck4U");
-    $basic_auth = base64_encode("infra:TP1nghm0R1hM0zaRqfDck4U");
+    $basic_auth = base64_encode("infra:TP1nghm0R1hM0zaRqfCck4U");
     //$basic_auth='amZlcmlhOkxldHR5b3J0ZWdh';
         
 
@@ -2402,6 +2475,119 @@ function NewDevUserFormAPI() {
 
 }
 
+function NewDevUserFormGuided() {
+    //AKAKA
+    $rouser="";
+    $cu="NU";
+    $CmbOfi="";
+    $abs=GetOfficeAbrevs('x');
+    foreach ($abs as $value) {
+        $CmbOfi .= '<OPTION VALUE="'.$value.'">'.$value.'</OPTION>';
+    }
+    $forma='<div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-validation">
+                        <form class="form-valide" name="newdevuser" id="newdevuser" action="#" method="post">
+                            <div class="container">
+                                <div class="form-group row">
+                                    <div class="col">
+                                        Seleccione tipo de Dispositivo: <select class="form-select form-select-sm d-inline-flex p-2" id="elseltd" name="tipo" onchange="SelTipoCel('."'$cu'".','."'$cu'".')"><option value="SELECCIONE">SELECCIONE</option><option value="CPH">CPH</option><option value="CEL">CEL</option></select>
+                                    </div>
+                                </div>
+                                <div id="DIVNEMP" style="display: none" class="form-group row">';
+                                    $cu='dunumeroempleado';
+                                    $forma .='
+                                    <div class="col">
+                                        <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">Numero de Empleado: </label><!--<div id="edit-'.$cu.'"><a href="#" onclick="UValnn('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div>--></div>
+                                        <div class="col-lg-2">
+                                            <div class="form-row" id="elinput-'.$cu.'">
+                                                <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="'.$cu.'"  '.$ldata[0][$cu][0].' onchange="searchUserAPIRHTP('."'numero','$cu'".','."'SI'".')" '.$rouser.'>
+                                            </div>
+                                        </div>
+                                        <div id="userdata"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="empdata" style="display: none">
+                                <div class="form-group row">';
+                                    $cu='duusernname';
+                                    $forma .='
+                                    <div class="col">
+                                        <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">Username: </label></div>
+                                        <div class="col-lg-6">
+                                            <div class="form-row" id="elinput-'.$cu.'">
+                                                <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="Nombre de usuario" '.$rouser.' readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row"><label class="col-lg-4 col-form-label" for="val-dunombre">Nombre Completo:</label></div>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" id="val-dunombre" name="val-dunombre" placeholder="Autogenerado" value="'.$dunombre.'" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Segundo Reglon Oficina -->
+                                <div class="form-group row">';
+                                    $cu='nadax';
+                                    $forma .='
+                                    <div class="col">
+                                        <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">Creacion cuenta y TAG equipo: </label><div id="edit-'.$cu.'"><a href="#" onclick="UValn('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
+                                            <div class="col-lg-6">
+                                                <div class="form-row" id="elinput-'.$cu.'">
+                                                    <select style="width:5" class="form-control"  id="seltegcel" ><option value="SELECCIONE">SELECCIONE</option><option value="SI">SI CREAR</option><option value="NO">NO SOLO DEVUSER</option></select>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    ';
+
+
+                                    $cu='oficina';
+                                $forma .='
+                                    <div class="col">
+                                    <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'"><p class="text-danger">Oficina: </p></label><div id="edit-'.$cu.'"><a href="#" onclick="UValn('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
+                                    <div class="col-lg-6">
+                                    <div class="form-row" id="elinput-'.$cu.'">
+                                        <div id="elcombi"></div>
+                                   </div>
+                                  </div>
+                                </div>
+                                </div>                                
+
+
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Acciones</h4>
+                                        <div class="basic-form">
+                                            <div class="form-group">
+                                                <div class="form-check mb-3 ">
+                                                    <label class="form-check-label">
+                                                        <button type="button" id="BtnSaveNewDevUser" class="btn btn-primary mb-2" onclick="SaveNewDevUser()">Agregar</button>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                                    
+
+
+
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>';
+    return $forma;
+}
+
+
 
 function NewCellForm() {
     $rocell="";
@@ -3852,6 +4038,53 @@ Array
 
 )
 */
+
+
+
+function GetDeviceUserInfoFromdunumeroempleado($noemp,$how,$conn) {
+    include 'configuraciones.class.php';
+    $err='';
+    $data='';
+    $out='';
+    if ($how == "array") {
+        $out=array();
+    }
+    $ldapconn=ConectaLDAP();
+    //error_reporting(E_ALL);
+    //ini_set('display_errors', 'On');
+    set_time_limit(30);
+    $array1= array();
+    $result = ldap_search($ldapconn,"ou=DeviceUsers,dc=transportespitic,dc=com", "(dunumeroempleado=$noemp)");
+    $err=ldap_error($ldapconn);
+    return $noemp;
+    $ldata = ldap_get_entries($ldapconn, $result);
+    for ($i=0; $i<$ldata["count"]; $i++) {
+        //array_push($array1,$ldata[$i][$what][0]);
+        //echo "<pre>";
+        //print_r($ldata);
+        if ($how == "htmltable") {
+            $out .= "<tr><td>".$ldata[$i]['dunumeroempleado'][0]."</td></tr>";    
+        }
+        if ($how == "GetUserInfoFromLDAP") {
+            $out['uid']=$ldata[$i]['udunumeroempleadoid'][0];
+            $out['duoficina']=$ldata[$i]['duoficina'][0];
+        }
+        //echo "</pre>";
+        //return false;
+    }
+    //print_r($out);
+    if ($how == "exists") {
+        $out = $ldata["count"];    
+    }
+    if ($how == "array") {
+        $out = $ldata;    
+    }
+    //print_r($out);
+    return $out;
+}
+
+
+
 
 ?>
 

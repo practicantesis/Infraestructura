@@ -15,7 +15,7 @@ $empdata=QueryRHdb($_POST["valor"]);
 if ($empdata == "NO_RESPONSE") {
   $aviso .= '<div class="alert alert-danger">No. Empleado NO Existe RH </div><br>';
   $jsonSearchResults[] =  array(
-    'success' => 'YES',
+    'success' => 'NO',
     'aviso' => $aviso,
     'activo' => "NOTFOUND"
   );
@@ -23,31 +23,48 @@ if ($empdata == "NO_RESPONSE") {
   return false;
 }
 
-
 $abrevs=GetOfficeAbrevs('x');
-//print_r($abrevs);
 
-$combo='<select style="width:5" class="form-control" name="val-duoficina" id="val-duoficina"><option value="SELECCIONE">SELECCIONE</option>';
-foreach ($abrevs as $value) {
-  $sel="";
-  if (strtoupper($empdata['ofi']) == $value) {
-    $sel = "SELECTED";
+// descomentar para probar ofic exixtente con emp 1839
+//array_push($abrevs, 'GPO');
+
+
+
+
+if (in_array(strtoupper($empdata['ofi']), $abrevs)) { 
+  $combo='<input type="text" style="width:5" class="form-control" name="val-duoficina" id="val-duoficina" value='.strtoupper($empdata['ofi']).' readonly >';  
+}  else {
+  $combo='<select style="width:5" class="form-control" name="val-duoficina" id="val-duoficina"><option value="SELECCIONE">SELECCIONE</option>';
+  foreach ($abrevs as $value) {
+    $sel="";
+    if (strtoupper($empdata['ofi']) == $value) {
+      $sel = "SELECTED";
+    }
+    $combo.='<OPTION VALUE="'.$value.'" '.$sel.'>'.$value.'</OPTION>';  
   }
-  $combo.='<OPTION VALUE="'.$value.'" '.$sel.'>'.$value.'</OPTION>';  
+  $combo.='</select>';
 }
-$combo.='</select>';
+
+
+
 
 
 $activo=$empdata['activo'];
 $enpeople="NO";
+$endeviceusers="NO";
 if ($activo=="SI") {
   $aviso .= '<div class="alert alert-info">El numero de empleado EXISTE en BD RH </div><br>';
   // Ahora verificamos si no existe ya un usuario en people con ese numero de empleado
-  $exists=CheckExistentValueLDAP("ou=DeviceUsers,dc=transportespitic,dc=com","dunumeroempleado",$_POST["valor"]);
+  $exists=CheckExistentValueLDAP("ou=DeviceUsers,dc=transportespitic,dc=com","dunumeroempleadoOriginal",$_POST["valor"]);
   //echo "existes es $exists";
   if ($exists == "YES") {
     $aviso .= '<div class="alert alert-danger">El numero de empleado YA EXISTE en device users de LDAP </div><br>';
-    $success="DUP";    
+    $duinfo=GetDeviceUserInfoFromdunumeroempleado($_POST["valor"],"array","no");
+    //echo "PEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE1_";
+    //print_r($duinfo);
+    //echo "PEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE2_";
+    $success="DUP"; 
+    $endeviceusers="YES";   
   }
   $ldap=GetNoEmpInfoFromLDAP($_POST["valor"],'array');
   //print_r($ldap);
@@ -87,14 +104,16 @@ $jsonSearchResults[] =  array(
     'apep' => $empdata['pat'],
     'apem' => $empdata['mat'],
     'nom' => $empdata['nom'],
+    'feb' => $empdata['feb'],
     'genuser' => $genuser,
     'fullnom' => $empdata['pat']." ".$empdata['mat']." ".$empdata['nom'],
     'ofi' => strtoupper($empdata['ofi']),
     'enpeople' => $enpeople,
+    'endeviceusers' => $endeviceusers,
     'aviso' => $aviso,
     'username' => $username,
     'combo' => $combo,
-    'activo' => $activo
+    'activo' => $empdata['activo']
 );
 
 

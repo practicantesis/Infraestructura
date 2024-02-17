@@ -1,7 +1,8 @@
 <?php
 
 require('funciones.php');
-$forma=NewDevUserFormAPI();
+$forma=NewDevUserFormGuided();
+//$forma=NewDevUserFormAPI();
 
 $jsonSearchResults[] =  array(
     'success' => 'YES',
@@ -12,6 +13,7 @@ $jsonSearchResults[] =  array(
 
 echo json_encode ($jsonSearchResults);
 return false;
+
 
 
 ?>

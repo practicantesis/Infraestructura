@@ -1308,6 +1308,7 @@ function AddAlias() {
 
 
 
+
 function searchuserapirhtp(tipo,valor,chkexist) {
     var va=document.getElementById('val-'+valor).value;
     //alert (tipo+valor+chkexist+va);
@@ -1323,9 +1324,7 @@ function searchuserapirhtp(tipo,valor,chkexist) {
                     $('#menza').html(data[0]['aviso']);
                     $('#val-dunumeroempleado').val('');
                     return false;
-                    
                 }                
-
                 if (data[0]['activo'] == 'NOTFOUND') {
                     alert('Usuario '+va+' No existe en BD RH');
                     $('#BtnSaveNewDevUser').attr('disabled','disabled');
@@ -1338,7 +1337,6 @@ function searchuserapirhtp(tipo,valor,chkexist) {
                     alert('Usuario '+va+' ('+data[0]['fullnom']+') No esta activo en BD RH');
                     $('#BtnSaveNewDevUser').attr('disabled','disabled');
                     $('#val-dunumeroempleado').val('');
-                    
                 } else {
                     $('#val-dunombre').removeAttr('readonly');
                     $('#BtnSaveNewDevUser').removeAttr('disabled');
@@ -1350,9 +1348,6 @@ function searchuserapirhtp(tipo,valor,chkexist) {
                     $('#val-duusernname').removeAttr('readonly');
                     $('#val-duusernname').val(data[0]['username']);
                     $('#val-duusernname').attr('readonly');
-                    
-                    
-                    
                 }
                 //alert(data.info[0]['apepaterno']);
                 ///////$('#val-dunombre').removeAttr('readonly');
@@ -1779,3 +1774,80 @@ function SaveMacChange(tipo) {
         }
     });
 }
+
+
+function SelTipoCel(tipo) {
+    var cmbtd = document.getElementById("elseltd");
+    //alert(cmbtd);
+    if (cmbtd) {
+        var multi = cmbtd.options[cmbtd.selectedIndex].value;
+        if (multi == "SELECCIONE") {
+            alert('Selecciona un tipo McEnzie!!!');
+            DIVNEMP.style.display = "none";           
+            return false;
+        } else {
+            DIVNEMP.style.display = "block";           
+        }
+
+    }
+}
+
+function searchUserAPIRHTP(tipo,valor,chkexist) {
+    var va=document.getElementById('val-'+valor).value;
+    //alert (tipo+valor+chkexist+va);
+    $.ajax({
+            type: "POST",
+            url: 'php/SearchApiRHTP.php',
+            data: { valor: va },
+            dataType: "json",
+            success: function(data) {
+                var empdata = document.getElementById("empdata");
+                if (data[0]['activo'] == 'NOTFOUND') {
+                    alert('Usuario '+va+' No existe en BD RH');
+                    return false;
+                }
+                if (data[0]['success'] == 'YES') {                    
+                    empdata.style.display = "block";
+                    // Traer tipo de tel
+                    var e = document.getElementById("elseltd");
+                    if (e) {
+                        var tipot = e.options[e.selectedIndex].value;
+                    }
+                    alert('Usuario '+va+' existe LDAP people'+data[0]['enpeople']);
+                    if (data[0]['enpeople'] === 'SI') {
+                        //cph existe en people
+                        if (tipot === 'CPH') {
+                            abrev="CPHUP";
+                        }
+                        //cel existe en people y airwatch
+                        if (tipot === 'CEL') {
+                            abrev="CELUP";
+                        }
+                    } else {
+                        //cph NO existe en people
+                        if (tipot === 'CPH') {
+                            abrev="CPHUN";
+                        }
+                        // cel NO existe en people y si existe en airwatch
+                        if (tipot === 'CEL') {
+                            abrev="CELUN";
+                        }
+
+                    }
+                    var e = document.getElementById("elseltd");
+                    let inicial = data[0]['nom'].charAt(0);
+                    $("#val-duusernname").val(abrev+(inicial+data[0]['apep']).toLowerCase());
+                    $("#val-dunombre").val(data[0]['nom']+" "+data[0]['apep']+" "+data[0]['apem']);
+                    $("#elcombi").html(data[0].combo);
+                }
+                if (data[0]['success'] == 'DUP') {
+                    alert('Usuario '+va+' Ye existe en Device users ( '+data[0]['apep']+' '+data[0]['nom']+' - '+data[0]['ofi']+' )');
+                    empdata.style.display = "none";
+                    return false;                
+                }
+
+           }
+       });
+
+}    
+
