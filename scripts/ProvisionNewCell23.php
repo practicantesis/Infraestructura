@@ -1,5 +1,12 @@
 <?php
 
+//echo realpath(dirname(__FILE__));
+
+$path = str_replace("scripts", "php", realpath(dirname(__FILE__)));
+$funcs = $path."/funciones.php";
+
+echo "Usando dunciones desde:".$funcs."\n";
+return false;
 
 require('../php/funciones.php');
 $celdap=GetCellsFromLDAP("poractivar");
