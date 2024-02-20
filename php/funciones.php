@@ -303,7 +303,7 @@ function getRegSiglaFromRegional($reg) {
             $apipw=fgets($myfile);
             fclose($myfile);
             $pass="infra:".$apipw;
-            echo "xxxx".trim($pass)."yyy";
+            //echo "xxxx".trim($pass)."yyy";
             $basic_auth = base64_encode(trim($pass));
             $headers = ['aw-tenant-code: '.$api_key,'Authorization: Basic '.$basic_auth,'Accept: application/json'];
             $api_key='Zbh2S+e0ejNOibdtwlFDFssflXSeCniu2oh1/7lVg5A=';
@@ -345,10 +345,10 @@ function getRegSiglaFromRegional($reg) {
             } else {
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
             }
-            echo $ch;
-            echo $ch_result = curl_exec($ch);
-            echo $infos = curl_getinfo($ch);
-            print_r($infos);
+            //echo $ch;
+            //echo $ch_result = curl_exec($ch);
+            //echo $infos = curl_getinfo($ch);
+            //print_r($infos);
             //echo "UNAUTH!!!!!!!!!!!!!!!!!!!!!!!!!!".$infos['http_code'];
             if ($infos['http_code'] == 401) {
             return "UNAUTH";
@@ -2538,7 +2538,7 @@ function NewDevUserFormGuided() {
                                         <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">Creacion cuenta y TAG equipo: </label><div id="edit-'.$cu.'"><a href="#" onclick="UValn('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
                                             <div class="col-lg-6">
                                                 <div class="form-row" id="elinput-'.$cu.'">
-                                                    <select style="width:5" class="form-control"  id="seltegcel" ><option value="SELECCIONE">SELECCIONE</option><option value="SI">SI CREAR</option><option value="NO">NO SOLO DEVUSER</option></select>
+                                                    <select style="width:5" class="form-control"  id="seltegcel" onchange="SelTercerPaso('."'$cu'".','."'$cu'".')"><option value="SELECCIONE">SELECCIONE</option><option value="SI">SI CREAR</option><option value="NO">NO SOLO DEVUSER</option></select>
                                                 </div>
                                             </div>
                                     </div>
@@ -2566,7 +2566,12 @@ function NewDevUserFormGuided() {
                                             <div class="form-group">
                                                 <div class="form-check mb-3 ">
                                                     <label class="form-check-label">
-                                                        <button type="button" id="BtnSaveNewDevUser" class="btn btn-primary mb-2" onclick="SaveNewDevUser()">Agregar</button>
+                                                        <div id= "thirdstep" style="display: none">
+                                                            <button type="button" id="BtnSaveNewDevUser" class="btn btn-primary mb-2" onclick="SaveNewDevUser()">Agregar</button>
+                                                        </div>
+                                                        <div id= "thirdstepb" style="display: none">
+                                                            xxxxxx
+                                                        </div>
                                                     </label>
                                                 </div>
                                             </div>

@@ -55,18 +55,6 @@ $entry['objectClass'][0] = "top";
 $entry['objectClass'][1] = "DeviceInfo";
 
 
-/*
-echo "<pre>";
-print_r($entry);
-echo "-------------------------";
-echo $_POST['data'][0]['name'];
-echo "-------------------------";
-print_r($_POST['data']);
-echo "</pre>";
-echo $ERROR;
-return false;
-*/
-
 
 if ($ERROR == "NO") {
  	$mod = ldap_add($con, $dn , $entry);
