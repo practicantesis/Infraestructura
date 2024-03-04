@@ -798,6 +798,15 @@ return false;
                         </a>
 
                     </li>
+                    <li>
+                        <a>
+                            <form action="http://infr2.tpitic.com.mx/mv2/" method="POST" target="_blank">
+                                <input type="hidden" name="infra" value="<?php echo $_SESSION['user']; ?>">
+                                <i class="icon-grid menu-icon"></i><span class="nav-text"><input type="submit" name="sql" value="Responsivas" class="modulo"> </span>
+                            </form>
+                        </a>
+
+                    </li>
 
                     <li class="nav-label">LDAP</li>
                     <li><a href="#" onclick="ShowLDAPG('LDAPGroup')">
