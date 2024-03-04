@@ -1813,7 +1813,7 @@ function searchUserAPIRHTP(tipo,valor,chkexist) {
                     if (e) {
                         var tipot = e.options[e.selectedIndex].value;
                     }
-                    alert('Usuario '+va+' existe LDAP people'+data[0]['enpeople']);
+                    //alert('Usuario '+va+' existe LDAP people'+data[0]['enpeople']);
                     if (data[0]['enpeople'] === 'SI') {
                         //cph existe en people
                         if (tipot === 'CPH') {
@@ -1851,3 +1851,26 @@ function searchUserAPIRHTP(tipo,valor,chkexist) {
 
 }    
 
+function SelTercerPaso(valor, valor) {
+    var cmbtd = document.getElementById("seltegcel");
+    //alert(cmbtd);
+    if (cmbtd) {
+        var multi = cmbtd.options[cmbtd.selectedIndex].value;
+        if (multi == "SELECCIONE") {
+            alert('Selecciona un tipo McEnzie!!!');
+            thirdstep.style.display = "none";           
+            return false;
+        } else {
+            if (multi == "NO") {
+                thirdstep.style.display = "block";
+                thirdstepb.style.display = "none";
+            } else {
+                thirdstep.style.display = "none";
+                thirdstepb.style.display = "block";
+            }
+        }
+
+    }
+
+
+}    

@@ -102,6 +102,11 @@ $entry['duoficina']=$forma['duoficina'];
 $entry['objectClass'][0] = "deviceuser";
 
 
+//print_r($entry);
+//return false;
+
+
+
 if ($ERROR == "NO") {
 	$mod = ldap_add($con, $dn , $entry);
 	$ERROR=ldap_error($con);
