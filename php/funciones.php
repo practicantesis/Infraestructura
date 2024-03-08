@@ -313,6 +313,7 @@ function getRegSiglaFromRegional($reg) {
                 $endpoint="/API/mdm/devices/search?lgid=".$val;
             }
             if ($tipo == "ALLDEVS") {
+                
                 $endpoint="/API/mdm/devices/search";
             }
             if ($tipo == "DEVICE") {
@@ -329,7 +330,7 @@ function getRegSiglaFromRegional($reg) {
             } 
             $headers = ['aw-tenant-code: '.$api_key,'Authorization: Basic '.$basic_auth,'Accept: application/json'];
 
-            //echo $url = $baseurl.$endpoint;
+            $url = $baseurl.$endpoint;
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
             if ($tipo == "DeleteDEVICEperIMEI") {
@@ -346,8 +347,8 @@ function getRegSiglaFromRegional($reg) {
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
             }
             //echo $ch;
-            //echo $ch_result = curl_exec($ch);
-            //echo $infos = curl_getinfo($ch);
+             $ch_result = curl_exec($ch);
+             $infos = curl_getinfo($ch);
             //print_r($infos);
             //echo "UNAUTH!!!!!!!!!!!!!!!!!!!!!!!!!!".$infos['http_code'];
             if ($infos['http_code'] == 401) {

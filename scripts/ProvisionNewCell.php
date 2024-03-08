@@ -5,7 +5,7 @@
 $path = str_replace("scripts", "php", realpath(dirname(__FILE__)));
 $funcs = $path."/funciones.php";
 
-echo "Usando dunciones desde:".$funcs."\n";
+echo "Usando funciones desde:".$funcs."\n";
 
 require($funcs);
 $celdap=GetCellsFromLDAP("poractivar");
@@ -17,8 +17,8 @@ if ($total == 0) {
         return false;
 }
 //"25901"
-$awdevs=QueryToAirwatchAPI("LGID",$argv[1]);
-//$awdevs=QueryToAirwatchAPI("ALLDEVS","ALLDEVS");
+//$awdevs=QueryToAirwatchAPI("LGID",$argv[1]);
+$awdevs=QueryToAirwatchAPI("ALLDEVS","ALLDEVS");
 $awdevsa=json_decode($awdevs, true);
 $con=ConectaLDAP();
 
