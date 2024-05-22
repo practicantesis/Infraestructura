@@ -855,13 +855,15 @@ return false;
                     </ul>
                     <li class="nav-label">Herramientas</li>
                     <li><a class="has-arrow" href="javascript:void()">
-                        <i class="icon-location-pin menu-icon"></i><span class="nav-text">INVENTARIOS</span>
+                        <i class="icon-location-pin menu-icon"></i><span class="nav-text">INVENTARIOSx</span>
                     </a></li>
                     <ul aria-expanded="false">
                         <li><a href="#" onclick="ShowLastTag()">Ultimo Tag</a></li>
                             <!-- <li><a href="./index-2.html">Home 2</a></li> -->
                         </li>                            
                     </ul>
+
+
 
                     <li class="nav-label">HARDWARE</li>
                     <!-- IMPRESORAS -->
@@ -903,6 +905,14 @@ return false;
                     }
                     ?>
                     <li class="nav-label">Herramientas</li>
+
+                    <li><a class="has-arrow" href="javascript:void()">
+                            <i class="icon-location-pin menu-icon"></i><span class="nav-text">ADMIN</span>
+                        </a>
+                        <ul aria-expanded="false" class="collapse in" style=""><li><a href="#" onclick="Show('logs','inir')">LOGS</a></li></ul>
+                    </li>
+
+
                     <li><a class="has-arrow" href="javascript:void()">
                         <i class="icon-location-pin menu-icon"></i><span class="nav-text">INVENTARIOS</span>
                     </a></li>
