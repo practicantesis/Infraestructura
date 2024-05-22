@@ -22,7 +22,7 @@ if ($_POST["valor"] == "wifimac") {
 
 
 if ($toctet == "NO") {
-	$nets=CheckMultipleNets($_POST["ofi"]);
+	$nets=CheckMultipleNets($_POST["ofi"],$db);
 	$redes = explode(',', $nets);
 	$sele="<select name='seleredes' id='seleredes' onchange=\"CalcularIP('666','".$_POST["valor"]."')\">";
 	$sele .= "<option value='SELECCIONE'>SELECCIONE RED</option>";

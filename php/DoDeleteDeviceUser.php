@@ -25,6 +25,7 @@ $jsonSearchResults[] =  array(
     'success' => 'YES',
     'data' => $forma,
     'msg' => $msg,
+    'errm' => $dele,
     'error' => 'err',
 );
 echo json_encode ($jsonSearchResults);

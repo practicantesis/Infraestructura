@@ -11,7 +11,7 @@ if(!empty($_POST["keyword"])) {
       //$ldapfilter="(uid=".$_POST["keyword"]."*)";
       //$ldapfilter="(duusernname=".$_POST["keyword"]."*)";
 
-      $ldapfilter="(|(dunombre=".$_POST["keyword"]."*)(duusernname=".$_POST["keyword"]."*))";
+      $ldapfilter="(|(dunombre=*".$_POST["keyword"]."*)(duusernname=*".$_POST["keyword"]."*)(duapellido=*".$_POST["keyword"]."*))";
 /*
       $ldapfilter="(|(dunombre=".$_POST["keyword"]."*)(dunumeroempleado=".$_POST["keyword"]."*)(duusernname=".$_POST["keyword"]."*)(duoficina=".$_POST["keyword"]."))";
       $aut='';

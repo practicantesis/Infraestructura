@@ -65,8 +65,13 @@ if (strlen($forma['duusernname']) < 1) {
 } 
 
 if (strlen($forma['dunombre']) < 1) {
-  $ERROR="CAPTURE NOMBRE Y APELLIDO!!!".strlen($forma['dunombre']);
+  $ERROR="CAPTURE NOMBRE ".strlen($forma['dunombre']);
 } 
+
+if (strlen($forma['duapellido']) < 1) {
+  $ERROR="CAPTURE APELLIDO!!!".strlen($forma['duapellido']);
+} 
+
 
 if (is_numeric($forma['dunumeroempleado'])) {
   
@@ -97,6 +102,7 @@ echo $ERROR;
 
 $entry['duusernname']=$forma['duusernname'];
 $entry['dunombre']=$forma['dunombre'];
+$entry['duapellido']=$forma['duapellido'];
 $entry['dunumeroempleado']=$forma['dunumeroempleado'];
 $entry['duoficina']=$forma['duoficina'];
 $entry['objectClass'][0] = "deviceuser";
@@ -113,7 +119,8 @@ if ($ERROR == "NO") {
 }
 
 $jsonSearchResults[] =  array(
-    'success' => $ERROR
+    'success' => $ERROR,
+    'msg' => "DevUser ".$forma['duusernname']." Guardado"
 );
 echo json_encode ($jsonSearchResults);
 return false;

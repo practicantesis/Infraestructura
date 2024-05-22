@@ -118,6 +118,7 @@ return false;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Transportes Pitic SA de CV</title>
+    <script type="text/javascript" src="https://unpkg.com/default-passive-events"></script>
     <!-- Jquery -->
     <!--
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
@@ -131,6 +132,7 @@ return false;
     <!-- Chartist -->
     <link rel="stylesheet" href="./plugins/chartist/css/chartist.min.css">
     <link rel="stylesheet" href="./plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
+
     <!-- Custom Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="css/estilos.css">
@@ -151,10 +153,6 @@ return false;
     <!-- Pignose Calender -->
     <script src="./plugins/moment/moment.min.js"></script>
     <script src="./plugins/pg-calendar/js/pignose.calendar.min.js"></script>
-    <!-- ChartistJS -->
-    <script src="./plugins/chartist/js/chartist.min.js"></script>
-    <script src="./plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
-
 
     <script src="./plugins/validation/jquery.validate.min.js"></script>
     <script src="./plugins/validation/jquery.validate-init.js"></script>
@@ -163,24 +161,20 @@ return false;
 
     <script src="js/popper.js"></script>
 
-
     <script src="js/funciones.js"> </script>
 
     <script src="./js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="./css/bootstrap.min.css">
 
-
     <script src="bootstrap-4.3.1/js/bootstrap.min.js"> </script>
     <link rel="stylesheet" href="bootstrap-4.3.1//css/bootstrap.min.css">
-
 
     <!-- Font Awesome -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-
     <!-- Editable Stylesheet -->
-    <!-- <link href="css/bootstrap-editable.css" rel="stylesheet">-->
-    <!--<link href="css/jqueryui-editable.css" rel="stylesheet">-->
+    <link href="css/bootstrap-editable.css" rel="stylesheet">
+    <link href="css/jqueryui-editable.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -347,11 +341,11 @@ return false;
 
 
 <script type="text/javascript">
-    $(function() {
-        $("#search-box").autocomplete({
-            source: "./php/search.php",
-        });
-    });
+    //$(function() {
+    //    $("#search-box").autocomplete({
+    //        source: "./php/search.php",
+    //    });
+    //});
 
     $(document).ready(function() {
         $("#search-box").keyup(function() {
@@ -392,11 +386,12 @@ return false;
     });
 
 
-    $(function() {
-        $("#addlus").autocomplete({
-            source: "./php/search.php",
-        });
-    });
+    //$(function() {
+    //$(document).ready(function() {
+    //    $("#addlus").autocomplete({
+    //        source: "./php/search.php",
+    //    });
+    //});
 
     $(document).ready(function() {
         $("#addlus").keyup(function() {
@@ -465,31 +460,21 @@ return false;
 
 
 
+/*
     $.fn.editable.defaults.mode = 'inline';
     $(document).ready(function() {
         $('#givenname').editable();
     });
+*/
 
-
-    /*
-    $(document).ready(function() {
-        //EDITABLE
-        $('#givennameX').editable({
-            type:  'text',
-                                   pk:    1,
-                                   name:  'username',
-                                   url:   'post.php',
-                                   title: 'Enter username'
-        });
-    });
-    */
-
+/*
     function selectCountry(val) {
         $("#search-box").val(val);
         $("#suggesstion-box").hide();
     }
-    ///////////////////////////////
+*/
 
+/*
     (function($) {
         'use strict';
         $(function() {
@@ -652,17 +637,14 @@ return false;
             }
         });
     })(jQuery);
+*/
 
 
-    ///////////////////////////////
 </script>
 
 
 <body>
-
-    <!--*******************
-        Preloader start
-    ********************-->
+    <!-- Preloader start -->
     <div id="preloader">
         <div class="loader">
             <svg class="circular" viewBox="25 25 50 50">
@@ -670,19 +652,11 @@ return false;
             </svg>
         </div>
     </div>
-    <!--*******************
-        Preloader end
-    ********************-->
-
-
-    <!--**********************************
-        Main wrapper start
-    ***********************************-->
+    <!--  Preloader end -->
+    <!-- Main wrapper start -->
     <div id="main-wrapper">
 
-        <!--**********************************
-            Nav header start
-        ***********************************-->
+        <!-- Nav header start -->
         <div class="nav-header">
             <div class="brand-logo">
                 <a href="index.php" style="height:50px;">
@@ -694,13 +668,9 @@ return false;
                 </a>
             </div>
         </div>
-        <!--**********************************
-            Nav header end
-        ***********************************-->
+        <!--  Nav header end -->
 
-        <!--**********************************
-            Header start
-        ***********************************-->
+        <!--  Header start -->
         <div class="header">
             <div class="header-content clearfix">
 
@@ -728,7 +698,6 @@ return false;
                 <!--Menu de enlaces-->
                 <div class="header-right">
                     <ul class="clearfix">
-                        
                         <li class="icons dropdown">
                             <div class="user-img c-pointer position-relative" data-toggle="dropdown">
                                 <span class="activity active"></span>
@@ -746,7 +715,6 @@ return false;
                                                 <div class="badge gradient-3 badge-pill gradient-1">3</div>
                                             </a>
                                         </li>
-
                                         <hr class="my-2">
                                         <li>
                                             <a href="page-lock.html"><i class="icon-lock"></i> <span>Lock Screen</span></a>
@@ -760,17 +728,12 @@ return false;
                 </div>
             </div>
         </div>
-        <!--**********************************
-            Header end ti-comment-alt
-        ***********************************-->
+        <!-- Header end ti-comment-alt -->
 
-        <!--**********************************
-            Sidebar start
-        ***********************************-->
+        <!-- Sidebar start -->
         <div class="nk-sidebar">
             <div class="nk-nav-scroll">
                 <ul class="metismenu" id="menu">
-
                     <li class="nav-label">MODULOS</li>
                     <li><a href="http://wikisis.tpitic.com.mx/" target="_blank">
                             <i class="icon-people menu-icon"></i><span class="nav-text">WikiSis</span>
@@ -810,122 +773,107 @@ return false;
 
                     <li class="nav-label">LDAP</li>
                     <li><a href="#" onclick="ShowLDAPG('LDAPGroup')">
-                            <i class="icon-grid menu-icon"></i><span class="nav-text">Grupos LDAP </span>
-                        </a></li>
+                        <i class="icon-grid menu-icon"></i><span class="nav-text">Grupos LDAP </span>
+                    </a></li>
 
                     <li><a href="#" onclick="ShowLDAP('LDAPUsers')">
-                            <i class="icon-people menu-icon"></i><span class="nav-text">Usuarios LDAP </span>
-                        </a></li>
+                        <i class="icon-people menu-icon"></i><span class="nav-text">Usuarios LDAP </span>
+                    </a></li>
 
                     <li><a href="#" onclick="ShowLDAP('AddLDAPUsers')">
-                            <i class="icon-user-follow menu-icon"></i><span class="nav-text">Agregar usuario </span>
-                        </a></li>
+                        <i class="icon-user-follow menu-icon"></i><span class="nav-text">Agregar usuario </span>
+                    </a></li>
 
                     <li class="nav-label">DEVICES</li>
 
                     <li><a href="http://ti.tpitic.com.mx/Infraestructura/informe/index.php?666U2lzdGVtYXM=897" target="_blank">
-                            <i class="icon-user-follow menu-icon"></i><span class="nav-text">Moviles</span>
-                        </a></li>
-
-                    <li><a href="#" onclick="ShowCells('x')">
-                            <i class="icon-user-follow menu-icon"></i><span class="nav-text">Celulares</span>
-                        </a></li>
-
-                    <li><a href="#" onclick="ShowLDAP('AddLDAPDevUsers')">
-                            <i class="icon-user-follow menu-icon"></i><span class="nav-text">Agregar DevUser </span>
-                        </a></li>
-
-                    <li><a href="#" onclick="ShowLDAP('AddLDAPDevUsersAPI')">
-                            <i class="icon-user-follow menu-icon"></i><span class="nav-text">(BETA) Agregar DevUser </span>
-                        </a></li>
-
-                    <li><a href="#" onclick="ShowLDAP('AddLDAPCell')">
-                            <i class="icon-user-follow menu-icon"></i><span class="nav-text">Agregar Celular </span>
-                        </a></li>
-
-                    <li><a href="#" onclick="ShowLDAP('AddLDAPCellTRA')">
-                            <i class="icon-user-follow menu-icon"></i><span class="nav-text">Agregar Celular TRA </span>
-                        </a></li>
-
-                    <li><a href="#" onclick="ShowLDAP('LDAPDevUsers')">
-                            <i class="icon-people menu-icon"></i><span class="nav-text">Device Users</span>
-                        </a></li>
-
-                    <li><a href="#" onclick="ShowLDAP('NukeDev')">
-                            <i class="icon-people menu-icon"></i><span class="nav-text">Eliminar</span>
-                        </a></li>
-
-                    <li><a href="#" onclick="ShowLDAP('Velo')">
-                            <i class="icon-people menu-icon"></i><span class="nav-text">Velocloud</span>
-                        </a></li>
-
-                    <li><a href="#" onclick="ShowLDAP('rsyslog')">
-                            <i class="icon-people menu-icon"></i><span class="nav-text">Syslog</span>
+                        <i class="icon-user-follow menu-icon"></i><span class="nav-text">Moviles</span>
                     </a></li>
 
+                    <li><a href="#" onclick="ShowCells('x')">
+                        <i class="icon-user-follow menu-icon"></i><span class="nav-text">Celulares</span>
+                    </a></li>
 
+                    <li><a href="#" onclick="ShowLDAP('AddLDAPDevUsers')">
+                        <i class="icon-user-follow menu-icon"></i><span class="nav-text">Agregar DevUser </span>
+                    </a></li>
 
+                    <li><a href="#" onclick="ShowLDAP('AddLDAPDevUsersAPI')">
+                        <i class="icon-user-follow menu-icon"></i><span class="nav-text">(BETA) Agregar DevUser </span>
+                    </a></li>
+
+                    <li><a href="#" onclick="ShowLDAP('AddLDAPCell')">
+                        <i class="icon-user-follow menu-icon"></i><span class="nav-text">Agregar Celular </span>
+                    </a></li>
+
+                    <li><a href="#" onclick="ShowLDAP('AddLDAPCellTRA')">
+                        <i class="icon-user-follow menu-icon"></i><span class="nav-text">Agregar Celular TRA </span>
+                    </a></li>
+
+                    <li><a href="#" onclick="ShowLDAP('LDAPDevUsers')">
+                        <i class="icon-people menu-icon"></i><span class="nav-text">Device Users</span>
+                    </a></li>
+
+                    <li><a href="#" onclick="ShowLDAP('NukeDev')">
+                        <i class="icon-people menu-icon"></i><span class="nav-text">Eliminar</span>
+                    </a></li>
+
+                    <li><a href="#" onclick="ShowLDAP('Velo')">
+                        <i class="icon-people menu-icon"></i><span class="nav-text">Velocloud</span>
+                    </a></li>
+
+                    <li><a href="#" onclick="ShowLDAP('logs')">
+                        <i class="icon-people menu-icon"></i><span class="nav-text">Logs Infraestructura</span>
+                    </a></li>
+
+                    <li><a href="#" onclick="ShowLDAP('rsyslog')">
+                        <i class="icon-people menu-icon"></i><span class="nav-text">Syslog</span>
+                    </a></li>
+
+                    <li><a href="#" onclick="ShowChangelog()">
+                        <i class="icon-people menu-icon"></i><span class="nav-text">Changelog</span>
+                    </a></li>
 
                     <li class="nav-label">SAMBA</li>
                     <li><a href="#" onclick="ShowLDAPG('SMBLDAPGroup')">
-                            <i class="icon-grid menu-icon"></i><span class="nav-text">Grupos LDAP Samba</span>
-                        </a></li>
-
-
+                        <i class="icon-grid menu-icon"></i><span class="nav-text">Grupos LDAP Samba</span>
+                    </a></li>
 
                     <li class="nav-label">OPENVPN</li>
                     <li><a href="#" onclick="ShowOPENVPN()">
-                            <i class="icon-shuffle menu-icon"></i><span class="nav-text">Conexiones </span>
-                        </a></li>
-
-
+                        <i class="icon-shuffle menu-icon"></i><span class="nav-text">Conexiones </span>
+                    </a></li>
 
                     <li class="nav-label">Informacion</li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()">
-                            <i class="icon-location-pin menu-icon"></i><span class="nav-text">IP Adressing </span>
-
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="#" onclick="ShowTravel()">IPs Travellers</a></li>
+                    <li><a class="has-arrow" href="javascript:void()">
+                        <i class="icon-location-pin menu-icon"></i><span class="nav-text">IP Adressing </span>
+                    </a></li>
+                    <ul aria-expanded="false">
+                        <li><a href="#" onclick="ShowTravel()">IPs Travellers</a></li>
                             <!-- <li><a href="./index-2.html">Home 2</a></li> -->
-                        </ul>
-                    </li>
-
+                        </li>
+                    </ul>
                     <li class="nav-label">Herramientas</li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()">
-                            <i class="icon-location-pin menu-icon"></i><span class="nav-text">INVENTARIOS</span>
-
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="#" onclick="ShowLastTag()">Ultimo Tag</a></li>
+                    <li><a class="has-arrow" href="javascript:void()">
+                        <i class="icon-location-pin menu-icon"></i><span class="nav-text">INVENTARIOS</span>
+                    </a></li>
+                    <ul aria-expanded="false">
+                        <li><a href="#" onclick="ShowLastTag()">Ultimo Tag</a></li>
                             <!-- <li><a href="./index-2.html">Home 2</a></li> -->
-                        </ul>
-                    </li>
+                        </li>                            
+                    </ul>
 
                     <li class="nav-label">HARDWARE</li>
                     <!-- IMPRESORAS -->
                     <li><a href="#" onclick="Show('print')">
-                            <i class="icon-printer menu-icon"></i><span class="nav-text">Impresoras </span>
-                        </a>
-
-                        <!-- SENSORES -->
+                        <i class="icon-printer menu-icon"></i><span class="nav-text">Impresoras </span>
+                    </a>
+                    <!-- SENSORES -->
                     <li><a href="#" onclick="ShowHtml('sensor')">
-                            <i class="icon-printer menu-icon"></i><span class="nav-text">Sensor de Temperatura</span>
-                        </a>
-
-                    </li>
-
-
+                        <i class="icon-printer menu-icon"></i><span class="nav-text">Sensor de Temperatura</span>
+                    </a></li>
                     <li>
-                        <!--<a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-speedometer menu-icon"></i><span class="nav-text">Switches</span>
-                        </a>-->
-
-                        <?php
-                        //error_reporting(0);
-                        //error_reporting(E_ALL);
+                    <?php
                         $list = array();
                         $arreglo = array();
                         $list = GetDeviceListFromLDAP("ou=NetworkSwitches,ou=Devices,dc=transportespitic,dc=com", "devicetag");
@@ -941,16 +889,8 @@ return false;
                             $arreglo[$regional] .= $html;
                             echo '</ul>';
                         }
-                        //error_reporting(E_ALL);
-                        //echo "<pre>";
-                        //print_r($list);
-                        //echo "</pre>";
                         ?>
-
                     </li>
-
-
-
                     <?php
                     $regios = GetRegionalesFromOficinas();
                     foreach ($regios as &$valor) {
@@ -961,42 +901,20 @@ return false;
                         echo '</li>';
                         //$valor = $valor * 2;
                     }
-
-
-                    //echo "<pre>";
-                    //print_r($regios);
-                    //echo "</pre>";
                     ?>
-
-                    </a>
-
-
                     <li class="nav-label">Herramientas</li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()">
-                            <i class="icon-location-pin menu-icon"></i><span class="nav-text">INVENTARIOS</span>
-
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="#" onclick="ShowLastTag()">Ultimo Tag</a></li>
-                            <!-- <li><a href="./index-2.html">Home 2</a></li> -->
-                        </ul>
-                    </li>
-
-
-
-
+                    <li><a class="has-arrow" href="javascript:void()">
+                        <i class="icon-location-pin menu-icon"></i><span class="nav-text">INVENTARIOS</span>
+                    </a></li>
+                    <ul aria-expanded="false">
+                        <li><a href="#" onclick="ShowLastTag()">Ultimo Tag</a></li>
+                    </ul>
                 </ul>
             </div>
         </div>
-        <!--**********************************
-            Sidebar end
-        ***********************************-->
+        <!-- Sidebar end -->
 
-        <!--**********************************
-            Content body start
-            style="display:none;
-        ***********************************-->
+        <!-- Content body start -->
         <div class="content-body">
             <div id="loaderDiv" style="display:none;">
                 CONECTANDO...
@@ -1069,6 +987,7 @@ return false;
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">
+                                <!--
                                 <form role="form">
                                     <div class="row">
                                         <div class="col-md-6">
@@ -1143,11 +1062,10 @@ return false;
                                         </div>
                                     </div>
                                 </form>
+                                -->
                             </div>
                         </div>
                     </div>
-
-
                 </div>
 
                 <div id="SrchLDAPGp" style="display:none;">
@@ -1193,63 +1111,34 @@ return false;
                         </div>
                     </div>
                 </div>
-
-                <!--
--->
-
-
-
-
                 <DIV ID='BOTTDIV'></DIV>
-
-
-
-
 
                 <!-- NUKED newldapuser -->
 
-
-
-
                 <!-- #/ container -->
             </div>
-            <!--**********************************
-            Content body end
-        ***********************************-->
+            <!-- Content body end -->
 
-
-            <!--**********************************
-            Footer start
-        ***********************************-->
+            <!-- Footer start -->
             <div class="footer">
                 <div class="copyright">
-                    <p>Copyright &copy; Designed & Developed by Juan Feria<br>Bottstrap template by: <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+                    <p>Copyright &copy; Designed & Developed by Juan Feria<br>Bottstrap template by: <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018-2004</p>
                 </div>
             </div>
-            <!--**********************************
-            Footer end
-        ***********************************-->
+            <!-- Footer end -->
         </div>
-        <!--**********************************
-        Main wrapper end
-    ***********************************-->
+        <!-- Main wrapper end -->
 
-        <!--**********************************
-        Scripts
-    ***********************************-->
-
+        <!-- Scripts-->
         <script src="plugins/common/common.min.js"></script>
         <script src="js/custom.min.js"></script>
         <script src="js/settings.js"></script>
         <script src="js/gleek.js"></script>
         <script src="js/styleSwitcher.js"></script>
         <!-- <script src="js/bootstrap-editable.js"></script>-->
-        <script src="js/jqueryui-editable.js"></script>
+        <!-- <script src="js/jqueryui-editable.js"></script> -->
         <script src="./plugins/tables/js/jquery.dataTables.min.js"></script>
         <script src="./plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
         <script src="./plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
-
-
-</body>
-
+    </body>
 </html>

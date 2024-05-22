@@ -232,7 +232,9 @@ if ($ERROR == "NO") {
 }
 
 $jsonSearchResults[] =  array(
-    'success' => $ERROR
+    'success' => $ERROR,
+    'msg' => "Usuario ".$forma['uid']." Guardado"
+
 );
 echo json_encode ($jsonSearchResults);
 return false;

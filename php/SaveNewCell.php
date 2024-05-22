@@ -62,7 +62,8 @@ if ($ERROR == "NO") {
 }
 
 $jsonSearchResults[] =  array(
-    'success' => $ERROR
+    'success' => $ERROR,
+    'msg' => "Tag ".$forma['val-newtag']." Guardado"
 );
 echo json_encode ($jsonSearchResults);
 return false;

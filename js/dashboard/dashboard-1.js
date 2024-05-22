@@ -75,6 +75,8 @@
 })(jQuery);
 
 
+
+/*
 (function($) {
     "use strict"
 
@@ -182,12 +184,6 @@
     gridLineColor: 'transparent',
     resize: true
 });
-
-
-
-
-
-
 
 
 
@@ -314,6 +310,8 @@
 
 })(jQuery);
 
+
+
 (function($) {
     "use strict"
 
@@ -397,11 +395,12 @@
 
 })(jQuery);
 
-
+*/
 
 /*******************
 Chart Chartist
 *******************/
+/*
 (function($) {
     "use strict"
 
@@ -448,12 +447,13 @@ Chart Chartist
 
 })(jQuery);
 
-
+*/
 
 
 /*******************
 Pignose Calender
 *******************/
+/*
 (function ($) {
     "use strict";
 
@@ -464,3 +464,5 @@ Pignose Calender
     });
 
 })(jQuery);
+
+*/

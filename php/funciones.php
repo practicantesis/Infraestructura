@@ -296,6 +296,74 @@ function getRegSiglaFromRegional($reg) {
 }    
 
 
+
+function addUserToAirwatchAPI($user,$nombre,$apellido) {
+    $myfile = fopen("/var/www/html/Infraestructura/.awapi", "r") or die("Unable to open file!");
+    $apipw=fgets($myfile);
+    fclose($myfile);
+    $pass="infra:".$apipw;
+    $basic_auth = base64_encode(trim($pass));
+    $api_key='Zbh2S+e0ejNOibdtwlFDFssflXSeCniu2oh1/7lVg5A=';
+    $ch = curl_init();
+    $baseurl="https://as257.awmdm.com";
+    $endpoint="/api/system/users/adduser";
+    $url = $baseurl.$endpoint;
+
+    //Inicializar array de datos
+    // datos minimos para regristrar un usuario "UserName", "Password", "FirstName", "LastName", "Email", "SecurityType" => 2
+    $data = array(
+        "UserName" => $user,
+        "Password" => "tpitic123",
+        "FirstName" => $nombre,
+        "Status" => 'true',
+        "LastName" => $apellido,
+        "Email" => 'DEVICETAG@tpitic.com.mx',
+        "SecurityType" => 2  //ESTE PARAMETRO SIEMPRE DEBE DE SER 2
+    );
+
+    // Convertir datos a formato JSON
+    $jsonData = json_encode($data);
+
+    $headr = array(
+        'aw-tenant-code: '.$api_key,
+        'Authorization: Basic '.$basic_auth,
+        'Accept: application/json',
+        'Content-Type: application/json',
+        'Content-Length: ' . strlen($jsonData)
+    );
+
+
+    // Configurar opciones de cURL
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headr);
+
+    // Ejecutar la solicitud cURL y obtener la respuesta
+    $response = curl_exec($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+    // Obtener cualquier error ocurrido durante la solicitud
+    $error_msg = curl_error($ch);
+    $error_code = curl_errno($ch);
+
+    // Cerrar la sesión cURL
+    curl_close($ch);
+
+    // Verificar si hubo algún error en la solicitud
+    if ($response === false) {
+        //echo "Error en la solicitud: " . $error_msg .  "\n";
+        //echo "Código de error: " . $error_code .  "\n";
+    } else {
+        // Imprimir la respuesta
+        //echo "Código de estado HTTP: " . $http_code . "\n";
+        //echo "Respuesta: " . $response .  "\n" ;
+    }
+    return $jsonData.$http_code;
+}    
+
+
         function QueryToAirwatchAPI($tipo,$val) {
             // Vendedores 6707
             // Choferes con whatsapp 25901      
@@ -543,6 +611,11 @@ function ConectaSQL($base) {
         $mysqlhost="mysqlo";
         $mysqluser="ocsext";
         $mysqlpass="#sistemaspitiC#123";
+    }
+    if ($base == "firxewall") {
+        $mysqlhost="192.168.100.16";
+        $mysqluser="feria";
+        $mysqlpass="bodycombat";
     }
     if ($base == "globaldb") {
         $mysqlhost="dbmysql.transportespitic.com";
@@ -1320,9 +1393,8 @@ function GetRegionalesFromOficinas() {
 }
 
 
-function CheckMultipleNets($ofi) {
-    $conn=ConectaSQL('firewall');
-    //global $conn;
+function CheckMultipleNets($ofi,$conn) {
+    //$conn=ConectaSQL('firewall');
     $sql = "select multiplenet from oficinas where abrev = '$ofi' ";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
@@ -1471,11 +1543,36 @@ function DevUserForm($ldata) {
                                         </div>
                                     </div>
                                 </div>
-
-
-
-
                             </div>                                
+
+
+                            <!-- Tercer Reglon -->
+                            <div class="form-group row">';
+                                $cu='duapellido';
+                                $forma .='
+                                <div class="col">
+                                    <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">DU Apellido: </label><div id="edit-'.$cu.'"><a href="#" onclick="UVal('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
+                                    <div class="col-lg-6">
+                                        <div class="form-row" id="elinput-'.$cu.'">
+                                            <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="'.$cu.'" value="'.$ldata[0][$cu][0].'" '.$ldata[0][$cu][0].' '.$rouser.'>
+                                        </div>
+                                    </div>
+                                </div>
+                                ';
+                                $cu='xxxx';
+                                $forma .='
+                                <div class="col">
+                                    <!--
+                                    <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">DU Oficina: </p></label><div id="edit-'.$cu.'"><a href="#" onclick="UVal('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
+                                    <div class="col-lg-6">
+                                        <div class="form-row" id="elinput-'.$cu.'">
+                                            <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="'.$cu.'" value="'.$ldata[0][$cu][0].'" '.$ldata[0][$cu][0].' '.$rouser.'>
+                                        </div>
+                                    </div>
+                                    -->
+                                </div>
+                            </div>                                
+
 
 
                                         <div class="form-group">
@@ -2501,7 +2598,7 @@ function NewDevUserFormGuided() {
                                     $cu='dunumeroempleado';
                                     $forma .='
                                     <div class="col">
-                                        <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">Numero de Empleado: </label><!--<div id="edit-'.$cu.'"><a href="#" onclick="UValnn('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div>--></div>
+                                        <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">Numero de Empleado: </label></div>
                                         <div class="col-lg-2">
                                             <div class="form-row" id="elinput-'.$cu.'">
                                                 <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="'.$cu.'"  '.$ldata[0][$cu][0].' onchange="searchUserAPIRHTP('."'numero','$cu'".','."'SI'".')" '.$rouser.'>
@@ -2510,81 +2607,175 @@ function NewDevUserFormGuided() {
                                         <div id="userdata"></div>
                                     </div>
                                 </div>
-                            </div>
-                            <div id="empdata" style="display: none">
-                                <div class="form-group row">';
-                                    $cu='duusernname';
-                                    $forma .='
-                                    <div class="col">
-                                        <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">Username: </label></div>
-                                        <div class="col-lg-6">
-                                            <div class="form-row" id="elinput-'.$cu.'">
-                                                <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="Nombre de usuario" '.$rouser.' readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="row"><label class="col-lg-4 col-form-label" for="val-dunombre">Nombre Completo:</label></div>
-                                        <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="val-dunombre" name="val-dunombre" placeholder="Autogenerado" value="'.$dunombre.'" readonly>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Segundo Reglon Oficina -->
-                                <div class="form-group row">';
-                                    $cu='nadax';
-                                    $forma .='
-                                    <div class="col">
-                                        <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">Creacion cuenta y TAG equipo: </label><div id="edit-'.$cu.'"><a href="#" onclick="UValn('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
+                                <div id="empdata" style="display: none">
+                                    <div class="form-group row">';
+                                        $cu='duusernname';
+                                        $forma .='
+                                        <div class="col">
+                                            <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">Username: </label></div>
                                             <div class="col-lg-6">
                                                 <div class="form-row" id="elinput-'.$cu.'">
-                                                    <select style="width:5" class="form-control"  id="seltegcel" onchange="SelTercerPaso('."'$cu'".','."'$cu'".')"><option value="SELECCIONE">SELECCIONE</option><option value="SI">SI CREAR</option><option value="NO">NO SOLO DEVUSER</option></select>
+                                                    <input type="text" class="form-control" id="val-'.$cu.'" name="val-'.$cu.'" placeholder="Nombre de usuario" '.$rouser.' readonly>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row"><label class="col-lg-4 col-form-label" for="val-dunombre">Nombre:</label></div>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" id="val-dunombre" name="val-dunombre" placeholder="Autogenerado" value="'.$dunombre.'" readonly>
+                                            </div>
+                                        </div>
                                     </div>
-                                    ';
-
-
-                                    $cu='oficina';
-                                $forma .='
-                                    <div class="col">
-                                    <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'"><p class="text-danger">Oficina: </p></label><div id="edit-'.$cu.'"><a href="#" onclick="UValn('."'$dn'".','."'$cu'".')"><span class="fa fa-pencil"></span></a></div></div>
-                                    <div class="col-lg-6">
-                                    <div class="form-row" id="elinput-'.$cu.'">
-                                        <div id="elcombi"></div>
-                                   </div>
-                                  </div>
-                                </div>
-                                </div>                                
-
-
-                            <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Acciones</h4>
-                                        <div class="basic-form">
-                                            <div class="form-group">
-                                                <div class="form-check mb-3 ">
-                                                    <label class="form-check-label">
-                                                        <div id= "thirdstep" style="display: none">
-                                                            <button type="button" id="BtnSaveNewDevUser" class="btn btn-primary mb-2" onclick="SaveNewDevUser()">Agregar</button>
-                                                        </div>
-                                                        <div id= "thirdstepb" style="display: none">
-                                                            xxxxxx
-                                                        </div>
-                                                    </label>
+                                    <!-- Segundo Reglon Oficina -->
+                                    <div class="form-group row">';
+                                        $cu='nadax';
+                                        $forma .='
+                                        <div class="col">
+                                            <div class="row"><label class="col-lg-4 col-form-label" for="val-dunombre">Apellido:</label></div>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" id="val-duapellido" name="val-duapellido" placeholder="Apellido" value="'.$duapellido.'" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row"><label class="col-lg-4 col-form-label" for="val-'.$cu.'">Crear cuenta y TAG: </label></div>
+                                            <div class="col-lg-6">
+                                                <div class="form-row" id="elinput-'.$cu.'">
+                                                    <select style="width:5" class="form-control"  id="seltegcel" onchange="SelTercerPaso()"><option value="SELECCIONE">SELECCIONE</option><option value="SI">SI CREAR</option><option value="NO">NO SOLO DEVUSER</option></select>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <div class="col">
+                                            <div class="row"><label class="col-lg-4 col-form-label" for="val-oficina"><p class="text-danger">Oficina: </p></label></div>
+                                            <div class="col-lg-6">
+                                                <div class="form-row" id="elinput-oficina">
+                                                    <div id="elcombi"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+
                                 </div>
-                            </div>                                    
+                                <div id= "thirdstepb" style="display: none">
+                                    <div class="form-group row">
+                                        <div class="col">
+                                            <div class="row">
+                                                <label class="col-lg-4 col-form-label" for="val-newtag">Tag Generado: </label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-row" id="elinput-newtag">
+                                                    <input type="text" class="form-control" id="val-newtag" name="val-newtag" placeholder="newtag" '.$readonly.'="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row">
+                                                <label class="col-lg-4 col-form-label" for="val-devicenumber">Numero de telefono:</label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-row" id="elinput-devicenumber">
+                                                    <input type="text" class="form-control" id="val-devicenumber" name="val-devicenumber" placeholder="devicenumber" onchange="validarinput('."'".'telefono'."'".','."'".'devicenumber'."'".')">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
 
 
 
+
+                                    <div class="form-group row">
+                                        <div class="col">
+                                            <div class="row">
+                                                <label class="col-lg-4 col-form-label" for="val-deviceimei">Device IMEI </label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-row" id="elinput-deviceimei">
+                                                    <input type="text" class="form-control" id="val-deviceimei" name="val-deviceimei" placeholder="IMEI">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row">
+                                                <label class="col-lg-4 col-form-label" for="val-devicebrand">Marca del telefono:</label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-row" id="elinput-devicebrand">
+                                                    <input type="text" class="form-control" id="val-devicebrand" name="val-devicebrand" placeholder="devicebrand" onchange="validarinput()">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+
+                                    <div class="form-group row">
+                                        <div class="col">
+                                            <div class="row"><label class="col-lg-4 col-form-label" for="val-devicedept">Departamento:</label></div>
+                                            <div class="col-lg-6">
+                                                <div class="form-row" id="elinput-devicedept">
+                                                    <input type="text" class="form-control" id="val-devicedept" name="val-devicedept" placeholder="devicedept" onchange="validarinput()">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <div class="row">
+                                                <label class="col-lg-4 col-form-label" for="val-deviceserial">Serie del telefono:</label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-row" id="elinput-deviceserial">
+                                                    <input type="text" class="form-control" id="val-deviceserial" name="val-deviceserial" placeholder="deviceserial" onchange="validarinput()">
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <!--<div class="col">
+                                            <div class="row">
+                                                <label class="col-lg-4 col-form-label" for="savebtn">Save!:</label></div>
+                                            </div>    
+                                            <div class="col-lg-6">
+                                                <div class="form-row" id="botonx">
+                                                    <button type="button" class="btn btn-primary mb-2"  id="savebtn" name="savebtn" onclick="SaveTelAndUser()">Agregar Devuser y Tag</button>
+                                                </div>
+                                            </div>
+                                        </div>-->
+                                    </div>
+<input type="hidden" name="tipod" id="tipod" value="">                                    
+<button type="button" class="btn btn-primary mb-2"  id="savebtn" name="savebtn" onclick="SaveTelAndUser()">Agregar Devuser y Tag</button>
+                                </div>
+                                <div id= "thirdstep" style="display: none">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h4 class="card-title">Acciones</h4>
+                                                <div class="basic-form">
+                                                    <div class="form-group">
+                                                        <div class="form-check mb-3 ">
+                                                            <label class="form-check-label">
+                                                                <button type="button" id="BtnSaveNewDevUser" class="btn btn-primary mb-2" onclick="SaveNewDevUser()">Agregar</button>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                </div>
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -4089,6 +4280,18 @@ function GetDeviceUserInfoFromdunumeroempleado($noemp,$how,$conn) {
     return $out;
 }
 
+
+function logit($user,$actividad,$valorafectado,$conn) {
+    if ($conn instanceof mysqli) {
+        //echo "Valid mysqli object.";
+    } else {
+        $conn=ConectaSQL('firewall');
+    }
+    $sql = "INSERT INTO log values ('0','$user','$actividad','$valorafectado',NOW())";
+    $result = $conn->query($sql);
+    //echo "MySQLi Error: " . mysqli_error($conn);
+
+}
 
 
 

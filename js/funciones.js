@@ -205,6 +205,20 @@ function ShowLDAP(what) {
             }
         });
     }
+    if (what == "logs") {
+        $.ajax({
+            type: "POST",
+            url: 'php/GetLogTable.php',
+            dataType: "json",
+            success: function(data) {
+                if (data[0].success == "YES") {
+                    $('#NewLDAPUser').html(data[0].data);
+                    $('#tablalog').dataTable();
+                }
+            }
+        });
+    }
+
     if (what == "rsyslog") {
         $.ajax({
             type: "POST",
@@ -608,6 +622,26 @@ function ShowCells(what) {
         }
     });
 }
+
+
+function ShowChangelog() {
+    Limpia();
+    $("#LDAPGroups").hide();
+    $("#SmbLDAPGroups").hide();
+    $("#SrchLDAPGp").hide();
+    $.ajax({
+        type: "POST",
+        url: 'php/GetChangelog.php',
+        dataType: "json",
+        success: function(data) {
+            if (data[0].success == "YES") {
+                $('#NewLDAPUser').html(data[0].data);
+                $('#logTable').dataTable( { "lengthMenu": [[150, -1], [150, "All"]]  } );
+            }
+        }
+    });
+}
+
 
 function ShowLDAPG(tipo) {
     Limpia();
@@ -1338,10 +1372,14 @@ function searchuserapirhtp(tipo,valor,chkexist) {
                     $('#BtnSaveNewDevUser').attr('disabled','disabled');
                     $('#val-dunumeroempleado').val('');
                 } else {
+                    alert('go!');
                     $('#val-dunombre').removeAttr('readonly');
                     $('#BtnSaveNewDevUser').removeAttr('disabled');
-                    $('#val-dunombre').val(data[0]['fullnom']);
+                    //$('#val-dunombre').val(data[0]['fullnom']);
+                    $('#val-dunombre').val(data[0]['nom']);
                     $('#val-dunombre').attr('readonly');
+                    $('#val-duapellido').val(data[0]['apep']+' '+data[0]['apem']);                    
+                    $('#val-duapellido').attr('readonly');
                     //$('#val-duoficina').val(data[0]['ofi']);
                     $('#elinput-duoficina').html(data[0]['combo']);
                     $('#menza').html(data[0]['aviso']);
@@ -1396,6 +1434,10 @@ function validarinput(tipo,valor,chkexist) {
     if (tipo == 'mac') {
         var re = new RegExp("^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$");
         var err = "11:22:33:44:55";
+    }
+    if (tipo == 'telefono') {
+        var re = new RegExp("^([0-9]{10})$");
+        var err = "1234567890";
     }
 
     // Validar que no existe en deviceusers
@@ -1559,6 +1601,7 @@ function CalcularIP(ofi,valor) {
         var e = document.getElementById("seleredes");
         var multi = e.options[e.selectedIndex].value;
         ofi=multi;
+        alert('sss'+e+multi);
     }
     $.ajax({
         type: "POST",
@@ -1605,7 +1648,8 @@ function SaveNewUser() {
         async: false,
         success: function(data) {
             if (data[0].success == "Success") {
-                alert('Usuario Guardado');
+                //alert('Usuario Guardado');
+                alert(data[0].msg);
                 ShowLDAP('AddLDAPUsers');
             } else {
                 alert(data[0].success);
@@ -1624,7 +1668,8 @@ function SaveNewCell() {
         async: false,
         success: function(data) {
             if (data[0].success == "Success") {
-                alert('Usuario Guardado');
+                //alert('Usuario Guardado');
+                alert(data[0].msg);
                 $("#val-oficina").val("SELECCIONE");
                 $("#val-newtag").val("");
                 $("#val-devicenumber").val("");
@@ -1659,7 +1704,8 @@ function SaveNewDevUser() {
         async: false,
         success: function(data) {
             if (data[0].success == "Success") {
-                alert('Usuario Guardado');
+                //alert('Usuario Guardado');
+                alert(data[0].msg);
                 ShowLDAP('AddLDAPDevUsers');
             } else {
                 alert(data[0].success);
@@ -1667,6 +1713,46 @@ function SaveNewDevUser() {
         }
     });
 }
+
+function SaveTelAndUser() {
+    var e = document.getElementById("val-duoficina");
+    if (e) {
+        var ofi = e.options[e.selectedIndex].value;
+    }
+    if (ofi == "SELECCIONE") {
+        alert("SELECCIONE UNA OFICINA!!!!");
+        return false;
+    }
+    var tel = document.getElementById("val-devicenumber").value;
+    var re = new RegExp("^([0-9]{10})$");
+    var err = "1234567890";
+    if (re.test(tel)) {
+
+    } else {
+        alert('Telefono: valor invalido formato aceptado:'+err );
+        return false;
+    }
+
+    //return false;
+    var data = $("#newdevuser").serializeArray();
+    $.ajax({
+        type: "POST",
+        url: 'php/SaveNewDevUserAndTag.php',
+        data: { data: data },
+        dataType: "json",
+        async: false,
+        success: function(data) {
+            if (data[0].success == "Success") {
+                //alert('Usuario Guardado');
+                alert(data[0].msg);
+                ShowLDAP('AddLDAPDevUsers');
+            } else {
+                alert(data[0].success);
+            }
+        }
+    });
+}
+
 
 function ValidateMacSet(tipo) {
     var e = document.getElementById(tipo+"-sel");
@@ -1788,7 +1874,24 @@ function SelTipoCel(tipo) {
         } else {
             DIVNEMP.style.display = "block";           
         }
-
+        if (multi == "CEL") {
+            $("#val-deviceimei").prop("disabled", true);
+            $("#val-devicebrand").prop("disabled", true);
+            $("#val-deviceserial").prop("disabled", true);
+            $("#val-deviceimei").val("disabled");
+            $("#val-devicebrand").val("disabled");
+            $("#val-deviceserial").val("disabled");
+            $("#tipod").val("CEL");
+        }            
+        if (multi == "CPH") {
+            $("#val-deviceimei").prop("disabled", false);
+            $("#val-devicebrand").prop("disabled", false);
+            $("#val-deviceserial").prop("disabled", false);
+            $("#val-deviceimei").val("");
+            $("#val-devicebrand").val("");
+            $("#val-deviceserial").val("");
+            $("#tipod").val("CPH");
+        }        
     }
 }
 
@@ -1837,7 +1940,8 @@ function searchUserAPIRHTP(tipo,valor,chkexist) {
                     var e = document.getElementById("elseltd");
                     let inicial = data[0]['nom'].charAt(0);
                     $("#val-duusernname").val(abrev+(inicial+data[0]['apep']).toLowerCase());
-                    $("#val-dunombre").val(data[0]['nom']+" "+data[0]['apep']+" "+data[0]['apem']);
+                    $("#val-dunombre").val(data[0]['nom']);
+                    $("#val-duapellido").val(data[0]['apep']+" "+data[0]['apem']);
                     $("#elcombi").html(data[0].combo);
                 }
                 if (data[0]['success'] == 'DUP') {
@@ -1851,11 +1955,24 @@ function searchUserAPIRHTP(tipo,valor,chkexist) {
 
 }    
 
-function SelTercerPaso(valor, valor) {
+function SelTercerPaso() {
+    var cmbvo = document.getElementById("val-duoficina");
     var cmbtd = document.getElementById("seltegcel");
+    var cmbtipo = document.getElementById("elseltd");
+    var tipocell = cmbtipo.options[cmbtipo.selectedIndex].value;
+    //alert(tipocell);
     //alert(cmbtd);
+    if (cmbvo) {
+        var multiof = cmbvo.value;
+        if (multiof == "SELECCIONE") {
+            alert('Selecciona una oficina McEnzie!!!');
+            $("#seltegcel").val("SELECCIONE");
+            return false;
+        }
+    }        
     if (cmbtd) {
         var multi = cmbtd.options[cmbtd.selectedIndex].value;
+	alert(multi);
         if (multi == "SELECCIONE") {
             alert('Selecciona un tipo McEnzie!!!');
             thirdstep.style.display = "none";           
@@ -1865,6 +1982,30 @@ function SelTercerPaso(valor, valor) {
                 thirdstep.style.display = "block";
                 thirdstepb.style.display = "none";
             } else {
+                    if (tipocell === "CELL") {
+                        aw = "si";
+                    } else {
+                        aw = "no";
+                    }
+                    $.ajax({    
+                        type: "POST",
+                        url: 'php/GetCellAvailableTag.php',
+                        data: { ofi: multiof , aw: aw },
+                        dataType: "json",
+                        success: function(data) {
+                        if (data[0].success == "NO") {
+                            alert('INCORRECTO');
+                        }
+                        if (data[0].success == "YES") {
+                            $('#val-newtag').val(data[0].tag);
+                            //alert(data[0].tag)
+                        } else {
+                            alert(data[0].success);
+                        }
+                    }
+                    });    
+
+
                 thirdstep.style.display = "none";
                 thirdstepb.style.display = "block";
             }
