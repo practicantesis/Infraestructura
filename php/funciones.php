@@ -2168,6 +2168,7 @@ function CheckSMBServiceForUser($dn) {
     } else {
         $RES="SI";
     }
+    //echo $RES;
     return $RES;
 }
 

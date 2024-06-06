@@ -218,13 +218,14 @@ if ($_POST['value'] == "SAMBA") {
 			$sambaArray = array();
 			$sambaArray['objectClass'][0] = "sambaSamAccount";
 			$sambaArray['sambaSID'] = "S-1-5-21-2286529612-1239631486-3098793819-1002";
-			$sambaArray['objectClass'][1] = "shadowAccount";
+			//$sambaArray['objectClass'][1] = "shadowAccount";
 			$sambaArray['sambaPasswordHistory'] = "0000000000000000000000000000000000000000000000000000000000000000";
 			$sambaArray['sambaAcctFlags'] = "[U          ]";
 			$sambaArray['shadowLastChange'] = "16207";
 			$sambaArray['sambaPwdLastSet'] = "1400916704";
 			$smbReq = @ldap_mod_add($con,$_POST['dn'],$sambaArray);
 			$success="Samba activado";
+			//print_r($sambaArray);
 		}
 		if ($_POST['nvalue'] == "NO") {
 			$userdataModifydelSamba = array();
