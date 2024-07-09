@@ -1348,7 +1348,8 @@ function TelegramATelefonia($debs) {
     EnviaTelegram($debs,"eresendiz");
     EnviaTelegram($debs,"jferia");  
     EnviaTelegram($debs,"acota"); 
-    EnviaTelegram($debs,"abgarcia");  
+    EnviaTelegram($debs,"abgarcia");
+    EnviaTelegram($debs,"rcruz");  
 }
 
 function ValidatePassword($password, $hash) {
