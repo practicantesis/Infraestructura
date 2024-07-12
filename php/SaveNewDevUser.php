@@ -26,7 +26,6 @@ foreach ($_POST['data'] as $value) {
 	$forma[$vname]=$value[value];
 }	
 
-
 //: duusernname=aarcos,ou=DeviceUsers,dc=transportespitic,dc=com
 $dn="duusernname=".$forma['duusernname'].",ou=DeviceUsers,dc=transportespitic,dc=com";
 //$fullname=$forma['givenname']." ".$forma['sn'];
@@ -68,9 +67,11 @@ if (strlen($forma['dunombre']) < 1) {
   $ERROR="CAPTURE NOMBRE ".strlen($forma['dunombre']);
 } 
 
-if (strlen($forma['duapellido']) < 1) {
-  $ERROR="CAPTURE APELLIDO!!!".strlen($forma['duapellido']);
-} 
+
+//se comenta este if porque el formulario de agregar devuser no lo solicita
+//if (strlen($forma['duapellido']) < 1) {
+//  $ERROR="CAPTURE APELLIDO!!!".strlen($forma['duapellido']);
+//} 
 
 
 if (is_numeric($forma['dunumeroempleado'])) {
@@ -102,7 +103,7 @@ echo $ERROR;
 
 $entry['duusernname']=$forma['duusernname'];
 $entry['dunombre']=$forma['dunombre'];
-$entry['duapellido']=$forma['duapellido'];
+//$entry['duapellido']=$forma['duapellido'];
 $entry['dunumeroempleado']=$forma['dunumeroempleado'];
 $entry['duoficina']=$forma['duoficina'];
 $entry['objectClass'][0] = "deviceuser";

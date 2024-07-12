@@ -218,8 +218,9 @@ if ($_POST['value'] == "SAMBA") {
 			$sambaArray = array();
 			$sambaArray['objectClass'][0] = "sambaSamAccount";
 			$sambaArray['sambaSID'] = "S-1-5-21-2286529612-1239631486-3098793819-1002";
-			//$sambaArray['objectClass'][1] = "shadowAccount";
+			$sambaArray['objectClass'][1] = "shadowAccount";
 			$sambaArray['sambaPasswordHistory'] = "0000000000000000000000000000000000000000000000000000000000000000";
+			$sambaArray['sambaNTPassword'] = "96693806C8B181C36154E630C835A62F";
 			$sambaArray['sambaAcctFlags'] = "[U          ]";
 			$sambaArray['shadowLastChange'] = "16207";
 			$sambaArray['sambaPwdLastSet'] = "1400916704";
