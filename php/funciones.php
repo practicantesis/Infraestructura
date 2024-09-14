@@ -363,8 +363,103 @@ function addUserToAirwatchAPI($user,$nombre,$apellido) {
     return $jsonData.$http_code;
 }    
 
+function QueryToAirwatchAPI($tipo, $val) {
+    // Vendedores 6707
+    // Choferes con whatsapp 25901      
+    $myfile = fopen("/var/www/html/Infraestructura/.awapi", "r") or die("Unable to open file!");
+    $apipw = fgets($myfile);
+    fclose($myfile);
+    $pass = "infra:" . $apipw;
+    $basic_auth = base64_encode(trim($pass));
+    $api_key = 'Zbh2S+e0ejNOibdtwlFDFssflXSeCniu2oh1/7lVg5A=';
+    $headers = ['aw-tenant-code: ' . $api_key, 'Authorization: Basic ' . $basic_auth, 'Accept: application/json'];
+    $ch = curl_init();
+    $baseurl = "https://as257.awmdm.com";
+    
+    if ($tipo == "ALLDEVS") {
+        // Realizar paginación
+        $pageSize = 500;
+        $page0Endpoint = "/API/mdm/devices/search?pagesize=$pageSize&page=0";
+        $page1Endpoint = "/API/mdm/devices/search?pagesize=$pageSize&page=1";
+        
+        // Primera petición (página 0)
+        curl_setopt($ch, CURLOPT_URL, $baseurl . $page0Endpoint);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        $page0Result = curl_exec($ch);
+        
+        // Segunda petición (página 1)
+        curl_setopt($ch, CURLOPT_URL, $baseurl . $page1Endpoint);
+        $page1Result = curl_exec($ch);
+        
+        // Combinar los resultados de ambas páginas
+        $page0Data = json_decode($page0Result, true);  // Decodificar JSON
+        $page1Data = json_decode($page1Result, true);  // Decodificar JSON
+        
+        if (isset($page0Data['Devices']) && isset($page1Data['Devices'])) {
+            // Combinar las listas de dispositivos
+            
+            $combinedDevices = array_merge($page0Data['Devices'], $page1Data['Devices']);
+            $result['status'] = AIRWATCH_API_RESULT_OK;
+            $result['data'] = json_encode(['Devices' => $combinedDevices]);  // Codificar de nuevo a JSON
+        } else {
+            $result['status'] = AIRWATCH_API_RESULT_ERROR;
+            $result['error'] = "Error fetching devices from API.";
+        }
+    } else {
+        // Otras opciones de tipo (LGID, DEVICE, etc.)
+        if ($tipo == "LGID") {
+            $endpoint = "/API/mdm/devices/search?lgid=" . $val;
+        } elseif ($tipo == "DEVICE") {
+            $endpoint = "/api/mdm/devices/?searchby=Serialnumber&id=" . $val;
+        } elseif ($tipo == "DEVICEperIMEI") {
+            $endpoint = "/api/mdm/devices/?searchby=ImeiNumber&id=" . $val;
+        } elseif ($tipo == "DeleteDEVICEperIMEI") {
+            $endpoint = "/api/mdm/devices/?searchby=ImeiNumber&id=" . $val;
+        } elseif ($tipo == "NOTES") {
+            $endpoint = "/api/mdm/devices/notes?searchby=SerialNumber&id=320615670110";
+        }
 
-        function QueryToAirwatchAPI($tipo,$val) {
+        $url = $baseurl . $endpoint;
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        $ch_result = curl_exec($ch);
+
+        $infos = curl_getinfo($ch);
+        if ($infos['http_code'] == 401) {
+            return "UNAUTH";
+        }
+        if ($infos['http_code'] != 200) {
+            $result['status'] = AIRWATCH_API_RESULT_ERROR;
+            $result['error'] = $infos['http_code'];
+        } else {
+            $result['status'] = AIRWATCH_API_RESULT_OK;
+            $result['data'] = $ch_result;
+        }
+    }
+
+    curl_close($ch);
+
+    if ($result['status'] == "AIRWATCH_API_RESULT_ERROR") {
+        return $result['error'];
+    } else {
+        return $result['data'];
+    }
+}
+
+
+
+
+
+        function QueryToAirwatchAPIold($tipo,$val) {
+            
             // Vendedores 6707
             // Choferes con whatsapp 25901      
             $myfile = fopen("/var/www/html/Infraestructura/.awapi", "r") or die("Unable to open file!");
@@ -381,7 +476,7 @@ function addUserToAirwatchAPI($user,$nombre,$apellido) {
                 $endpoint="/API/mdm/devices/search?lgid=".$val;
             }
             if ($tipo == "ALLDEVS") {
-                
+
                 $endpoint="/API/mdm/devices/search";
             }
             if ($tipo == "DEVICE") {
@@ -395,8 +490,9 @@ function addUserToAirwatchAPI($user,$nombre,$apellido) {
             }
             if ($tipo == "NOTES") {
                 $endpoint="/api/mdm/devices/notes?searchby=SerialNumber&id=320615670110";
-            } 
+            }
             $headers = ['aw-tenant-code: '.$api_key,'Authorization: Basic '.$basic_auth,'Accept: application/json'];
+
 
             $url = $baseurl.$endpoint;
             curl_setopt($ch, CURLOPT_URL, $url);
@@ -417,7 +513,7 @@ function addUserToAirwatchAPI($user,$nombre,$apellido) {
             //echo $ch;
              $ch_result = curl_exec($ch);
              $infos = curl_getinfo($ch);
-            //print_r($infos);
+           // print_r($infos);
             //echo "UNAUTH!!!!!!!!!!!!!!!!!!!!!!!!!!".$infos['http_code'];
             if ($infos['http_code'] == 401) {
             return "UNAUTH";
@@ -429,6 +525,8 @@ function addUserToAirwatchAPI($user,$nombre,$apellido) {
             } else {
                 $result['status'] = AIRWATCH_API_RESULT_OK;
                 $result['data'] = $ch_result;
+              //  echo "esatus ok==================================";
+             // print_r($result['data']);
             }
             if ($result['status'] == "AIRWATCH_API_RESULT_ERROR") {
                 return $result['error'];
@@ -437,87 +535,6 @@ function addUserToAirwatchAPI($user,$nombre,$apellido) {
             }
             curl_close($ch);
         }
-
-
-//https://resources.workspaceone.com/view/zv5cgwjrcv972rd6fmml/en
-function QueryToAirwatchAPIold($tipo,$val) {
-    //$basic_auth = base64_encode("infra:TP1nghm0R1hM0zaRqfAck4U");
-    $basic_auth = base64_encode("infra:TP1nghm0R1hM0zaRqfCck4U");
-    //$basic_auth='amZlcmlhOkxldHR5b3J0ZWdh';
-        
-
-    $ch = curl_init();
-    $api_key='Zbh2S+e0ejNOibdtwlFDFssflXSeCniu2oh1/7lVg5A=';
-    $baseurl="https://as257.awmdm.com";
-    if ($tipo == "ALLDEVS") {
-        $endpoint="/API/mdm/devices/search";    
-    }
-    if ($tipo == "DEVICE") {
-        $endpoint="/api/mdm/devices/?searchby=Serialnumber&id=".$val;
-    }
-    if ($tipo == "DEVICEperIMEI") {
-        $endpoint="/api/mdm/devices/?searchby=ImeiNumber&id=".$val;
-    }
-    if ($tipo == "DeleteDEVICEperIMEI") {
-        $endpoint="/api/mdm/devices/?searchby=ImeiNumber&id=".$val;
-    }
-    if ($tipo == "NOTES") {
-        $endpoint="/api/mdm/devices/notes?searchby=SerialNumber&id=320615670110";
-    }
-
-    
-    $url = $baseurl.$endpoint;
-    $headers = ['aw-tenant-code: '.$api_key,'Authorization: Basic '.$basic_auth,'Accept: application/json'];
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    if ($tipo == "DeleteDEVICEperIMEI") {
-        curl_setopt($curl, CURLOPT_DELETE, true);
-    }
-    curl_setopt($ch, CURLOPT_VERBOSE, 1);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    if ($tipo == "DeleteDEVICEperIMEI") {
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
-    } else {
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');    
-    }
-
-
-    
-
-    $ch_result = curl_exec($ch);
-    $infos = curl_getinfo($ch);
-    //print_r($infos);
-
-    //echo "UNAUTH!!!!!!!!!!!!!!!!!!!!!!!!!!".$infos['http_code'];
-    if ($infos['http_code'] == 401) {
-        //echo "UNAUTH!!!!!!!!!!!!!!!!!!!!!!!!!!";
-        return "UNAUTH";
-        //exit;
-    }
-
-
-    //If http_code is not 200, then there's an error
-    if ($infos['http_code'] != 200) {
-        $result['status'] = AIRWATCH_API_RESULT_ERROR;
-        $result['error']  = $infos['http_code'];
-    } else {
-        $result['status'] = AIRWATCH_API_RESULT_OK;
-        $result['data'] = $ch_result;
-    }
-    //print_r($result);
-    //echo $tipo,$val;
-    curl_close($ch);
-
-    if ($result['status'] == "AIRWATCH_API_RESULT_ERROR") {
-        return $result['error'];
-    } else {
-        return $result['data'];    
-    }
-    
-}
 
 
 

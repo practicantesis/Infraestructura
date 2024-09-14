@@ -18,24 +18,27 @@ if ($total == 0) {
 }
 //"25901"
 //$awdevs=QueryToAirwatchAPI("LGID",$argv[1]);
+//$awdevs=QueryToAirwatchAPI("ONEDEV","CELPUE164");
 $awdevs=QueryToAirwatchAPI("ALLDEVS","ALLDEVS");
 $awdevsa=json_decode($awdevs, true);
 $con=ConectaLDAP();
 
 
+
 if ($awdevs == "UNAUTH") {
 $debs="SIN AUTORIZACION PARA API DE AW";
-EnviaTelegram($debs,"jferia");  
-EnviaTelegram($debs,"acota");  
-EnviaTelegram($debs,"eresendiz");  
-EnviaTelegram($debs,"abgarcia");  
+EnviaTelegram($debs,"jferia");
+EnviaTelegram($debs,"acota");
+EnviaTelegram($debs,"eresendiz");
+EnviaTelegram($debs,"abgarcia");
 }
 
 
 //print_r($celdap);
-//print_r($awdevsa);
+
 $a=array();
 $b=array();
+
 
 
 //EnviaTelegram("hi","jferia");
@@ -69,8 +72,8 @@ foreach ($tags as &$value) {
 	
 }
 //////echo "xx".$debs;
-////print_r($a);
-///print_r($b);
+//print_r($a);
+//print_r($b);
 
 
 echo "-------------------------------------------------------  \n";
@@ -82,11 +85,11 @@ foreach ($awdevsa['Devices'] as &$valuex) {
 	$tag="DUNNO";
     $skipthis="DUNNO";
 	//echo $valuex['DeviceFriendlyName']." ---- \n";
-	//echo "//////// ".$b[$valuex['DeviceFriendlyName']]."\n";
+	//echo "//////// ".in_array($valuex['DeviceFriendlyName'], $a)."\n";
 	//if (in_array($valuex['DeviceFriendlyName'], $a)) {
     if ( (in_array($valuex['DeviceFriendlyName'], $a)) and ($b[$valuex['DeviceFriendlyName']] != "PORDEFINIR") and ($b[$valuex['DeviceFriendlyName']] != "BAJA") ) {    
     	//and ($b[$valuex['DeviceFriendlyName']] != "SINASIGNAR")
-        
+       
 		$tg = $valuex['DeviceFriendlyName'];
         echo "777777777777777777777777777".$b[$valuex['DeviceFriendlyName']];
 		echo "Validando parametos locales para ".$valuex['DeviceFriendlyName']."\n";
@@ -174,8 +177,8 @@ TelegramATelefonia($debs);
 #EnviaTelegram($debs,"jferia");  
 #EnviaTelegram($debs,"acota");  
 #EnviaTelegram($debs,"eresendiz");  
-#EnviaTelegram($debs,"gsalazar");  
-#EnviaTelegram($debs,"abgarcia");
+//EnviaTelegram($debs,"rcruz");  
+//EnviaTelegram($debs,"abgarcia");
 
 /*
 print_r($awdevsa);
